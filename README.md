@@ -6,3 +6,4 @@
 
 - `git fetch` -> command untuk fetch perubahan terbaru
 - `git pull` -> command untuk membuat codebase kita menjadi yang terbaru
+- 'git config' --global user.name "nama akun github anda" -> command mengatur konfigurasi nama

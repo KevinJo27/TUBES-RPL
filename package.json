@@ -1,7 +1,7 @@
 {
-  "name": "mibd-tugas-akhir",
+  "name": "rpl-tubes",
   "version": "1.0.0",
-  "description": "",
+  "description": "- `git add .` -> untuk add file yang ingin dirubah, \".\"(titik) artinya semua file yang mengalami perubahan\r - `git add index.html` -> add file `index.html` saja ke commit\r - `git commit -m \"pesan anda\"` -> commit perubahan dengan pesan sesuai apa yang dirubah, misalnya \"fix index.html\"\r - `git push -u origin main` -> push commit-commit yang ada ke github `main` adalah branch nya",
   "main": "app.js",
   "type": "module",
   "scripts": {
@@ -10,9 +10,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "MIBD-TUGAS-AKHIR"
+    "url": "RPL-Tubes"
   },
-  "author": "KElompok 7",
+  "author": "Kelompok E",
   "license": "ISC",
   "dependencies": {
     "busboy": "^1.6.0",
@@ -29,5 +29,6 @@
     "path": "^0.12.7",
     "pdf-creator-node": "^2.3.5",
     "sweetalert2": "^11.4.8"
-  }
+  },
+  "keywords": []
 }

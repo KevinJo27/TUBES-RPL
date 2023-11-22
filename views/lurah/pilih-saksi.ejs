@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pilih Saksi</title>
+    <link rel="stylesheet" type="text/css" href="/lurah/pilihsaksi.css" />
+  </head>
+
+  <body>
+    <%- include('./layout/navigator.ejs') %>
+    <div class="container">
+      <div class="rectangle">
+        <h2>Daftar Calon Pemilih</h2>
+        <div class="line"></div>
+        <h3>
+          Silahkan Cari Calon Pemilih yang akan di-alokasikan sebagai Saksi!
+        </h3>
+        <h4>Cari calon pemilih berdasarkan NIK mereka!</h4>
+        <form method="GET" action="/lurah/pilih-saksi">
+          <div class="form-row">
+            <input type="text" name="filter" placeholder="Masukkan NIK Calon Pemilih" />
+            <input type="submit" value="Search" />
+          </div>
+        </form>
+        <br />
+        <div class="result <%= result && result[0] ? '' : 'hide' %>">
+          <% if (result && result[0] && result[0].namaPengguna) { %>
+            <%= result[0].namaPengguna %>
+            <button class="button" onclick="showModal('<%= result[0].namaPengguna %>')">View</button>
+          <% } %>
+        </div>
+        
+        
+        
+        
+      </div>
+    </div>
+    <div class="hider">
+      <div class="rectangle1">
+        <h2 class="head">Pilih Saksi</h2>
+        <div class="line1">
+          ----------------------------------------------------------------------------------------------------
+        </div>
+        <% if (result && result[0] && result[0].namaPengguna) { %>
+        <h4 class="ket"><%= result[0].namaPengguna %></h4>
+        <% } %>
+        <form method="post" action="/lurah/pilih-saksi" style="justify-content: center; align-items: center; display: flex; flex-direction: column;">
+          <label>Pilih Partai:</label>
+          <input class="partai" name="partai" placeholder="Masukkan nama partai..." type="text" required>
+          
+    
+          
+          <div class="green-oval">
+            <button style="color: aliceblue;" type="submit" class="green-oval" onclick="hideModal()">Jadikan Saksi</button>
+          </div>
+
+        </form>
+       
+        <div class="profile-details">
+          <div>
+            <p><strong>NIK:</strong></p>
+            <p><strong>Tempat, Tanggal Lahir:</strong></p>
+            <p><strong>Alamat:</strong></p>
+            <p><strong>No HP:</strong></p>
+            <p><strong>Kota:</strong></p>
+            <p><strong>Kecamatan:</strong></p>
+            <p><strong>Kelurahan:</strong></p>
+            <p><strong>RT/RW:</strong></p>
+          </div>
+          <div>
+            <% if (result && result[0] && result[0].namaPengguna) { %>
+            <p><%= result[0].idCamil %></p>
+            <p><%= result[0].tptlahir %>, <%= result[0].tgllahir.toLocaleDateString('en-GB'); %></p>
+            <p><%= result[0].alamat %></p>
+            <p><%= result[0].noHP %></p>
+            <p><%= result[0].kota %></p>
+            <p><%= result[0].kecamatan %></p>
+            <p><%= result[0].kelurahan %></p>
+            <p><%= result[0].idRT %>/<%= result[0].idRW %></p>
+            <% } %>
+          </div>
+        </div>
+        <button class="btn" onclick="hideModal()">Close</button>
+      </div>
+
+    </div>
+    
+  </body>
+</html>
+
+<script>
+  function showModal(namaPengguna) {
+ 
+    document.querySelector(".hider").style.display = "flex";
+  }
+  
+  function hideModal() {
+    document.querySelector(".hider").style.display = "none";
+  }
+
+        
+</script>

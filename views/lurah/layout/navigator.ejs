@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="/lurah/navigator.css">
+<script src="/lurah/navigator.js"></script>
+
+<nav class="vertical-navbar">
+    <a href="home" class="nav-button <%= currentPage === 'home' ? 'current' : '' %>">
+        <img src="/images/icon ke home.png" alt="Home">
+        <span>Home</span>
+    </a>
+    <a href="profile" class="nav-button <%= currentPage === 'profile' ? 'current' : '' %>">
+        <img src="/images/icon home 1.png" alt="Home">
+        <span>Profile</span>
+    </a>
+    <a href="lihat-camil" class="nav-button <%= currentPage === 'lihat-camil' ? 'current' : '' %>">
+        <img src="/images/icon home 2.png" alt="Home">
+        <span>Lihat CAMIL</span>
+    </a>
+    <a href="lihat-tps" class="nav-button <%= currentPage === 'lihat-tps' ? 'current' : '' %>">
+        <img src="/images/icon home 3.png" alt="Home">
+        <span>Lihat TPS</span>
+    </a>
+    <a href="pilih-saksi" class="nav-button <%= currentPage === 'pilih-saksi' ? 'current' : '' %>">
+        <img src="/images/icon home 4.png" alt="Home">
+        <span>Pilih Saksi</span>
+    </a>
+    <a href="/logout" class="nav-button">
+        <img src="/images/log out.png" alt="Home">
+        <span>Log out</span>
+    </a>
+</nav>

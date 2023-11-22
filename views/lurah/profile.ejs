@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" type="text/css" href="/lurah/profile.css">
+</head>
+
+<body>
+    <%- include('./layout/navigator.ejs') %>
+    
+    <div class="container">
+        <div class="rectangle">
+            <h2>Profile Lurah</h2>
+            <div class="line"></div>
+            <h2><%= namalurah  %></h2>
+            <div class="spacer-line"></div>
+            <div class="profile-details">
+                <div>
+                    <p><strong>NIK:</strong></p>
+                    <p><strong>Tempat, Tanggal Lahir:</strong></p>
+                    <p><strong>Alamat:</strong></p>
+                    <p><strong>No HP:</strong></p>
+                    <p><strong>Kota:</strong></p>
+                    <p><strong>Kecamatan:</strong></p>
+                    <p><strong>Kelurahan:</strong></p>
+                    
+                </div>
+                <div>
+                    <p><%= result[0].NIK  %></p>
+                    <p><%= result[0].tempat  %>, <%= result[0].tanggal.toLocaleDateString('en-GB'); %></p>
+                    <p><%= result[0].alamat  %></p>
+                    <p><%= result[0].hp %></p>
+                    <p><%= result[0].kota  %></p>
+                    <p><%= result[0].kecamatan  %></p>
+                    <p><%= result[0].kelurahan  %></p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

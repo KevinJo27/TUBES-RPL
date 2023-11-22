@@ -1,0 +1,40 @@
+<style>
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+  
+    .pagination a {
+      display: inline-block;
+      padding: 3px 10px;
+      text-decoration: none;
+      color: #000;
+      background-color: #f1f1f1;
+      border: 1px solid #ddd;
+      margin: 0 4px;
+    }
+  
+    .pagination a:hover {
+      background-color: #ddd;
+    }
+  
+    .pagination a.active {
+      background-color: #4CAF50;
+      color: white;
+      border: 1px solid #4CAF50;
+    }
+  </style>
+  
+
+<% if (result.length > 0) { %>
+    <% const totalPages = totalRecords / show; %>
+    <div class="pagination">
+      <% for (let i = 0; i < totalPages; i++) { %>
+        <% const start = i * show; %>
+        <a href="/admin/verifikasi?start=<%= start %>"><%= i + 1 %></a>
+      <% } %>
+    </div>
+  <% } %>
+  <br>
+  

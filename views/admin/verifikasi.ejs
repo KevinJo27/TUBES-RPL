@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" type="text/css" href="/admin/verifikasi.css">
+  <link rel="script" type="text/javascript" href="/admin/verifikasi.js">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+  <%- include('./header.ejs') %>
+  <%- include('./navigator.ejs') %>
+  <div class="isi">
+    <p id="txt1">Request Verifikasi Data Calon Pemilih</p>
+    <div class="search"></div>
+    <img id="searchImage" src="/images/Search transparan abu.png" alt="search Picture">
+    <form method="GET" action="/admin/verifikasi">
+      <input type="search" id="searchBar" name="filter" value="<%= name %>" placeholder="Search..."></input>
+    </form>
+
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Date</th>
+        <th>Name</th>
+        <th>NIK</th>
+        <th>Alamat</th>
+        <th>Status</th>
+        <th>Detail</th>
+        
+      </tr>
+      <% let i = 1; %>
+      <% for(const row of result) { %>
+      <tr>
+        <td><%= i %></td>
+        <td><%= row.tgl.toLocaleDateString('en-GB'); %></td>
+        <td><%= row.nama %></td>
+        <td><%= row.nik %></td>
+        <td><%= row.alamat %></td>
+        <td>
+            <button id="buttonBelumVerif">Belum Terverfikasi</button></td>
+        <td>
+          <button class="button buttonDetail" onclick="ambilnik('<%= row.nik %>'); showmodaldetail()">Detail</button>
+        </td>
+        
+      </tr>
+      <% i++; %>
+      <% } %>
+    </table>
+  </div>
+  <%- include('./layout/pagination.ejs') %>
+
+    <div class="popup">
+        <div class="rectangle1">
+          <h2 class = "head">Profile Calon Pemilih</h2>
+          <button id="closeButton" onclick="hidemodaldetail()">
+            <img id="imgCloseButton" src="/images/close button transparan.png" alt="closeButton Picture">
+          </button>
+          <h2 class="ket" id="ket"></h2>
+          <div class="ktp2" id="ktp"></div>
+          <form method="post" action="/admin/verifikasi" class="verif">
+            <input type="text" name = "tps" class="tps" placeholder="Masukkan TPS..." required>
+            <button id="buttonVerif" type="submit" onclick="handleButtonClick(); hidemodaldetail(); ">Verifikasi</button>
+          </form>
+          <div class="profile-details" id="profile-details">
+            <div>
+              <p><strong>NIK:</strong></p>
+              <p><strong>Tempat, Tanggal Lahir:</strong></p>
+              <p><strong>Alamat:</strong></p>
+              <p><strong>No HP:</strong></p>
+              <p><strong>Kota:</strong></p>
+              <p><strong>Kecamatan:</strong></p>
+              <p><strong>Kelurahan:</strong></p>
+              <p><strong>RT/RW:</strong></p>
+            </div>
+            <div>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+        </div>
+            
+    </div>
+</div>    
+</body>
+
+</html>
+<script>
+  let selectedIdCamil = '';
+    function showmodaldetail() {
+      // Mengambil data profil dari server berdasarkan selectedIdCamil
+      fetchProfileData(selectedIdCamil)
+        .then((profileData) => {
+          // Mengisi detail profil di dalam modal
+          const profileDetailsElement =
+            document.getElementById("profile-details");
+
+          const profilektp = document.getElementById("ktp");
+          const profileNameElement = document.getElementById("ket");
+          profileNameElement.innerHTML = profileData.nama;
+          
+          profileDetailsElement.innerHTML = `
+            <div>
+              <p><strong>NIK:</strong> ${profileData.idCamil}</p>
+              <p><strong>Tempat, Tanggal Lahir:</strong> ${profileData.tptlahir}, ${profileData.tgllahir}</p>
+              <p><strong>Alamat:</strong> ${profileData.alamat}</p>
+              <p><strong>No HP:</strong> ${profileData.noHP}</p>
+              <p><strong>Kota:</strong> ${profileData.kota}</p>
+              <p><strong>Kecamatan:</strong> ${profileData.kecamatan}</p>
+              <p><strong>Kelurahan:</strong> ${profileData.kelurahan}</p>
+              <p><strong>RT/RW:</strong> ${profileData.idRT}/${profileData.idRW}</p>
+            </div>
+          `;
+          var img = new Image();
+          img.onload = function () {
+            // Jika file JPG tersedia
+            profilektp.innerHTML = `<img src="/KTP_data/${profileData.idCamil}.jpg" class="ktp" />`;
+          };
+          img.onerror = function () {
+            // Jika file JPG tidak tersedia
+            profilektp.innerHTML = `<img src="/KTP_data/ktp.png" class="ktp" />`;
+          };
+          img.src = `/KTP_data/${profileData.idCamil}.jpg`;
+          
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+      // Menampilkan modal
+      document.querySelector(".popup").style.display = "flex";
+    }
+
+    function hidemodaldetail() {
+      document.querySelector(".popup").style.display = "none";
+    }
+
+    function hidemodalalokasi() {
+      document.querySelector(".popup").style.display = "none";
+    }
+
+    function handleButtonClick() {
+        //Mengirim idCamil ke server menggunakan metode POST
+  const data = { idCamil: selectedIdCamil };
+  fetch('/admin/verifikasi', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+    .then((response) => {
+     
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+      }
+
+      function ambilnik(idCamil){
+        selectedIdCamil = idCamil;
+      }
+
+    function fetchProfileData(idCamil) {
+      // Mengirim permintaan ke server untuk mendapatkan data profil berdasarkan idCamil
+      return fetch(`/profile/${idCamil}`)
+        .then((response) => response.json())
+        .then((data) => {
+          return data;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  </script>

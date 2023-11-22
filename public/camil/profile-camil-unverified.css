@@ -1,0 +1,90 @@
+body {
+    
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+@keyframes transitionIn {
+    from{
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f2f2f2;
+    background-image: url('../../public/images/background\ potensi1.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.rectangle {
+    animation: transitionIn 0.75s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    width: 450px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    margin: 10px 0;
+}
+
+.line {
+    width: 100%;
+    height: 2px;
+    background-color: #EF4C59;
+    margin-bottom: 20px;
+}
+
+.spacer-line {
+    width: 100%;
+    height: 1px;
+    background-color: lightgrey;
+    margin: 20px 0;
+}
+
+.profile-details {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 20px;
+    /* Increase the value to add more distance between columns */
+    text-align: left;
+}
+
+.profile-details p {
+    margin: 10px 0;
+    text-align: left;
+}
+
+.verification-label {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.verification-label p {
+    margin: 0;
+    font-weight: bold;
+    color: #fff;
+}
+
+.red-oval {
+    background-color: red;
+    border-radius: 50px;
+    padding: 5px 10px;
+    margin-top: -10px;
+}

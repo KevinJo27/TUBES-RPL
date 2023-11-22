@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<script type="module" src="/admin/cetakkartu.js" difer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<link rel="stylesheet" href="cetakkartu.css">
+<body>
+  <%- include('./header.ejs') %>
+    
+    <%- include('./navigator.ejs') %>
+
+    <div class="border-container">
+        <div class="border-row">
+          <span class="border-title">Cetak Kartu Pemilihan</span>
+          
+        </div>
+        <hr>
+        <div class="border-row">
+          <button id="cetakButton" class="btn">Cetak</button>
+          
+        </div>
+      </div>
+      
+
+    
+    
+</body>
+</html>
+<script>
+    const cetakButton = document.getElementById('cetakButton');
+cetakButton.addEventListener('click', function() {
+  Swal.fire({
+    position: 'mid',
+    icon: 'success',
+    title: 'Kartu pemilihan berhasil dicetak',
+    showConfirmButton: true,
+    timer: 5000
+  });
+});
+
+</script>
+
+

@@ -1,0 +1,57 @@
+<link rel="stylesheet" href="navigator.css" />
+<script type="module" src="/admin/navigator.js" difer></script>
+
+
+
+
+<div class="nav-container">
+<b>Halaman Admin</b>
+
+  <br />
+  <br />
+  <nav class="nav">
+    <a
+      href="dashboard"
+      class="nav-link <%= currentPage === 'dashboard' ? 'current' : '' %>"
+      >Dashboard</a
+    >
+    
+    <a
+      href="verifikasi"
+      class="nav-link <%= currentPage === 'verifikasi' ? 'current' : '' %>"
+      >Verifikasi Data Pemilih</a
+    >
+    <a
+      href="daftarpengalokasian"
+      class="nav-link <%= currentPage === 'daftarpengalokasian' ? 'current' : '' %>"
+      >Daftar Pengalokasian TPS</a
+    >
+    
+    <a
+      href="cetakkartu"
+      class="nav-link <%= currentPage === 'cetakkartu' ? 'current' : '' %>"
+      >Cetak Kartu Pemilihan</a
+    >
+    <a
+      href="cetaklaporan"
+      class="nav-link <%= currentPage === 'cetaklaporan' ? 'current' : '' %>"
+      >Cetak Laporan</a
+    >
+    <br>
+    <span>Account Pages</span>
+
+    <a
+      href="profile"
+      class="nav-link <%= currentPage === 'profile' ? 'current' : '' %>"
+      >Profile</a
+    >
+
+    <a href="/logout" class="nav-link">Log Out</a>
+
+    <br><br><br><br><br><br><br><br><br><br>
+    
+  
+  </nav>
+  
+  
+</div>

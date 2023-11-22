@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" href="/camil/layout/main.css">
+    
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="/images/potensi logo (1).jpg" alt="Logo">
+        </div>
+        <div class="countdown">
+            <p id="countdown-days"></p>
+            <p id="countdown-time"></p>
+            <p>Menuju Pemungutan Suara 2024</p>
+            <div class="line"></div>
+        </div>
+        <div class="statusUser">
+            <button>
+                <p>Lurah</p>
+            </button>
+        </div>
+        <div class="profile">
+            <img src="/images/profile.png" alt="Profile Picture">
+            <p>Selamat Datang</p>
+            <p> <%= login  %></p>
+        </div>
+    </header>
+
+    <div class="background"></div>
+
+    <div id="navigator">
+        <div class="container">
+            <div class="rectangle">
+                
+                <a href="profile" class="nav-button">
+                    <img src="/images/icon home 1.png" alt="Home">
+                    <span>Profile</span>
+                </a>
+                <a href="lihat-camil" class="nav-button">
+                    <img src="/images/icon home 2.png" alt="Home">
+                    <span>Lihat CAMIL </span>
+                </a>
+                <a href="lihat-tps" class="nav-button">
+                    <img src="/images/icon home 3.png" alt="Home">
+                    <span>Lihat TPS</span>
+                </a>
+                <a href="pilih-saksi" class="nav-button">
+                    <img src="/images/icon home 4.png" alt="Home">
+                    <span>Pilih Saksi</span>
+                </a>
+                <a href="/logout" class="nav-button">
+                    <img src="/images/log out.png" alt="Home">
+                    <span>Log out</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+  
+    <script>
+
+        var countdownDate = new Date("February 14, 2024 00:00:00").getTime();
+
+
+        var countdownInterval = setInterval(function () {
+
+            var now = new Date().getTime();
+
+
+            var distance = countdownDate - now;
+
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+
+            document.getElementById("countdown-days").innerHTML = days + " Hari";
+            document.getElementById("countdown-time").innerHTML = hours + " Jam, " + minutes + " Menit, " + seconds + " Detik";
+
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown-days").innerHTML = "";
+                document.getElementById("countdown-time").innerHTML = "Countdown expired";
+            }
+        }, 1000);
+    </script>
+</body>
+
+</html>

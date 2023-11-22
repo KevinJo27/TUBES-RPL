@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="/camil/signup-account.css">
+    <script>
+        function validateEmail() {
+            let emailInput = document.getElementById("email");
+            let email = emailInput.value;
+            let validFeedback = document.getElementById("valid-feedback");
+            let invalidFeedback = document.getElementById("invalid-feedback");
+
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email.match(emailRegex)) {
+                validFeedback.style.display = "inline";
+                invalidFeedback.style.display = "none";
+            } else {
+                validFeedback.style.display = "none";
+                invalidFeedback.style.display = "inline";
+            }
+        }
+
+        function validatePassword() {
+            let passwordInput = document.getElementById("password");
+            let repassInput = document.getElementById("repass");
+            let password = passwordInput.value;
+            let repass = repassInput.value;
+            let passwordFeedback = document.getElementById("password-feedback");
+
+            if (password === repass) {
+                passwordFeedback.style.display = "none";
+            } else {
+                passwordFeedback.style.display = "block";
+            }
+        }
+
+        function validateForm() {
+            let passwordInput = document.getElementById("password");
+            let repassInput = document.getElementById("repass");
+            let password = passwordInput.value;
+            let repass = repassInput.value;
+            let passwordFeedback = document.getElementById("password-feedback");
+
+            if (password !== repass) {
+                passwordFeedback.style.display = "block";
+                return false; // Mencegah pengiriman formulir jika password tidak sama
+            } else {
+                passwordFeedback.style.display = "none";
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <h2>Masukkan Data Diri Anda</h2>
+            <form method="post" action="/camil/signup" onsubmit="return validateForm()">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap:</label>
+                    <input type="text" id="nama" name="nama" placeholder="Nama..." required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email" placeholder="Email address..." required onkeyup="validateEmail()">
+                    <span class="valid-feedback" id="valid-feedback">Email valid &#10004;</span>
+                    <span class="invalid-feedback" id="invalid-feedback">Email tidak valid &#10008;</span>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Password..." required>
+                </div>
+                <div class="form-group">
+                    <label for="repass">Repeat Password:</label>
+                    <input type="password" id="repass" name="repass" placeholder="Repeat Password..." required onkeyup="validatePassword()">
+                    <span class="password-feedback" id="password-feedback" style="display: none; color: red;">Password tidak sama</span>
+                </div>
+                <button class="button" type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

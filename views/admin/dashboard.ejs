@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin</title>
+    <link rel="stylesheet" type="text/css" href="/admin/dashboard.css">
+</head>
+
+<body>
+
+    <%- include('./header.ejs') %>
+       
+        <div class="utama">
+            <%- include('./navigator.ejs') %>
+                <main>
+                    <div class="lihatCamil">
+                <p>Data Calon Pemilih</p>
+    
+                <div class="data">
+                    <div id="data1">
+                        <p id="totCamil">Total Calon Pemilih</p>
+                        <img id="gambarCamera" src="/images/div.icon-wrapper.png">
+                        <h1 id="empat"><%= result[0].total %></h1>
+                    </div>
+                    
+                    
+    
+                    <div id="data2">
+                        <p id="belumVerif">Belum Terverifikasi</p>
+                        <img id="gambarTas" src="/images/icon admin 1.png">
+                        <h1 id="tiga"><%= result[0].belum %></h1>
+                    </div>
+    
+                    <div id="data3">
+                        <p id="sudahVerif">Sudah Terverifikasi</p>
+                        <img id="gambarBohlam" src="/images/icon admin 2.png">
+                        <h1 id="satu"><%= result[0].sudah %></h1>
+                    </div>
+                    
+                </div>
+    
+                <button id="lihatLebihDetailAtauTutup">Lihat Lebih Detail</button>
+                
+            </div>
+
+                    <div class="lihatTPS">
+                <p>Data TPS</p>
+    
+                <div class="data">
+                    <div id="data1">
+                        <p id="jmlTPS">Jumlah TPS</p>
+                        <img id="gambarCamera2" src="/images/div.icon-wrapper.png">
+                        <h1 id="empat"><%= result1[0].total %></h1>
+                    </div>
+                    
+                    
+    
+                    <div id="data2">
+                        <p id="tpsPenuh">TPS Penuh</p>
+                        <img id="gambarTas2" src="/images/icon admin 1.png">
+                        <h1 id="tiga"><%= result1[0].penuh %></h1>
+                    </div>
+    
+                    <div id="data3">
+                        <p id="tpsSedia">TPS yang Tersedia</p>
+                        <img id="gambarBohlam2" src="/images/icon admin 2.png">
+                        <h1 id="satu"><%= result1[0].tidak %></h1>
+                    </div>
+                    
+                </div>
+    
+                <button id="lihatLebihDetailAtauTutup">Lihat Lebih Detail</button>
+            </div>
+
+
+                    <!-- <div class="DetailDataPemilih">
+                <p id="txtDataPemilih">Data Pemilih</p>
+                <div class="search"></div>
+                <img id="searchImage" src="/images/Search transparan abu.png" alt="search Picture">
+                <input type="search" id="searchBar" placeholder="Search..."></input>
+                <table>
+                    <tr>
+                        <th>No</th>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>NIK</th>
+                        <th>Alamat</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+    
+                    <tr id="baris1">
+                        <td>#1</td>
+                        <td>11 Jan</td>
+                        <td>Hanna Paulina</td>
+                        <td>3279725162783645</td>
+                        <td>Bojong Soang</td>
+                        <td><button id="buttonBelumVerif">Belum Terverfikasi</button></td>
+                        <td><button id="buttonDetail1">Detail</button></td>
+                    </tr>
+    
+                    <tr id="baris2">
+                        <td>#2</td>
+                        <td>12 Jan</td>
+                        <td>Johnathan Abraham</td>
+                        <td>3279763726182635</td>
+                        <td>Saritem</td>
+                        <td><button id="buttonSudahVerif">Belum Terverfikasi</button></td>
+                        <td><button id="buttonDetail1">Detail</button></td>
+                    </tr>
+    
+                    <tr id="baris3">
+                        <td>#3</td>
+                        <td>12 Feb</td>
+                        <td>Ferry</td>
+                        <td>3279825371920167</td>
+                        <td>Lengkong</td>
+                        <td><button id="buttonBelumVerif">Belum Terverfikasi</button></td>
+                        <td><button id="buttonDetail1">Detail</button></td>
+                    </tr>
+    
+                    
+    
+                </table>
+            </div> -->
+
+                    <!-- <div class="lihatTPSDetail">
+                        <p>Data TPS</p>
+
+                        <div class="classdata1">
+                            <div id="data1detail">
+                                <p id="jmlTPS">Jumlah TPS</p>
+                                <img id="gambarCamera2" src="/images/div.icon-wrapper.png">
+                                <h1 id="empat">-</h1>
+                            </div>
+
+
+
+                            <div id="data2detail">
+                                <div id="groupTPSPenuh">
+                                    <p id="tpsPenuh">TPS Penuh</p>
+                                    <img id="gambarTas2" src="/images/icon admin 1.png">
+                                    <h1 id="tiga">-</h1>
+                                </div>
+                            </div>
+
+                            <div id="data3detail">
+                                <p id="tpsSedia">TPS yang Tersedia</p>
+                                <img id="gambarBohlam2" src="/images/icon admin 2.png">
+                                <h1 id="satu">-</h1>
+                            </div>
+
+                        </div> -->
+
+                        <!-- <button id="lihatLebihDetailAtauTutup">Lihat Lebih Detail</button> -->
+                        <!-- <button id="lihatLebihDetailAtauTutup">Tutup</button> -->
+                    </div>
+
+                    <!-- <div class="DetailDataTPS">
+                        <p id="txtDataTPS">Data TPS</p>
+                        <div class="search"></div>
+                        <img id="searchImage" src="/images/Search transparan abu.png" alt="search Picture">
+                        <input type="search" id="searchBar" placeholder="Search..."></input>
+                        <table>
+                            <tr>
+                                <th>No</th>
+                                <th>Nomor</th>
+                                <th>Lokasi</th>
+                                <th>Kapasitas Sisa</th>
+                                <th>Kapasitas Maksimum</th>
+                                <th>Keterangan</th>
+                            </tr>
+
+                            <tr id="baris1">
+                                <td>#1</td>
+                                <td>21</td>
+                                <td>Babakan Ciparay</td>
+                                <td>9</td>
+                                <td>10</td>
+                                <td>Aula SMA BPK Holis</td>
+
+                            </tr>
+
+                            <tr id="baris2">
+                                <td>#2</td>
+                                <td>22</td>
+                                <td>Cibadak</td>
+                                <td>11</td>
+                                <td>11</td>
+                                <td>Gedung SG 1</td>
+
+                            </tr>
+
+                            <tr id="baris3">
+                                <td>#3</td>
+                                <td id="txt23">23</td>
+                                <td>Lengkong</td>
+                                <td>0</td>
+                                <td>10</td>
+                                <td>Taman Karta</td>
+
+                            </tr>
+
+
+
+                        </table>
+                    </div> -->
+
+                    <!-- <div class="popup">
+                <div class="container">
+                    <div class="navigator">
+                       //include navigator camil
+            
+            
+                    </div>
+                    <div class="profile">
+                        <div class="rectangle">
+                            <h1>Profile Calon Pemilih</h1>
+                            //<img id="imgCloseButton" src="/images/close button transparan.png" alt="closeButton Picture">
+                            <div class="line"></div>
+                            <h2>Johannes Putra</h2>
+                            <p id="textFotoKTP">Foto KTP</p>
+                            <img id="imgKTP" src="/images/ktp.png" alt="KTP Picture">
+                            <div class="spacer-line"></div>
+                            <div class="profile-details">
+                                <div class="labelData">
+                                    <p><strong>NIK:</strong></p>
+                                    <p><strong>Tempat, Tanggal Lahir:</strong></p>
+                                    <p><strong>Alamat:</strong></p>
+                                    <p><strong>No HP:</strong></p>
+                                    <p><strong>Kota:</strong></p>
+                                    <p><strong>Kecamatan:</strong></p>
+                                    <p><strong>Kelurahan:</strong></p>
+                                    <p><strong>RT/RW:</strong></p>
+                                </div>
+                                <div class="classdata2">
+                                    <p>32729374618273</p>
+                                    <p>Bandung, 8 Juni 2000</p>
+                                    <p>Taman Holis Indah G.5</p>
+                                    <p>081263712823</p>
+                                    <p>Bandung</p>
+                                    <p>Margahayu</p>
+                                    <p>Pungkur</p>
+                                    <p>06/09</p>
+                                    <button id="buttonTutup">Tutup</button>
+                                </div>
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+            
+                <div class="container">
+                    
+                </div> -->
+            </div>
+
+                </main>
+
+        </div>
+        <menu>
+
+        </menu>
+
+
+</body>
+
+</html>

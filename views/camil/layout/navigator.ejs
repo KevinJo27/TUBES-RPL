@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="/camil/layout/navigator.css">
+    <nav class="vertical-navbar">
+        <a href="home" class="nav-button <%= currentPage === 'home' ? 'current' : '' %>">
+            <img src="/images/icon ke home.png" alt="Home">
+            <span>Home</span>
+        </a>
+        <a href="profile" class="nav-button <%= currentPage === 'profile' ? 'current' : '' %>">
+            <img src="/images/icon home 1.png" alt="Home">
+            <span>Profile</span>
+        </a>
+        <a href="lihat-tps" class="nav-button <%= currentPage === 'lihat-tps' ? 'current' : '' %>">
+            <img src="/images/icon home 3.png" alt="Home">
+            <span>Lihat TPS</span>
+        </a>
+        <form method="post", action="/logout">
+            <button style="border: none;" type = "submit"class="nav-button">
+                <img src="/images/log out.png" alt="Home">
+                <span>Log out</span>
+            </button>
+
+        </form>
+        
+    </nav>
+
+

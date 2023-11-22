@@ -1,0 +1,417 @@
+.utama{
+    display: flex;
+}
+
+main{
+    width: 90%;
+   padding: 10px;
+    margin-top: 50px;
+}
+
+.lihatCamil p{
+    margin-left: 20px;
+}
+
+.lihatCamil{
+    border: 1px solid gray;
+    padding-bottom: 10px;
+    
+}
+
+.data{
+    border: 1px solid gray;
+    height: 100px;
+}
+.classdata1{
+    display: flex;
+    border: 1px solid gray;
+    justify-content: space-between;
+    height: 100px;
+}
+
+#totCamil{
+    
+    margin-left: 85px;
+    color: #495057;
+}
+
+#gambarCamera{
+    margin-left: 15px;
+    margin-top: -20px;
+}
+
+#empat{
+    margin-left: 90px;
+    margin-top: -160px;
+    color:#495057
+}
+
+
+
+
+#gambarTas{
+    margin-left: -55px;
+    margin-top: -20px;
+}
+
+#tiga{
+    position: relative;
+    left: 20px;
+    top:-80px;
+    /* margin-left: 20px;
+    margin-top: -50px; */
+    color:#495057
+}
+
+#sudahVerif{
+    margin-left: -250px;
+    color: #495057;
+}
+
+#gambarBohlam{
+    margin-top: -20px;
+    margin-left: -325px; 
+}
+
+#satu{
+    margin-left: -250px;
+    margin-top: -155px;
+    color:#495057
+}
+
+#lihatLebihDetailAtauTutup{
+    color: white;
+    background-image: linear-gradient(to bottom,#295988,#033C73);
+    height: 30px;
+    margin-top: 15px;
+    margin-left: 600px;
+    border: 0;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#data2{
+    margin-left: 500px;
+    margin-top: -20px;
+}
+
+#data3{
+    margin-left: 1250px;
+    margin-top: -160px;
+}
+
+.lihatTPS{
+    margin-top: 100px;
+    border: 1px solid gray;
+    padding-bottom: 10px;
+    
+}
+
+.lihatTPS p{
+    margin-left: 20px;
+}
+
+#jmlTPS{
+    margin-left: 85px;
+    color: #495057;
+}
+
+#gambarCamera2{
+    margin-left: 15px;
+    margin-top: -20px;
+}
+
+#gambarTas2{
+    margin-left: -55px;
+    margin-top: -20px;
+}
+
+#gambarBohlam2{
+    margin-top: -20px;
+    margin-left: -325px; 
+}
+
+#tpsSedia{
+    color: #495057;
+    margin-left: -250px;
+}
+#tpsPenuh{
+    color: #495057;
+}
+
+#belumVerif{
+    color: #495057;
+}
+
+table {
+    width: 1200px;
+    margin-left: -21px;
+    margin-top: -10px;
+}
+
+td {
+    text-align: center;
+}
+
+th,
+td {
+    padding: 10px;
+}
+
+.isi {
+    position: relative;
+    top: -50px
+}
+
+#buttonBelumVerif {
+    background-color: #C71C22;
+    color: white;
+    border-radius: 16px;
+}
+
+#buttonDetail {
+    color: white;
+    background-color: #033C73;
+    border-radius: 2px;
+    padding: 7px;
+}
+
+/* #buttonDetail {
+    padding: 5px;
+    color: white;
+    background-color: #87a2bd
+        /* background-image:linear-gradient(#295988,#033C73) ; 
+}*/
+
+#buttonDetail1{
+    padding: 5px;
+    color: white;
+    background-color: #033C73
+        /* background-image:linear-gradient(#295988,#033C73) ; */
+}
+#searchImage {
+    z-index: 2;
+    position: relative;
+    top: -45px;
+    left: 1020px;
+    width: 20px;
+    border-color: #D2D6DA;
+}
+
+#searchBar {
+    position: relative;
+    top: -50px;
+    left:990px;
+    padding-top: 10px;
+    padding-left: 28px;
+    padding-bottom: 5px;
+    width: 200px;
+
+}
+
+#txtDataPemilih{
+    position: relative;
+    top:10px;
+    border-bottom: 2px solid #495057;
+    padding: 15px;
+    width: 1200px;
+}
+
+#buttonSudahVerif{
+    background-color: #73A839;
+    color: white;
+    border-radius: 16px;
+}
+
+.lihatTPSDetail{
+    margin-left: 50px;
+    margin-top: 10px;
+    border: 1px solid gray;
+    padding: 10px;
+    width: 1240px;
+}
+
+#groupTPSPenuh{
+    margin-left: -150px;
+}
+
+.DetailDataTPS{
+    margin-left: 50px;
+}
+
+
+
+#txtDataTPS{
+    position: relative;
+    top:10px;
+    border-bottom: 2px solid #495057;
+    padding: 15px;
+    width: 1200px;
+}
+
+#txt23{
+    color: red;
+}
+
+.rectangle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    width: 600px;
+    height: 530px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-left: 500px;
+    margin-top: -100px;
+}
+
+.popup{
+    position: relative;
+    left: -250px;
+    top: -250px;
+    z-index: 99;
+
+}
+.container {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
+    max-width: 100px;
+    column-gap: 100px;
+    /* background-color: #f2f2f2; */
+    background-image: url('/images/background/potensi1.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+h1 {
+    position: relative;
+    top: 100px;
+    /* top:-50px; */
+    /* margin: 10px 0; */
+    font-weight: 500;
+}
+
+#imgCloseButton{
+    position: relative;
+    left:315px;
+    top: 30px;
+    width: 30px;
+
+}
+
+h2 {
+    position: relative;
+    top: 75px;
+    font-weight: 400;
+}
+
+.labelData {
+    /* padding-left: 50px;
+    padding-top: 200px; */
+    position: relative;
+    top: -120px;
+    left: -75px;
+}
+
+.classdata2{
+    /* padding-left: 140px;
+    padding-top: 200px; */
+    position: relative;
+    top: -120px;
+    left: 100px;
+    max-width: 200px;
+}
+
+.line {
+    position: relative;
+    top: 75px;
+    width: 100%;
+    height: 2px;
+    /* background-color: #EF4C59; */
+    /* margin-bottom: 20px; */
+    z-index: 9999;
+    border: none;
+    border-top: 2px solid #EF4C59;
+}
+
+.spacer-line {
+    position: relative;
+    top: -95px;
+    width: 95%;
+    height: 1px;
+    background-color: lightgrey;
+    margin: 20px 0;
+    border: none;
+    border-top: 2px solid lightgrey;
+}
+
+.profile-details {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 20px;
+    text-align: left;
+}
+
+.profile-details p {
+    margin: 10px 0;
+    text-align: left;
+}
+
+.verification-label {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.verification-label p {
+    margin: 0;
+    font-weight: bold;
+    color: #fff;
+}
+
+.green-oval {
+    background-color: #008000;
+    border-radius: 50px;
+    padding: 5px 10px;
+    margin-top: -10px;
+    
+}
+
+#textFotoKTP {
+    margin-left: -450px;
+    padding-top: 50px;
+}
+
+#buttonTutup {
+    color: white;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #34B4B3;
+    border-radius: 20px;
+    border: 0;
+    position: relative;
+    left: -160px;
+    top:5px;
+    max-height: 50px;
+}
+
+
+#imgKTP {
+    position: relative;
+    top: -50px;
+    width: 200px;
+}
+

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lihat TPS</title>
+    <link rel="stylesheet" type="text/css" href="/lurah/detailtps.css">
+</head>
+
+<body>
+
+    <%- include('./layout/navigator.ejs') %>
+
+    <div class="container">
+        <div class="rectangle">
+            <h2>Daftar Pengalokasian TPS</h2>
+            <div class="profile-details">
+                <table>
+                    <tr>
+                        <th>No</th>
+                        <th>Nomor TPS</th>
+                        <th>Lokasi</th>
+                        <th>Kapasitas Terisi</th>
+                        <th>Kapasitas Maksimum</th>
+                        <th>Kapasitas Sisa</th>
+                        <th>Keterangan</th>
+                        <th>Action</th>
+                    </tr>
+                    <% let i = 1; %>
+                    <% for(const row of result) { %>
+                    <tr>
+                        <td><%= i %></td>
+                        <td><%= row.nomor %></td>
+                        <td><%= row.lokasi %></td>
+                        <td><%= row.kapasitasterisi %></td>
+                        <td><%= row.kapasitasmaks %></td>
+                        <td><%= row.kapasitasmaks - row.kapasitasterisi %></td>
+                        <td><%= row.keterangan %></td>
+                        <td>
+                            <button class="button" onclick="handleButtonClick('<%= row.nomor %>')">Detail</button>
+                        </td>
+                    </tr>
+                    <% i++; %>
+                    <% } %>
+                </table>
+            </div>
+            <%- include('./layout/pagination.ejs') %>
+        </div>
+    </div>
+    <div class="hider">
+        <div class="rectangle1">
+            <h2 class="head">Detail TPS</h2>
+            <div class="line"></div>
+            <div id="loket">
+              
+            </div>
+            <div class="spacer-line"></div>
+            <div class="profile-details">
+                <table class="overlay" id="tabeloverlay">
+                    
+                    
+                </table>
+            </div>
+            <button class="button" onclick="hidemodal()">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedIdTPS = '';
+
+        function showmodal() {
+  fetch(`/lurah/detail-tps/${selectedIdTPS}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data); // Cetak data ke konsol untuk memastikan struktur data yang benar
+
+      const lokasiket = document.getElementById("loket");
+
+      let infoloket = '';
+
+      if (Array.isArray(data)) {
+        // Jika data adalah array objek
+        data.forEach((row, index) => {
+          infoloket += `
+            <h4>Lokasi: ${row.lokasi}</h4>
+            <h4>Keterangan: ${row.keterangan}</h4>
+          `;
+        });
+      } else {
+        // Jika data adalah objek tunggal
+        infoloket += `
+          <h4> Lokasi:  ${data.lokasi}</h4>
+          <h4> Keterangan:  ${data.keterangan}</h4>
+        `;
+      }
+
+      lokasiket.innerHTML = infoloket; // Update the variable name to "infoloket"
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  document.querySelector('.hider').style.display = 'flex';
+
+  fetch(`/lurah/detail-tps/${selectedIdTPS}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data); // Cetak data ke konsol untuk memastikan struktur data yang benar
+
+      const profileTable = document.getElementById("tabeloverlay");
+      let html = '';
+
+      if (Array.isArray(data)) {
+        // Jika data adalah array objek
+        data.forEach((row, index) => {
+          html += `
+          <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>NIK</th>
+                        <th>Alamat</th>
+                    </tr>
+            <tr>
+              <td>${index + 1}</td>
+              <td>${row.nama}</td>
+              <td>${row.nik}</td>
+              <td>${row.alamat}</td>
+            </tr>
+          `;
+        });
+      } else {
+        // Jika data adalah objek tunggal
+        html += `
+        <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>NIK</th>
+                        <th>Alamat</th>
+                    </tr>
+          <tr>
+            <td>1</td>
+            <td>${data.nama}</td>
+            <td>${data.nik}</td>
+            <td>${data.alamat}</td>
+          </tr>
+        `;
+      }
+
+      profileTable.innerHTML = html;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  document.querySelector('.hider').style.display = 'flex';
+}
+
+
+
+        function hidemodal() {
+            document.querySelector('.hider').style.display = 'none';
+        }
+
+        function handleButtonClick(idTPS) {
+            selectedIdTPS = idTPS;
+            console.log("Button clicked for TPS ID:", idTPS);
+            showmodal();
+        }
+    </script>
+</body>
+</html>

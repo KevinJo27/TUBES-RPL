@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Halaman Login</title>
+    <link rel="stylesheet" href="/style-login.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="left">
+        <form method="post" action="/login">
+          <h2>Sign in</h2>
+         
+          <label for="nik">NIK</label>
+          <input name="nik" type="text" placeholder="NIK" required />
+          <label for="password">PASSWORD</label>
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+          />
+          <button id="signin" type="submit">Sign in</button>
+        </form>
+      </div>
+      <div class="right">
+        <h1>Selamat Datang di Website PEMILU</h1>
+        <p>Belum punya akun?</p>
+        <button
+          id="signup"
+          type="submit"
+          onclick="window.location.href = 'camil/datadiri'"
+        >
+          Sign Up
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  const error = "<%= error %>";
+  if (error) {
+    alert(error);
+  }
+</script>

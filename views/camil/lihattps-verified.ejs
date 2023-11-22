@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" type="text/css" href="/camil/lihat-tps.css">
+</head>
+
+<body>
+    <%- include('./layout/navigator.ejs') %>
+    
+    <div class="container">
+        <div class="rectangle">
+            <h2>Detail TPS</h2>
+            <div class="line"></div>
+            <div class="profile-details">
+                <div>
+                    <p><strong>Kota:</strong></p>
+                    <p><strong>Tanggal:</strong></p>
+                    <p><strong>Kecamatan:</strong></p>
+                    <p><strong>Kelurahan:</strong></p>
+                    <p><strong>RT:</strong></p>
+                    <p><strong>RW:</strong></p>
+                    <p><strong>TPS no:</strong></p>
+                    <p><strong>Keterangan:</strong></p>
+                </div>
+                <div>
+                    <p><%= result[0].kota  %></p>
+                    <p>February 14, 2024</p>
+                    <p><%= result[0].kecamatan  %></p>
+                    <p><%= result[0].kelurahan  %></p>
+                    <p><%= result[0].rt  %></p>
+                    <p><%= result[0].rw  %></p>
+                    <p><%= result[0].idTPS  %></p>
+                    <p><%= result[0].kettps  %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

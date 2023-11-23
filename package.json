@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "RPL-TUGAS-BESAR",
+=======
+  "name": "rpl-tubes",
+>>>>>>> b16ab8dfa8b7f6f9967f1dcb7c8c06e305c7c4cb
   "version": "1.0.0",
   "description": "- `git add .` -> untuk add file yang ingin dirubah, \".\"(titik) artinya semua file yang mengalami perubahan\r - `git add index.html` -> add file `index.html` saja ke commit\r - `git commit -m \"pesan anda\"` -> commit perubahan dengan pesan sesuai apa yang dirubah, misalnya \"fix index.html\"\r - `git push -u origin main` -> push commit-commit yang ada ke github `main` adalah branch nya",
   "main": "app.js",
@@ -10,7 +14,11 @@
   },
   "repository": {
     "type": "git",
+<<<<<<< HEAD
     "url": "RPL-TUGAS-BESAR"
+=======
+    "url": "RPL-Tubes"
+>>>>>>> b16ab8dfa8b7f6f9967f1dcb7c8c06e305c7c4cb
   },
   "author": "Kelompok E",
   "license": "ISC",

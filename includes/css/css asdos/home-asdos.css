@@ -1,0 +1,23 @@
+.logo img{
+    max-width: 100px;
+}
+
+.statusUser button{
+    border-radius: 100px;
+    width: 150px;
+    margin-left: 300px;
+    margin-top: 15px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}

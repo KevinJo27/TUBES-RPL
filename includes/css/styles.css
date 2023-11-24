@@ -1,0 +1,117 @@
+* {
+    padding: 0; margin: 0;
+  }
+
+
+body 
+{
+    height: 100%;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #46d2b5, #418ba4);
+}
+  
+
+.container 
+{
+  margin-top: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  
+.login-section 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 375px;
+    width: 427px;
+    padding: 20px;
+    background-color: white; 
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+  
+.signup-section {
+  height: 375px;
+  width: 214px;
+  background-color: #015850;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+#welcometext{
+  color: white;
+}
+.signup-section img {
+  width: 80%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.Signuppage-section
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 641px;
+  height: 455px;
+  background-color: white;
+  border-radius: 10px;
+  font-size: 20px;
+}
+  
+form 
+{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+  
+label 
+{
+    margin-bottom: 8px;
+}
+  
+input 
+{
+    padding: 8px;
+    margin-bottom: 16px;
+}
+  
+button 
+{
+    margin-top: 5% ;
+    margin-bottom: 5%;
+    width: 40%;
+    padding: 10px;
+    background-color: #015850;
+    color: #fff;;
+    cursor: pointer;
+    border-radius: 40px;
+}
+  
+button:is(:hover, :focus) 
+{
+    outline-style: solid;
+    outline-color: rgb(185, 182, 182);
+    outline-offset: 2px;
+    transition: outline-offset 0.3s ease;
+
+}
+
+
+h2
+{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

@@ -1,0 +1,70 @@
+body 
+{
+    height: 100%;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #46d2b5, #418ba4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.master{
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 86%;
+    height: 650px;
+}
+
+.container {
+    background-color: white;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 86%;
+    height: 650px;
+}
+
+.day-label, .hour-label, .schedule-cell {
+    border: 1px solid #ddd;
+    text-align: center;
+    line-height: 2;
+}
+
+.day-label {
+    grid-column: 1;
+    grid-row: span 11;
+}
+
+.hour-label {
+    grid-row: span 2;
+}
+
+.upload-button {
+    grid-column: span 11;
+    text-align: center;
+    margin-top: 15px;
+}
+
+button {
+    padding: 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+table {
+    width: 86%;
+}
+
+th, td {
+    padding: 8px;
+}

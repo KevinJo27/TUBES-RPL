@@ -13,6 +13,8 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    padding-right: 30%;
+    
 }
 
 .rectangle {
@@ -75,3 +77,63 @@ h1 {
     font-size: 20px;
     color: #333;
 }
+
+
+.navRectangle{
+    animation: transitionIn 0.75s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    width: 50px;
+    height: 50vh;
+    padding: 40px;
+    margin-right: 40%;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-left: 20px;
+    justify-content: flex-start;
+}
+
+.navigationHomeAsdos span{
+    color: black;
+    padding-left: 25px;
+    padding-top: -10px;
+}
+
+.navigationHomeAsdos{
+    text-decoration: none;
+    align-self: flex-start;
+    
+}
+
+.navigationProfileAsdos span{
+    color: black;
+    padding-left: 25px;
+    padding-top: -10px;
+}
+
+.navigationProfileAsdos{
+    text-decoration: none;
+    align-self: flex-start;
+}
+
+.navigationProfileAsdos img{
+    padding-top: 50px;
+    max-height: 50px;
+    margin-left: 22px;
+}
+
+#borderNavHomeAsdos{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+}
+
+#borderNavProfileAsdos{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+}
+
+
+

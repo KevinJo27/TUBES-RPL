@@ -69,6 +69,7 @@ th, td {
     padding: 8px;
 }
 
+/* Navigation Bar */
 .navRectangle{
     animation: transitionIn 0.75s;
     display: flex;

@@ -70,6 +70,14 @@ app.get('/home-dosen', authenticateUser, (req, res) => {
   res.render('dosen/home-dosen');
 });
 
+app.get('/daftar-asdos', (req, res) =>{
+  res.render('asdos/daftar-asdos');
+})
+
+app.get('/jadwal-asdos', (req, res) =>{
+  res.render('asdos/jadwal-asdos');
+})
+
 app.post('/logout', (req, res) => {
   req.session.user = null;
   res.redirect('/');

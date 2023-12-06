@@ -19,68 +19,109 @@
                     <span>Home</span>
                 </a>
             </div>
-            
+
             <div id="borderNavProfileAsdos">
                 <a href="profile-asdos.html" class="navigationProfileAsdos">
-                    <img src="/includes/images/profile navigation icon.png"alt="Navigation Profile Asdos">
+                    <img src="/includes/images/profile navigation icon.png" alt="Navigation Profile Asdos">
                     <span>Profile</span>
                 </a>
             </div>
 
             <div id="borderNavMataKuliah">
                 <a href="matakuliah.html" class="navigationMataKuliah">
-                    <img src="/includes/images/icon daftar asdos.png"alt="Navigation Mata Kuliah">
+                    <img src="/includes/images/icon daftar asdos.png" alt="Navigation Mata Kuliah">
                     <span>Mata Kuliah</span>
                 </a>
             </div>
 
             <div id="borderNavJadwalAsdos">
                 <a href="jadwal-asdos.html" class="navigationJadwalAsdos">
-                    <img src="/includes/images/icon jadwal.png"alt="Navigation Jadwal Asdos">
+                    <img src="/includes/images/icon jadwal.png" alt="Navigation Jadwal Asdos">
                     <span>Jadwal</span>
                 </a>
             </div>
 
             <div id="borderNavLogOutAsdos">
                 <a href="login-asdos.html" class="navigationLogOutAsdos">
-                    <img src="/includes/images/log out.png"alt="Navigation Logout Asdos">
+                    <img src="/includes/images/log out.png" alt="Navigation Logout Asdos">
                     <span>Logout</span>
                 </a>
             </div>
         </nav>
     </div>
-<!-- Navigation Bar -->
+    <!-- Navigation Bar -->
 
-    <h2 style="color: white;"><center>Mata Kuliah :</center></h2>
+    <h2 style="color: white;">
+        <center>Mata Kuliah :</center>
+    </h2>
     <div class="master">
-    <div class="container">
-        <table>
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Nama MataKuliah</th>
-                    <th>Jumlah Asisten</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Dasar Pemrograman</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Rekayasa Perangkat Lunak</td>
-                    <td>2</td>
-                </tr>
-            </tbody>
-            
-        </table>
-        <div class="upload-button">
-            <button>Upload</button>
+        <div class="container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama MataKuliah</th>
+                        <th>Jumlah Asisten</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Dasar Pemrograman</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Rekayasa Perangkat Lunak</td>
+                        <td>2</td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <div class="upload-button">
+                <button onclick="showPopup()">Upload</button>
+            </div>
         </div>
     </div>
-</div>
+
+    <!-- Pop-up -->
+    <div class="overlay" id="overlay" onclick="hidePopup()"></div>
+    <div class="popup" id="popup">
+        <label for="namaMK">Nama MataKuliah:</label>
+        <input type="text" id="namaMK" placeholder="Isi Nama MataKuliah" style="margin-bottom: 10px;">
+
+        <label for="jumlahAsisten">Jumlah Asisten:</label>
+        <select id="jumlahAsisten">
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select>
+        <div class="button-container">
+            <button id="cancel-button" onclick="hidePopup()">Cancel</button>
+            <button onclick="uploadData()">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        function showPopup() {
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function hidePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function uploadData() {
+            var namaMK = document.getElementById('namaMK').value;
+            var jumlahAsisten = document.getElementById('jumlahAsisten').value;
+
+            console.log("Nama MataKuliah:", namaMK);
+            console.log("Jumlah Asisten:", jumlahAsisten);
+
+            hidePopup();
+        }
+    </script>
 </body>
 
 </html>

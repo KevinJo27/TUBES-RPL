@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MataKuliah</title>
+    <link rel="stylesheet" href="/includes/css/css koordinator/assign-jadwal.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <div class="navRectangle">
+        <nav class="navigationBar">
+            <div id="borderNavHomeAsdos">
+                <a href="home-asdos.html" class="navigationHomeAsdos">
+                    <img src="/includes/images/home icon.png" alt="Navigation Home">
+                    <span>Home</span>
+                </a>
+            </div>
+
+            <div id="borderNavProfileAsdos">
+                <a href="profile-asdos.html" class="navigationProfileAsdos">
+                    <img src="/includes/images/profile navigation icon.png" alt="Navigation Profile Asdos">
+                    <span>Profile</span>
+                </a>
+            </div>
+
+            <div id="borderNavMataKuliah">
+                <a href="matakuliah.html" class="navigationMataKuliah">
+                    <img src="/includes/images/icon daftar asdos.png" alt="Navigation Mata Kuliah">
+                    <span>Mata Kuliah</span>
+                </a>
+            </div>
+
+            <div id="borderNavJadwalAsdos">
+                <a href="jadwal-asdos.html" class="navigationJadwalAsdos">
+                    <img src="/includes/images/icon jadwal.png" alt="Navigation Jadwal Asdos">
+                    <span>Jadwal</span>
+                </a>
+            </div>
+
+            <div id="borderNavLogOutAsdos">
+                <a href="login-asdos.html" class="navigationLogOutAsdos">
+                    <img src="/includes/images/log out.png" alt="Navigation Logout Asdos">
+                    <span>Logout</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+    <!-- Navigation Bar -->
+    <h2 style="color: white;"><center>Asisten Dosen :</center></h2>
+    <div class="master">
+        <div class="container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama MataKuliah</th>
+                        <th>Jumlah Asisten</th>
+                        <th>Masukan Asisten</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let i = 0; i < mataKuliahList.length; i++) { %>
+                        <tr>
+                            <td><%= i + 1 %></td>
+                            <td><%= mataKuliahList[i].namaMataKuliah %></td>
+                            <td><%= mataKuliahList[i].jumlahAsisten %></td>
+                            <td><button onclick="addAsisten('<%= mataKuliahList[i].namaMataKuliah %>')">Tambah</button></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <div class="upload-button">
+                <button>Upload</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addAsisten(namaMataKuliah) {
+            console.log('Adding Asisten for:', namaMataKuliah);
+        }
+    </script>
+</body>
+
+</html>

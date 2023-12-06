@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MataKuliah</title>
     <link rel="stylesheet" href="/includes/css/css dosen lab/matakuliah.css">
-
 </head>
 
 <body>
@@ -65,18 +64,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Dasar Pemrograman</td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Rekayasa Perangkat Lunak</td>
-                        <td>2</td>
-                    </tr>
+                    <% for (let i = 0; i < data.length; i++) { %>
+                        <tr>
+                            <td><%= i + 1 %></td>
+                            <td><%= data[i].namaMataKuliah %></td>
+                            <td><%= data[i].jumlahAsisten %></td>
+                        </tr>
+                    <% } %>
                 </tbody>
-
             </table>
             <div class="upload-button">
                 <button onclick="showPopup()">Upload</button>

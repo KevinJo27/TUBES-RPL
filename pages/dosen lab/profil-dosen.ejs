@@ -19,44 +19,44 @@
                     <span>Home</span>
                 </a>
             </div>
-            
+
             <div id="borderNavProfileAsdos">
                 <a href="profile-asdos.html" class="navigationProfileAsdos">
-                    <img src="/includes/images/profile navigation icon.png"alt="Navigation Profile Asdos">
+                    <img src="/includes/images/profile navigation icon.png" alt="Navigation Profile Asdos">
                     <span>Profile</span>
                 </a>
             </div>
 
             <div id="borderNavMataKuliah">
                 <a href="matakuliah.html" class="navigationMataKuliah">
-                    <img src="/includes/images/icon daftar asdos.png"alt="Navigation Mata Kuliah">
+                    <img src="/includes/images/icon daftar asdos.png" alt="Navigation Mata Kuliah">
                     <span>Mata Kuliah</span>
                 </a>
             </div>
 
             <div id="borderNavJadwalAsdos">
                 <a href="jadwal-asdos.html" class="navigationJadwalAsdos">
-                    <img src="/includes/images/icon jadwal.png"alt="Navigation Jadwal Asdos">
+                    <img src="/includes/images/icon jadwal.png" alt="Navigation Jadwal Asdos">
                     <span>Jadwal</span>
                 </a>
             </div>
 
             <div id="borderNavLogOutAsdos">
                 <a href="login-asdos.html" class="navigationLogOutAsdos">
-                    <img src="/includes/images/log out.png"alt="Navigation Logout Asdos">
+                    <img src="/includes/images/log out.png" alt="Navigation Logout Asdos">
                     <span>Logout</span>
                 </a>
             </div>
         </nav>
     </div>
-<!-- Navigation Bar -->
+    <!-- Navigation Bar -->
 
     <div class="container">
         <div class="rectangle">
             <h1 id="profil">Profile Dosen</h1>
             <div class="line"></div>
             <div class="nama">
-                <p>Gunawan Winarta</p>
+                <p><%= dosen.nama %></p>
             </div>
             <div class="spacer-line"></div>
             <div class="profile-details">
@@ -69,11 +69,11 @@
                 </div>
 
                 <div>
-                    <p>9999.99999</p>
-                    <p>Laki-Laki</p>
-                    <p>Bandung,10 Mei 1986</p>
-                    <p>08123456789</p>
-                    <p>Jl. Ciumbuleuit No.98</p>
+                    <p><%= dosen.nidn %></p>
+                    <p><%= dosen.jenisKelamin %></p>
+                    <p><%= dosen.tempatTanggalLahir %></p>
+                    <p><%= dosen.programStudi %></p>
+                    <p><%= dosen.alamat %></p>
                 </div>
             </div>
         </div>

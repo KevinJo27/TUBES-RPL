@@ -17,6 +17,11 @@ body {
     width: 86%;
     height: 650px;
     position: relative;
+    margin-top: -370px;
+}
+
+h2{
+    margin-top: -260px;
 }
 
 .container {
@@ -66,4 +71,135 @@ button {
     border-radius: 5px;
     cursor: pointer;
     border-radius: 15px;
+}
+
+
+/* Navigation Bar */
+.navRectangle{
+    animation: transitionIn 0.75s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    width: 50px;
+    height: 480px;
+    padding: 40px;
+    margin-right: 1400px;
+    margin-top: 100px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-left: 20px;
+    justify-content: flex-start;
+
+}
+
+.navigationHomeAsdos span{
+    color: black;
+    padding-left: 25px;
+    padding-top: -10px;
+}
+
+.navigationHomeAsdos{
+    text-decoration: none;
+    align-self: flex-start;
+    
+}
+
+.navigationProfileAsdos span{
+    color: black;
+    padding-left: 25px;
+    padding-top: -10px;
+}
+
+.navigationProfileAsdos{
+    text-decoration: none;
+    align-self: flex-start;
+}
+
+.navigationProfileAsdos img{
+    padding-top: 50px;
+    max-height: 50px;
+    margin-left: 22px;
+}
+
+#borderNavHomeAsdos{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+#borderNavProfileAsdos{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+    padding: 3px;
+}
+
+#borderNavProfileAsdos img{
+    padding: 0px;
+}
+
+#borderNavMataKuliah{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+    margin-top: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.navigationMataKuliah{
+    text-decoration: none;
+}
+
+.navigationMataKuliah span{
+    color: black;
+    margin-left: 5px;
+}
+
+.navigationMataKuliah img{
+    max-width: 60px;
+    margin-left: 17px;
+}
+
+#borderNavJadwalAsdos{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+    padding: 3px;
+    margin-top: 15px;
+}
+
+.navigationJadwalAsdos{
+    text-decoration: none;
+}
+
+.navigationJadwalAsdos span{
+    color: black;
+    margin-left: 20px;
+}
+
+.navigationJadwalAsdos img{
+    max-width: 50px;
+    margin-left: 22px;
+}
+
+#borderNavLogOutAsdos{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+    padding: 3px;
+    margin-top: 15px;
+    padding-top: 10px;
+}
+
+.navigationLogOutAsdos{
+    text-decoration: none;
+}
+
+.navigationLogOutAsdos span{
+    color: black;
+    margin-left: 20px;
+}
+
+.navigationLogOutAsdos img{
+    max-width: 50px;
+    margin-left: 22px;
 }

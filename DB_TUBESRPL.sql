@@ -78,3 +78,119 @@ CREATE TABLE jadwal_kuliah (
 	FOREIGN KEY (id_user) REFERENCES pengguna(id_user),
 	FOREIGN KEY (id_matkul) REFERENCES matkul(id_matkul)
 )
+
+--mengisi tabel role user
+INSERT INTO role_user(id_role, role_name)
+VALUES ('1', 'Asisten Dosen');
+
+INSERT INTO role_user(id_role, role_name)
+VALUES ('2', 'Admin');
+
+INSERT INTO role_user(id_role, role_name)
+VALUES ('3', 'Dosen');
+
+--mengisi tabel pengguna
+INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
+VALUES ('6182001001', 'Kevin', '6182001001', 'kevin123', '4', '1');
+
+INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
+VALUES ('6182001002', 'Ahmad', '6182001002', 'ahmad123', '6', '1');
+
+INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
+VALUES ('6182001003', 'Alda', '6182001003', 'alda123', '4', '1');
+
+INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
+VALUES ('6182001004', 'Jessica', '6182001004', 'jessica123', '5', '1');
+
+INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
+VALUES ('6182001005', 'Mark', '6182001005', 'mark123', '5', '1');
+
+INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
+VALUES ('6182001006', 'Angel', '6182001006', 'angel123', '4', '1');
+
+INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
+VALUES ('6182001007', 'Dian', '6182001007', 'dian123', '6', '1');
+
+INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
+VALUES ('6182001008', 'Jovan', '6182001008', 'jovan123', '4', '1');
+
+INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
+VALUES ('6182001009', 'Jacelyn', '6182001009', 'jacelyn123', '4', '1');
+
+INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
+VALUES ('6182001010', 'Adi', '6182001010', 'adi123', '5', '1');
+
+INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
+VALUES ('6182001011', 'Michael', '6182001011', 'michael123', '6', '1');
+
+--mengisi tabel matkul
+INSERT INTO matkul(id_matkul, nama_matkul, kuota_asdos)
+VALUES ('1', 'Pemrograman Berbasis Web', '4');
+
+INSERT INTO matkul(id_matkul, nama_matkul, kuota_asdos)
+VALUES ('2', 'Pemrograman Berorientasi Objek', '3');
+
+INSERT INTO matkul(id_matkul, nama_matkul, kuota_asdos)
+VALUES ('3', 'Algoritma dan Struktur Data', '4');
+
+--mengisi tabel asdos_submission
+INSERT INTO asdos_submission(submission_id, id_user, pdf_path)
+VALUES ('1', '6182001001', '')
+
+INSERT INTO asdos_submission(submission_id, id_user, pdf_path)
+VALUES ('2', '6182001002', '')
+
+INSERT INTO asdos_submission(submission_id, id_user, pdf_path)
+VALUES ('3', '6182001003', '')
+
+INSERT INTO asdos_submission(submission_id, id_user, pdf_path)
+VALUES ('4', '6182001004', '')
+
+INSERT INTO asdos_submission(submission_id, id_user, pdf_path)
+VALUES ('5', '6182001005', '')
+
+--mengisi tabel dosen_matkul
+INSERT INTO dosen_matkul(id_dosen, id_user, id_matkul)
+VALUES ('RCP', '1', '1')
+
+INSERT INTO dosen_matkul(id_dosen, id_user, id_matkul)
+VALUES ('PAN', '2', '2')
+
+INSERT INTO dosen_matkul(id_dosen, id_user, id_matkul)
+VALUES ('HUH', '3', '3')
+
+--mengisi tabel asdos_assign
+INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
+VALUES ('1', '6182001001', '1')
+
+INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
+VALUES ('2', '6182001002', '1')
+
+INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
+VALUES ('3', '6182001003', '1')
+
+INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
+VALUES ('4', '6182001004', '1')
+
+INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
+VALUES ('5', '6182001005', '2')
+
+INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
+VALUES ('6', '6182001006', '2')
+
+INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
+VALUES ('7', '6182001007', '2')
+
+INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
+VALUES ('8', '6182001008', '3')
+
+INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
+VALUES ('9', '6182001009', '3')
+
+INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
+VALUES ('10', '6182001010', '3')																																																																																																																																																																																																							
+
+INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
+VALUES ('11', '6182001011', '3')
+
+--mengisi tabel jadwal_kuliah

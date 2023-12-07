@@ -25,6 +25,15 @@ CREATE TABLE pengguna (
 	FOREIGN KEY (role_id) REFERENCES role_user(id_role)
 )
 
+CREATE TABLE pengguna_dua (
+	id_user INT NOT NULL,
+	nama VARCHAR(100) NOT NULL,
+	katasandi VARCHAR(255) NOT NULL,
+	role_id INT NOT NULL,
+	PRIMARY KEY(id_user),
+	FOREIGN KEY (role_id) REFERENCES role_user(id_role)
+)
+
 CREATE TABLE matkul (
 	id_matkul VARCHAR(50) NOT NULL,
 	nama_matkul VARCHAR(50) NOT NULL,
@@ -111,17 +120,30 @@ VALUES ('6182001006', 'Angel', '6182001006', 'angel123', '4', '1');
 INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
 VALUES ('6182001007', 'Dian', '6182001007', 'dian123', '6', '1');
 
-INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
-VALUES ('6182001008', 'Jovan', '6182001008', 'jovan123', '4', '1');
+--mengisi tabel pengguna_dua (admin, alumni, dosen)
+INSERT INTO pengguna(id_user, nama, katasandi, role_id)
+VALUES ('01.234.567.8-123.000', 'Michael', 'michael123', '1');
 
-INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
-VALUES ('6182001009', 'Jacelyn', '6182001009', 'jacelyn123', '4', '1');
+INSERT INTO pengguna(id_user, nama, katasandi, role_id)
+VALUES ('01.234.567.8-123.001', 'Adi', 'adi123', '1');
 
-INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
-VALUES ('6182001010', 'Adi', '6182001010', 'adi123', '5', '1');
+INSERT INTO pengguna(id_user, nama, katasandi, role_id)
+VALUES ('01.234.567.8-123.002', 'Jovan', 'jovan123', '1');
 
-INSERT INTO pengguna(id_user, nama, npm, katasandi, semester, role_id)
-VALUES ('6182001011', 'Michael', '6182001011', 'michael123', '6', '1');
+INSERT INTO pengguna(id_user, nama, katasandi, role_id)
+VALUES ('01.234.567.8-123.003', 'Jacelyn', 'jacelyn123', '1');
+
+INSERT INTO pengguna(id_user, nama, katasandi, role_id)
+VALUES ('KAL', 'Keenan', 'keenan123', '2');
+
+INSERT INTO pengguna(id_user, nama, katasandi, role_id)
+VALUES ('RCP', 'Raymond', 'raymond123', '3');
+
+INSERT INTO pengguna(id_user, nama, katasandi, role_id)
+VALUES ('PAN', 'Pascal', 'pascal123', '3');
+
+INSERT INTO pengguna(id_user, nama, katasandi, role_id)
+VALUES ('HUH', 'Husnul Hakim', 'husnul123', '3');
 
 --mengisi tabel matkul
 INSERT INTO matkul(id_matkul, nama_matkul, kuota_asdos)
@@ -170,27 +192,27 @@ INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
 VALUES ('3', '6182001003', '1')
 
 INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
-VALUES ('4', '6182001004', '1')
+VALUES ('4', '01.234.567.8-123.000', '1')
 
 INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
-VALUES ('5', '6182001005', '2')
+VALUES ('5', '6182001004', '2')
 
 INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
-VALUES ('6', '6182001006', '2')
+VALUES ('6', '6182001005', '2')
 
 INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
-VALUES ('7', '6182001007', '2')
+VALUES ('7', '01.234.567.8-123.001', '2')
 
 INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
-VALUES ('8', '6182001008', '3')
+VALUES ('8', '01.234.567.8-123.002', '3')
 
 INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
-VALUES ('9', '6182001009', '3')
+VALUES ('9', '6182001006', '3')
 
 INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
-VALUES ('10', '6182001010', '3')																																																																																																																																																																																																							
+VALUES ('10', '6182001007', '3')																																																																																																																																																																																																							
 
 INSERT INTO asdos_assign(id_assign, id_user, id_matkul)
-VALUES ('11', '6182001011', '3')
+VALUES ('11', '01.234.567.8-123.003', '3')
 
 --mengisi tabel jadwal_kuliah

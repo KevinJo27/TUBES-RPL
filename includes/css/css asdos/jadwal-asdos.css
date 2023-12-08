@@ -16,11 +16,14 @@ body
     flex-direction: column;
     align-items: flex-end;
     width: 86%;
-    height: 650px;
+    height: 1000px;
+    background-color: white;
+    margin-top: --10px;
 }
 
 .container {
-    background-color: white;
+    position: relative;
+    
     width: auto;
     height: auto;
     display: flex;
@@ -29,6 +32,8 @@ body
     align-items: center;
     width: 86%;
     height: 650px;
+
+
 }
 
 .day-label, .hour-label, .schedule-cell {
@@ -49,7 +54,7 @@ body
 .upload-button {
     grid-column: span 11;
     text-align: center;
-    margin-top: 15px;
+    margin-top: -25px;
 }
 
 button {
@@ -63,6 +68,9 @@ button {
 
 table {
     width: 86%;
+    margin-right: 100px;
+    margin-top: 15px;
+    margin-bottom: 50px;
 }
 
 th, td {
@@ -198,8 +206,27 @@ th, td {
 }
 
 .container{
-    margin-top: -550px;
+    margin-top: 50px;
     height: 550px;
     margin-left: 150px;
 
 }
+
+center{
+    margin-top: -110px;
+    margin-left: 700px;
+}
+
+h2{
+    margin-top: -550px;
+    margin-left: 500px;
+}
+
+button{
+    margin:10px;
+}
+
+td,th{
+    padding: 15px;
+}
+

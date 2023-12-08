@@ -4,6 +4,9 @@ body
     width: 100%;
     font-family: 'Arial', sans-serif;
     background: linear-gradient(to right, #46d2b5, #418ba4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .master{
@@ -13,13 +16,13 @@ body
     flex-direction: column;
     align-items: flex-end;
     width: 86%;
-    height: 1000px;
+    height: 800px;
     background-color: white;
-    margin-top: --10px;
+    
 }
 
 .container {
-    background-color: white;
+    position: relative;
     width: auto;
     height: auto;
     display: flex;
@@ -28,6 +31,7 @@ body
     align-items: center;
     width: 86%;
     height: 650px;
+    top:-230px
 }
 
 .day-label, .hour-label, .schedule-cell {
@@ -222,5 +226,13 @@ button{
 
 td,th{
     padding: 15px;
+}
+
+td{
+    border-bottom: 1px solid #ddd;
+}
+
+thead th{
+    border-bottom: 2px solid black;
 }
 

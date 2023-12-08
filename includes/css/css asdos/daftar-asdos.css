@@ -211,3 +211,32 @@ button {
     height: 550px;
     margin-left: 250px;
 }
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #eceaea;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.modal label {
+    display: block;
+    margin-top: 10px;
+}
+
+.modal input {
+    display: block;
+    margin: 5px auto;
+}
+
+.modal button {
+    display: block;
+    margin: 10px auto;
+}

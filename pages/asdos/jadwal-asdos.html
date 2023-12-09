@@ -6,50 +6,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jadwal ASDOS</title>
     <link rel="stylesheet" href="/includes/css/css asdos/jadwal-asdos.css">
+    <script>
+        function openDaftarAsdos() {
+            window.location.href = '/daftar-asdos';
+        }
 
+        function openJadwalAsdos() {
+            window.location.href = '/jadwal-asdos';
+        }
+
+        function openProfileAsdos(){
+            window.location.href = "/profil-asdos"
+        }
+
+        function openHomeAsdos(){
+            window.location.href = "/home-asdos"
+        }
+    </script>    
 </head>
 
 <body>
-    <!-- Navigation Bar -->
-    <div class="navRectangle">
-        <nav class="navigationBar">
-            <div id="borderNavHomeAsdos">
-                <a href="home-asdos.html" class="navigationHomeAsdos">
-                    <img src="/includes/images/home icon.png" alt="Navigation Home">
-                    <span>Home</span>
-                </a>
-            </div>
-            
-            <div id="borderNavProfileAsdos">
-                <a href="profile-asdos.html" class="navigationProfileAsdos">
-                    <img src="/includes/images/profile navigation icon.png"alt="Navigation Profile Asdos">
-                    <span>Profile</span>
-                </a>
-            </div>
+   <!-- Navigation Bar -->
+   <div class="navRectangle">
+    <nav class="navigationBar">
+        <div id="borderNavHomeAsdos">
+            <a href="#" class="navigationHomeAsdos" onclick="openHomeAsdos()">
+                <img src="/includes/images/home icon.png" alt="Navigation Home">
+                <span>Home</span>
+            </a>
+        </div>
+        
+        <div id="borderNavProfileAsdos">
+            <a href="#" class="navigationProfileAsdos" onclick="openProfileAsdos()">
+                <img src="/includes/images/profile navigation icon.png"alt="Navigation Profile Asdos">
+                <span>Profile</span>
+            </a>
+        </div>
 
-            <div id="borderNavDaftarAsdos">
-                <a href="daftar-asdos.html" class="navigationDaftarAsdos">
-                    <img src="/includes/images/icon daftar asdos.png"alt="Navigation Daftar Asdos">
-                    <span>Daftar</span>
-                </a>
-            </div>
+        <div id="borderNavDaftarAsdos">
+            <a href="#" class="navigationDaftarAsdos" onclick="openDaftarAsdos()">
+                <img src="/includes/images/icon daftar asdos.png"alt="Navigation Daftar Asdos">
+                <span>Daftar</span>
+            </a>
+        </div>
 
-            <div id="borderNavJadwalAsdos">
-                <a href="jadwal-asdos.html" class="navigationJadwalAsdos">
-                    <img src="/includes/images/icon jadwal.png"alt="Navigation Jadwal Asdos">
-                    <span>Jadwal</span>
-                </a>
-            </div>
+        <div id="borderNavJadwalAsdos">
+            <a href="#" class="navigationJadwalAsdos" onclick="openJadwalAsdos()">
+                <img src="/includes/images/icon jadwal.png"alt="Navigation Jadwal Asdos">
+                <span>Jadwal</span>
+            </a>
+        </div>
 
-            <div id="borderNavLogOutAsdos">
-                <a href="login-asdos.html" class="navigationLogOutAsdos">
-                    <img src="/includes/images/log out.png"alt="Navigation Logout Asdos">
-                    <span>Logout</span>
-                </a>
-            </div>
-        </nav>
-    </div>
-    <!-- Navigation Bar -->
+        <div id="borderNavLogOutAsdos">
+            <a href="login-asdos.html" class="navigationLogOutAsdos">
+                <img src="/includes/images/log out.png"alt="Navigation Logout Asdos">
+                <span>Logout</span>
+            </a>
+        </div>
+    </nav>
+</div>
+<!-- Navigation Bar -->
 
     <div class="container">
 

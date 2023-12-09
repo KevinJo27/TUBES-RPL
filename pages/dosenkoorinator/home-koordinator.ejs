@@ -6,6 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Dosen</title>
     <link rel="stylesheet" type="text/css" href="/includes/css/css koordinator//home-koordinator.css">
+    <script>
+        function openAsdosList() {
+            window.location.href = '/Asdos-list';
+        }
+
+        function openAssignJadwal() {
+            window.location.href = '/Assign-jadwal';
+        }
+
+        function openProfileDosen(){
+            window.location.href = "/profil-dosen"
+        }
+        
+    </script>    
 </head>
 
 <body>
@@ -36,13 +50,13 @@
                         Profile
                     </span>
                 </a>
-                <a href="matakuliah.html" class="nav-button">
+                <a href="#" class="nav-button" onclick="openAssignJadwal()">
                     <img src="/includes/images/icon task.png" alt="Navigation Daftar Asdos">
                     <span id="textMatakuliah">
                         Assign Jadwal ASDOS
                     </span>
                 </a>
-                <a href="AsistenDosen.html" class="nav-button">
+                <a href="#" class="nav-button" onclick="openAsdosList()">
                     <img src="/includes/images/icon jadwal.png" alt="Navigation Jadwal">
                     <span>
                         Asisten Dosen

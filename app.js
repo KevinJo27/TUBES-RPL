@@ -107,6 +107,26 @@ app.get('/jadwal-asdos', (req, res) =>{
   res.render('asdos/jadwal-asdos');
 })
 
+app.get('/matakuliah', (req, res) =>{
+  res.render('dosen/matakuliah');
+})
+
+app.get('/AsistenDosen', (req, res) =>{
+  res.render('dosen/AsistenDosen');
+})
+
+app.get('/home-koordinator', (req, res) =>{
+  res.render('dosenkoorinator/home-koordinator');
+})
+
+app.get('/Asdos-list', (req, res) =>{
+  res.render('dosenkoorinator/Asdos-list');
+})
+
+app.get('/Assign-jadwal', (req, res) =>{
+  res.render('dosenkoorinator/Assign-jadwal');
+})
+
 app.post('/logout', (req, res) => {
   req.session.user = null;
   res.redirect('/');

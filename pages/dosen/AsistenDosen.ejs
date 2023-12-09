@@ -6,6 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asisten Dosen</title>
     <link rel="stylesheet" href="/includes/css/css dosen lab/asistendosen.css">
+    <script>
+        function openAsistenDosen() {
+            window.location.href = '/AsistenDosen';
+        }
+
+        function openMatakuliah() {
+            window.location.href = '/Matakuliah';
+        }
+
+        function openProfileDosen(){
+            window.location.href = "/profil-dosen"
+        }
+
+        function openHomeDosen(){
+            window.location.href = "/home-dosen"
+        }
+    </script>  
 </head>
 
 <body>
@@ -13,30 +30,30 @@
     <div class="navRectangle">
         <nav class="navigationBar">
             <div id="borderNavHomeAsdos">
-                <a href="home-asdos.html" class="navigationHomeAsdos">
+                <a href="#" class="navigationHomeAsdos" onclick="openHomeDosen()">
                     <img src="/includes/images/home icon.png" alt="Navigation Home">
                     <span>Home</span>
                 </a>
             </div>
 
             <div id="borderNavProfileAsdos">
-                <a href="profile-asdos.html" class="navigationProfileAsdos">
+                <a href="#" class="navigationProfileAsdos" onclick="openProfileDosen()">
                     <img src="/includes/images/profile navigation icon.png" alt="Navigation Profile Asdos">
                     <span>Profile</span>
                 </a>
             </div>
 
             <div id="borderNavMataKuliah">
-                <a href="matakuliah.html" class="navigationMataKuliah">
+                <a href="#" class="navigationMataKuliah" onclick="openMatakuliah()">
                     <img src="/includes/images/icon daftar asdos.png" alt="Navigation Mata Kuliah">
                     <span>Mata Kuliah</span>
                 </a>
             </div>
 
             <div id="borderNavJadwalAsdos">
-                <a href="jadwal-asdos.html" class="navigationJadwalAsdos">
+                <a href="#" class="navigationJadwalAsdos" onclick="openAsistenDosen()">
                     <img src="/includes/images/icon jadwal.png" alt="Navigation Jadwal Asdos">
-                    <span>Jadwal</span>
+                    <span>Asisten Dosen</span>
                 </a>
             </div>
 
@@ -63,14 +80,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% for (let i = 0; i < data.length; i++) { %>
-                        <tr>
-                            <td><%= i + 1 %></td>
-                            <td><%= data[i].nama %></td>
-                            <td><%= data[i].keterangan %></td>
-                            <td><button>Jadwal</button></td>
-                        </tr>
-                    <% } %>
+                    <!-- You can manually populate this table with your data when connected -->
+                    <tr>
+                        <td>1</td>
+                        <td>John Doe</td>
+                        <td>Assistant</td>
+                        <td><button>Jadwal</button></td>
+                    </tr>
+                    <!-- Repeat the above row structure for other data entries -->
                 </tbody>
             </table>
         </div>

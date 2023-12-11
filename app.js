@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'DATABASE_TUBES'
+  database: 'database_rpltb'
 });
 
 connection.connect((err) => {
@@ -47,34 +47,42 @@ function authenticateUser(req, res, next) {
 }
 
 
-function isValidUser(username, password) {
-  const query = 'SELECT * FROM pengguna WHERE id_user = ? AND katasandi = ?';
-  connection.query(query, [username, password], (err, results) => {
-    if (err) {
-      console.error('Error querying database:', err);
-      return false;
-    }
+function isValidUser(req, username, password) {
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT * FROM users WHERE npm = ? AND password = ?';
+    connection.query(query, [username, password], (err, results) => {
+      if (err) {
+        console.error('Error querying database:', err);
+        reject(err);
+      }
 
-    if (results.length > 0) {
-      req.session.user = { authenticated: true, username };
-      return true;
-    }
-
-    // User does not exist or incorrect password
-    return false;
+      if (results.length > 0) {
+        req.session.user = { authenticated: true, userId: results[0].id };
+        resolve(true);
+      } else {
+        resolve(false);
+      }
+    });
   });
 }
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
-  if (isValidUser(username, password)) {
-    if (username.length === 3) {
-      res.redirect('/home-dosen');
+  try {
+    if (await isValidUser(req, username, password)) {
+      if (username.length === 3) {
+        res.redirect('/home-dosen');
+      } else if (username.length === 8) {
+        res.redirect('/home-koordinator');
+      } else {
+        res.redirect('/home-asdos');
+      }
     } else {
-      res.redirect('/home-asdos');
+      res.redirect('/');
     }
-  } else {
+  } catch (error) {
+    console.error('Error:', error);
     res.redirect('/');
   }
 });
@@ -88,6 +96,47 @@ app.get('/signup', (req, res) => {
   res.render('asdos/sign-up');
 });
 
+app.post('/signup', (req, res) => {
+  const { nama, npm_npwp, password } = req.body;
+  console.log(nama, npm_npwp, password);
+  // Validation logic
+  // Check if npm_npwp length is correct and contains only digits
+  if (npm_npwp.length !== 10 || !/^\d+$/.test(npm_npwp)) {
+    console.error('Invalid npm_npwp');
+    res.redirect('/signup'); // Redirect back to the signup page on error
+    return;
+  }
+
+  // Calculate semester
+  const currentYear = new Date().getFullYear();
+  const npmSemesterDigits = npm_npwp.substring(3, 5);
+  const npmSemester = parseInt(npmSemesterDigits, 10);
+  const currentSemester = Math.floor(((currentYear % 100) - npmSemester) / 2) + 1;
+
+  // Check if npm_npwp semester is valid
+  if (npmSemester === currentYear % 100 || currentSemester <= 0 || currentSemester > 8) {
+    console.error('Invalid semester');
+    res.redirect('/signup'); // Redirect back to the signup page on error
+    return;
+  }
+
+  // Example: Insert the user into the database
+  const query = 'INSERT INTO users (name, npm, password, semester, role_id) VALUES (?, ?, ?, ?, ?)';
+  const role_id = 3; // Assuming 3 is the role_id for Mahasiswa
+
+  connection.query(query, [nama, npm_npwp, password, currentSemester, role_id], (err, results) => {
+    if (err) {
+      console.error('Error inserting user into the database:', err);
+      res.redirect('/signup'); // Redirect back to the signup page on error
+      return;
+    }
+
+    console.log('User registered successfully');
+    res.redirect('/');
+  });
+});
+
+
 //app.get('/home-asdos', authenticateUser, (req, res) => {
   app.get('/home-asdos', authenticateUser, (req, res) => {
     const userId = req.session.user.userId;
@@ -95,13 +144,15 @@ app.get('/signup', (req, res) => {
   });
   
 
-app.get('/home-dosen', (req, res) => {
+app.get('/home-dosen', authenticateUser, (req, res) => {
+  const userId = req.session.user.userId;
   res.render('dosen/home-dosen');
 });
 
-app.get('/daftar-asdos', (req, res) =>{
-  res.render('asdos/daftar-asdos');
-})
+app.get('/home-asdos', authenticateUser, (req, res) => {
+  const userId = req.session.user.userId;
+  res.render('asdos/home-asdos');
+});
 
 app.get('/jadwal-asdos', (req, res) =>{
   res.render('asdos/jadwal-asdos');
@@ -115,7 +166,8 @@ app.get('/AsistenDosen', (req, res) =>{
   res.render('dosen/AsistenDosen');
 })
 
-app.get('/home-koordinator', (req, res) =>{
+app.get('/home-koordinator', authenticateUser, (req, res) =>{
+  const userId = req.session.user.userId;
   res.render('dosenkoorinator/home-koordinator');
 })
 

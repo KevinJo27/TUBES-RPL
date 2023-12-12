@@ -236,3 +236,64 @@ thead th{
     border-bottom: 2px solid black;
 }
 
+/* Modal */
+.modal {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #eceaea;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 100px;
+    width: 200px;
+    height: 250px;
+}
+
+.modal label {
+    display: block;
+    margin-top: 10px;
+}
+
+.modal input {
+    display: block;
+    margin: 5px auto;
+}
+
+.modal button {
+    display: block;
+    margin: 10px auto;
+}
+
+#transkrip{
+    margin-left: 60px;
+}
+
+#cv{
+    margin-left: 60px;
+}
+
+#suratLamaran{
+    margin-left: 60px;
+}
+
+#labelSuratLamaran{
+    margin-left: 10px;
+}
+
+.classHari{
+    margin-bottom: 15px;
+}
+
+.classJamMulai{
+    margin-bottom: 10px;
+}
+
+.classJamSelesai{
+    margin-bottom: 20px;
+}
+

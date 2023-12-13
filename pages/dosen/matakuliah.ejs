@@ -6,67 +6,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MataKuliah</title>
     <link rel="stylesheet" href="/includes/css/css dosen lab/matakuliah.css">
-    <script>
-        function openAsistenDosen() {
-            window.location.href = '/AsistenDosen';
-        }
-
-        function openMatakuliah() {
-            window.location.href = '/Matakuliah';
-        }
-
-        function openProfileDosen(){
-            window.location.href = "/profil-dosen"
-        }
-
-        function openHomeDosen(){
-            window.location.href = "/home-dosen"
-        }
-    </script> 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
 </head>
 
 <body>
-        <!-- Navigation Bar -->
-        <div class="navRectangle">
-            <nav class="navigationBar">
-                <div id="borderNavHomeAsdos">
-                    <a href="#" class="navigationHomeAsdos" onclick="openHomeDosen()">
-                        <img src="/includes/images/home icon.png" alt="Navigation Home">
-                        <span>Home</span>
-                    </a>
-                </div>
-    
-                <div id="borderNavProfileAsdos">
-                    <a href="#" class="navigationProfileAsdos" onclick="openProfileDosen()">
-                        <img src="/includes/images/profile navigation icon.png" alt="Navigation Profile Asdos">
-                        <span>Profile</span>
-                    </a>
-                </div>
-    
-                <div id="borderNavMataKuliah">
-                    <a href="#" class="navigationMataKuliah" onclick="openMatakuliah()">
-                        <img src="/includes/images/icon daftar asdos.png" alt="Navigation Mata Kuliah">
-                        <span>Mata Kuliah</span>
-                    </a>
-                </div>
-    
-                <div id="borderNavJadwalAsdos">
-                    <a href="#" class="navigationJadwalAsdos" onclick="openAsistenDosen()">
-                        <img src="/includes/images/icon jadwal.png" alt="Navigation Jadwal Asdos">
-                        <span>Asisten Dosen</span>
-                    </a>
-                </div>
-    
-                <div id="borderNavLogOutAsdos">
-                    <a href="login-asdos.html" class="navigationLogOutAsdos">
-                        <img src="/includes/images/log out.png" alt="Navigation Logout Asdos">
-                        <span>Logout</span>
-                    </a>
-                </div>
-            </nav>
-        </div>
-        <!-- Navigation Bar -->
+    <!-- Navigation Bar -->
+    <div class="navRectangle">
+        <nav class="navigationBar">
+            <div id="borderNavHomeAsdos">
+                <a href="home-dosen.html" class="navigationHomeAsdos">
+                    <img src="/includes/images/home icon.png" alt="Navigation Home">
+                    <span>Home</span>
+                </a>
+            </div>
 
+            <div id="borderNavProfileAsdos">
+                <a href="profile-dosen.html" class="navigationProfileAsdos">
+                    <img src="/includes/images/profile navigation icon.png" alt="Navigation Profile Asdos">
+                    <span>Profile</span>
+                </a>
+            </div>
+
+            <div id="borderNavMataKuliah">
+                <a href="matakuliah.html" class="navigationMataKuliah">
+                    <img src="/includes/images/icon daftar asdos.png" alt="Navigation Mata Kuliah">
+                    <span>Mata Kuliah</span>
+                </a>
+            </div>
+
+            <div id="borderNavJadwalAsdos">
+                <a href="jadwal-dosen.html" class="navigationJadwalAsdos">
+                    <img src="/includes/images/icon jadwal.png" alt="Navigation Jadwal Asdos">
+                    <span>Jadwal</span>
+                </a>
+            </div>
+
+            <div id="borderNavLogOutAsdos">
+                <a href="login-asdos.html" class="navigationLogOutAsdos">
+                    <img src="/includes/images/log out.png" alt="Navigation Logout Asdos">
+                    <span>Logout</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Navigation Bar -->
     <h2 style="color: white;">
         <center>Mata Kuliah :</center>
     </h2>
@@ -81,14 +65,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- You can manually populate this table with your data when connected -->
                     <tr>
                         <td>1</td>
-                        <td>Rekaya Perangkat Lunak</td>
-                        <td>2</td>
+                        <td>Pemrograman Berbasis Web</td>
+                        <td>4</td>
+                        <td>
+                            <span class="material-icons-outlined" onclick="showEditPopup(1)">edit</span>
+                            <span class="material-icons-outlined" onclick="showDeletePopup(1)">delete</span>
+                        </td>
                     </tr>
-                    <!-- Repeat the above row structure for other data entries -->
+                    <tr>
+                        <td>2</td>
+                        <td>Pemrograman Berorientasi Objek</td>
+                        <td>3</td>
+                        <td>
+                            <span class="material-icons-outlined" onclick="showEditPopup(2)">edit</span>
+                            <span class="material-icons-outlined" onclick="showDeletePopup(2)">delete</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Algoritma dan Struktur Data</td>
+                        <td>4</td>
+                        <td>
+                            <span class="material-icons-outlined" onclick="showEditPopup(3)">edit</span>
+                            <span class="material-icons-outlined" onclick="showDeletePopup(3)">delete</span>
+                        </td>
+                    </tr>
                 </tbody>
+
             </table>
             <div class="upload-button">
                 <button onclick="showPopup()">Upload</button>
@@ -96,44 +101,66 @@
         </div>
     </div>
 
-    <!-- Pop-up -->
+    <!-- Upload Pop-up -->
     <div class="overlay" id="overlay" onclick="hidePopup()"></div>
-    <div class="popup" id="popup">
-        <label for="namaMK">Nama MataKuliah:</label>
-        <input type="text" id="namaMK" placeholder="Isi Nama MataKuliah" style="margin-bottom: 10px;">
-
-        <label for="jumlahAsisten">Jumlah Asisten:</label>
-        <select id="jumlahAsisten">
-            <option value="1">1</option>
-            <option value="2">2</option>
-        </select>
+    <div class="upload-popup" id="popup">
+        <div class="nama-mk">
+            <label for="namaMK">Nama MataKuliah :</label>
+            <input type="text" id="namaMK" placeholder="Isi Nama MataKuliah" style="margin-bottom: 10px;">
+        </div>
+        <div class="jumlah-asisten">
+            <label for="jumlahAsisten">
+                Jumlah Asisten :
+            </label>
+            <select id="jumlahAsisten">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
         <div class="button-container">
             <button id="cancel-button" onclick="hidePopup()">Cancel</button>
-            <button onclick="uploadData()">Submit</button>
+            <button id="submit-button" onclick="uploadData()">Submit</button>
         </div>
     </div>
 
-    <script>
-        function showPopup() {
-            document.getElementById('popup').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-        }
 
-        function hidePopup() {
-            document.getElementById('popup').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        }
+    <!-- Edit Pop-up -->
+    <div class="overlay" id="edit-overlay" onclick="hidePopup()"></div>
+    <div class="edit-popup" id="edit-popup">
+        <div class="jumlah-asisten">
+            <label for="jumlahAsisten">
+                Jumlah Asisten :
+            </label>
+            <select id="jumlahAsisten">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div class="button-container">
+            <button id="cancel-button" onclick="hideEditPopup()">Cancel</button>
+            <button id="save-button" onclick="saveData()">Save</button>
+        </div>
+    </div>
 
-        function uploadData() {
-            var namaMK = document.getElementById('namaMK').value;
-            var jumlahAsisten = document.getElementById('jumlahAsisten').value;
+    <!-- Delete Pop-up -->
+    <div class="delete-overlay" id="deleteOverlay" onclick="hideDeletePopup()"></div>
+    <div class="delete-popup" id="deletePopup">
+        <div class="delete-message">
+            <p>Apakah Anda yakin ingin menghapus catatan ini?</p>
+        </div>
+        <div class="delete-buttons">
+            <button id="cancel-delete-button" onclick="hideDeletePopup()">Cancel</button>
+            <button id="confirm-delete-button" onclick="deleteRow()">Delete</button>
+        </div>
+    </div>
 
-            console.log("Nama MataKuliah:", namaMK);
-            console.log("Jumlah Asisten:", jumlahAsisten);
-
-            hidePopup();
-        }
-    </script>
+    <script src="/includes/js/Dosen/matakuliah.js"></script>
 </body>
 
 </html>

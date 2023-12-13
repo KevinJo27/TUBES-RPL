@@ -224,7 +224,6 @@ button {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     text-align: center;
-    
 }
 
 .modal label {
@@ -260,13 +259,22 @@ button {
 
 .classTranskrip{
     margin-bottom: 25px;
+    border: solid #454545 1px;
+    padding-top: 5px;
+    padding-bottom: 10px;
 }
 
 .classCV{
     margin-bottom: 30px;
+    border: solid #454545 1px;
+    padding-top: 5px;
+    padding-bottom: 10px;
 }
 
 .classSuratLamaran{
     margin-top: 5px;
     margin-bottom: 30px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    border: solid #454545 1px;
 }

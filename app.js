@@ -1,8 +1,8 @@
-const express = require('express');
-const path = require('path');
-const session = require('express-session');
-const mysql = require('mysql2'); // Add this line
-const app = express();
+aconst express = require('express');
+aconst path = require('path');
+aconst session = require('express-session');
+bconst mysql = require('mysql2'); // Add this line
+cconst app = express();
 const port = 3000;
 
 const connection = mysql.createConnection({
@@ -137,7 +137,7 @@ app.post('/signup', (req, res) => {
 });
 
 
-//app.get('/home-asdos', authenticateUser, (req, res) => {
+app.get('/home-asdos', authenticateUser, (req, res) => {
   app.get('/home-asdos', authenticateUser, (req, res) => {
     const userId = req.session.user.userId;
     res.render('asdos/home-asdos');

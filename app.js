@@ -5,6 +5,8 @@ const mysql = require('mysql2'); // Add this line
 const app = express();
 const port = 3000;
 
+const __dirname = path.resolve();
+
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -38,10 +40,8 @@ app.set('view engine', 'ejs');
 
 function authenticateUser(req, res, next) {
   if (req.session.user && req.session.user.authenticated) {
-    // User is authenticated, allow access to the route
     next();
   } else {
-    // User is not authenticated, redirect to the login page
     res.redirect('/');
   }
 }
@@ -116,43 +116,41 @@ app.post('/signup', (req, res) => {
   // Check if npm_npwp semester is valid
   if (npmSemester === currentYear % 100 || currentSemester <= 0 || currentSemester > 8) {
     console.error('Invalid semester');
-    res.redirect('/signup'); // Redirect back to the signup page on error
+    res.redirect('/signup?error=semester'); // Redirect back to the signup page with an error query parameter
     return;
   }
 
   // Example: Insert the user into the database
-  const query = 'INSERT INTO users (name, npm, password, semester, role_id) VALUES (?, ?, ?, ?, ?)';
+  const query = 'INSERT INTO users (name, npm, password, semester, role_id) VALUES (?, ?, ?, ?, 1)';
   const role_id = 3; // Assuming 3 is the role_id for Mahasiswa
 
-  connection.query(query, [nama, npm_npwp, password, currentSemester, role_id], (err, results) => {
+  connection.query(query, [nama, npm_npwp, password, currentSemester, role_id], (err) => {
     if (err) {
       console.error('Error inserting user into the database:', err);
       res.redirect('/signup'); // Redirect back to the signup page on error
       return;
     }
-
+  
     console.log('User registered successfully');
     res.redirect('/');
-  });
+  });  
 });
 
 
-//app.get('/home-asdos', authenticateUser, (req, res) => {
-  app.get('/home-asdos', authenticateUser, (req, res) => {
-    const userId = req.session.user.userId;
-    res.render('asdos/home-asdos');
-  });
-  
 
 app.get('/home-dosen', authenticateUser, (req, res) => {
-  const userId = req.session.user.userId;
+  // const userId = req.session.user.userId;
   res.render('dosen/home-dosen');
 });
 
 app.get('/home-asdos', authenticateUser, (req, res) => {
-  const userId = req.session.user.userId;
+  // const userId = req.session.user.userId;
   res.render('asdos/home-asdos');
 });
+
+app.get('/daftar-asdos', (req, res) =>{
+  res.render('asdos/daftar-asdos');
+})
 
 app.get('/jadwal-asdos', (req, res) =>{
   res.render('asdos/jadwal-asdos');
@@ -163,11 +161,11 @@ app.get('/matakuliah', (req, res) =>{
 })
 
 app.get('/AsistenDosen', (req, res) =>{
-  res.render('dosen/AsistenDosen');
+  res.render('dosen/AssistenDosen');
 })
 
-app.get('/home-koordinator', authenticateUser, (req, res) =>{
-  const userId = req.session.user.userId;
+app.get('/home-koordinator', (req, res) =>{
+  // const userId = req.session.user.userId;
   res.render('dosenkoorinator/home-koordinator');
 })
 

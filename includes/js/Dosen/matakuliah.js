@@ -1,3 +1,16 @@
+
+function openAsistenDosen() {
+    window.location.href = '/AsistenDosen';
+}
+
+function openMatakuliah() {
+    window.location.href = '/Matakuliah';
+}
+
+function openProfileDosen(){
+    window.location.href = "/profil-dosen"
+}
+
 function showPopup() {
     document.getElementById('popup').style.display = 'block';
     document.getElementById('overlay').style.display = 'block';

@@ -5,7 +5,7 @@ const mysql = require('mysql2'); // Add this line
 const app = express();
 const port = 3000;
 
-const __dirname = path.resolve();
+//const __dirname = path.resolve();
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -46,6 +46,23 @@ function authenticateUser(req, res, next) {
   }
 }
 
+function getUserDetailsByUsername(username) {
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT id, name FROM users WHERE npm = ?';
+    connection.query(query, [username], (err, results) => {
+      if (err) {
+        console.error('Error querying database:', err);
+        reject(err);
+      }
+
+      if (results.length > 0) {
+        resolve(results[0]);
+      } else {
+        resolve(null);
+      }
+    });
+  });
+}
 
 function isValidUser(req, username, password) {
   return new Promise((resolve, reject) => {
@@ -70,13 +87,25 @@ app.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    if (await isValidUser(req, username, password)) {
-      if (username.length === 3) {
-        res.redirect('/home-dosen');
-      } else if (username.length === 8) {
-        res.redirect('/home-koordinator');
+    const isValid = await isValidUser(req, username, password);
+    if (isValid) {
+      const user = await getUserDetailsByUsername(username);
+      if (user) {
+        req.session.user = {
+          authenticated: true,
+          userId: user.id,
+          userName: user.name
+        };
+
+        if (username.length === 3) {
+          res.redirect('/home-dosen');
+        } else if (username.length === 8) {
+          res.redirect('/home-koordinator');
+        } else {
+          res.redirect('/home-asdos');
+        }
       } else {
-        res.redirect('/home-asdos');
+        res.redirect('/');
       }
     } else {
       res.redirect('/');
@@ -139,13 +168,13 @@ app.post('/signup', (req, res) => {
 
 
 app.get('/home-dosen', authenticateUser, (req, res) => {
-  // const userId = req.session.user.userId;
-  res.render('dosen/home-dosen');
+  const { userName } = req.session.user;
+  res.render('dosen/home-dosen', { userName });
 });
 
 app.get('/home-asdos', authenticateUser, (req, res) => {
-  // const userId = req.session.user.userId;
-  res.render('asdos/home-asdos');
+  const { userName } = req.session.user;
+  res.render('asdos/home-asdos',{userName});
 });
 
 app.get('/daftar-asdos', (req, res) =>{
@@ -165,8 +194,8 @@ app.get('/AsistenDosen', (req, res) =>{
 })
 
 app.get('/home-koordinator', (req, res) =>{
-  // const userId = req.session.user.userId;
-  res.render('dosenkoorinator/home-koordinator');
+  const { userName } = req.session.user;
+  res.render('dosenkoorinator/home-koordinator',{userName});
 })
 
 app.get('/Asdos-list', (req, res) =>{

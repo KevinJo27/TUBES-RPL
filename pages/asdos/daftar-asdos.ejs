@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar ASDOS</title>
+    <link rel="stylesheet" href="/includes/css/css asdos/daftar-asdos.css">
+    <script>
+        function openDaftarAsdos() {
+            window.location.href = '/daftar-asdos';
+        }
+
+        function openJadwalAsdos() {
+            window.location.href = '/jadwal-asdos';
+        }
+
+        function openProfileAsdos(){
+            window.location.href = "/profil-asdos"
+        }
+
+        function openHomeAsdos(){
+            window.location.href = "/home-asdos"
+        }
+    </script>    
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <div class="navRectangle">
+        <nav class="navigationBar">
+            <div id="borderNavHomeAsdos">
+                <a href="#" class="navigationHomeAsdos" onclick="openHomeAsdos()">
+                    <img src="/includes/images/home icon.png" alt="Navigation Home">
+                    <span>Home</span>
+                </a>
+            </div>
+            
+            <div id="borderNavProfileAsdos">
+                <a href="#" class="navigationProfileAsdos" onclick="openProfileAsdos()">
+                    <img src="/includes/images/profile navigation icon.png"alt="Navigation Profile Asdos">
+                    <span>Profile</span>
+                </a>
+            </div>
+
+            <div id="borderNavDaftarAsdos">
+                <a href="#" class="navigationDaftarAsdos" onclick="openDaftarAsdos()">
+                    <img src="/includes/images/icon daftar asdos.png"alt="Navigation Daftar Asdos">
+                    <span>Daftar</span>
+                </a>
+            </div>
+
+            <div id="borderNavJadwalAsdos">
+                <a href="#" class="navigationJadwalAsdos" onclick="openJadwalAsdos()">
+                    <img src="/includes/images/icon jadwal.png"alt="Navigation Jadwal Asdos">
+                    <span>Jadwal</span>
+                </a>
+            </div>
+
+            <div id="borderNavLogOutAsdos">
+                <a href="login-asdos.html" class="navigationLogOutAsdos">
+                    <img src="/includes/images/log out.png"alt="Navigation Logout Asdos">
+                    <span>Logout</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+    <!-- Navigation Bar -->
+
+    
+    <div class="container">
+        <h1 id="daftar">Daftar ASDOS</h1>
+        <div class="desc-title">
+            <p>Sebelum menjadi asisten dosen, Anda perlu mengupload transkrip nilai semester Anda hingga semester ini</p>
+        </div>
+
+        <div class="upload-button">
+            <button onclick="openModal()">Upload</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="classTranskrip">
+            <label for="transkrip">Transkrip Nilai:</label>
+            <input type="file" accept=".pdf" id="transkrip" placeholder="Transkrip Nilai">
+        </div>
+        
+        <div class="classCV">
+            <label for="cv">CV:</label>
+            <input type="file" accept=".pdf" id="cv" placeholder="CV">
+        </div>
+
+        
+        <div class="classSuratLamaran">
+            <label id="labelSuratLamaran" for="suratLamaran">Surat Lamaran Kerja:</label>
+            <input type="file" accept=".pdf" id="suratLamaran" placeholder="Surat Lamaran Kerja">
+        </div>
+        
+    
+        <button onclick="uploadFiles()">Submit</button>
+        <button onclick="closeModal()">Close</button>
+    </div>
+    
+
+    <script>
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        function uploadFiles() {
+            closeModal();
+        }
+    </script>
+</body>
+
+</html>

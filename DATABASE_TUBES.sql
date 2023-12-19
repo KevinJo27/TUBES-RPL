@@ -92,6 +92,39 @@ INSERT INTO
 VALUES
 	('Algoritma dan Struktur Data', 4);
 
+INSERT INTO
+	users(
+		name,
+		npm,
+		password,
+		semester,
+		role_id
+	)
+VALUES
+	(
+		'Pascal',
+		'PANadmin',
+		'12345',
+		0,
+		2
+	);
+
+INSERT INTO
+	users(
+		name,
+		npm,
+		password,
+		semester,
+		role_id
+	)
+VALUES
+	(
+		'Hunsul',
+		'HUHadmin',
+		'12345',
+		0,
+		3
+	);
 
 INSERT INTO
 	users(

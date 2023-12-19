@@ -4,6 +4,8 @@ const session = require('express-session');
 const mysql = require('mysql2'); // Add this line
 const app = express();
 const port = 3000;
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' }); // Specify the upload directory
 
 // const __dirname = path.resolve();
 
@@ -25,6 +27,7 @@ connection.connect((err) => {
 const staticPath = path.join(__dirname, 'includes');
 const cssPath = path.join(staticPath, 'css');
 
+app.use('/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: true })); // Parse form data
 app.use('/includes', express.static(staticPath));
 app.use('/css', express.static(cssPath));
@@ -181,6 +184,77 @@ app.get('/daftar-asdos', (req, res) =>{
   res.render('asdos/daftar-asdos');
 })
 
+app.get('/upload', authenticateUser, (req, res) => {
+  // Assuming user_id is available in the session
+  const userId = req.session.user ? req.session.user.userId : null;
+
+  if (!userId) {
+    console.error('User ID not found in session');
+    return res.status(401).send('Unauthorized');
+  }
+
+  // Fetch user IDs from asdos_submissions where pdf_path is not null
+  const query = `
+    SELECT DISTINCT user_id
+    FROM asdos_submissions
+    WHERE pdf_path IS NOT NULL
+  `;
+
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Error querying database:', err);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    // Extract user IDs from the query results
+    const userIds = results.map(result => result.user_id);
+
+    // Pass user IDs to the Asdos-list route
+    res.redirect(`/Asdos-list?userIds=${userIds.join(',')}`);
+  });
+});
+
+app.post('/upload', upload.fields([
+  { name: 'transkrip', maxCount: 1 },
+  { name: 'cv', maxCount: 1 },
+  { name: 'suratLamaran', maxCount: 1 }
+]), (req, res) => {
+  const { user } = req.session;
+
+  // Check if user and user.userId are defined
+  if (user && user.userId) {
+    const { transkrip, cv, suratLamaran } = req.files;
+
+    if (!transkrip || !cv || !suratLamaran) {
+        return res.status(400).send('All files are required.');
+    }
+
+    // Assuming user_id is available in the session
+    const userId = user.userId;
+
+    // Assuming the pdf_path in the database is a URL or file path
+    const transkripPath = `/uploads/${transkrip[0].filename}`;
+    const cvPath = `/uploads/${cv[0].filename}`;
+    const suratLamaranPath = `/uploads/${suratLamaran[0].filename}`;
+
+    // Insert data into the asdos_submissions table
+    const query = 'INSERT INTO asdos_submissions (user_id, pdf_path) VALUES (?, ?)';
+    connection.query(query, [userId, transkripPath], (err) => {
+        if (err) {
+            console.error('Error inserting data into the database:', err);
+            return res.status(500).send('Internal Server Error');
+        }
+
+        console.log('Data inserted successfully');
+        res.redirect('/home-asdos');
+    });
+  } else {
+    // Handle the case where user or user.userId is undefined or null
+    res.status(401).send('Unauthorized');
+  }
+});
+
+
 app.get('/jadwal-asdos', (req, res) =>{
   res.render('asdos/jadwal-asdos');
 })
@@ -188,6 +262,7 @@ app.get('/jadwal-asdos', (req, res) =>{
 app.get('/matakuliah', (req, res) =>{
   res.render('dosen/matakuliah');
 })
+
 
 app.get('/AsistenDosen', (req, res) =>{
   res.render('dosen/AssistenDosen');
@@ -198,9 +273,51 @@ app.get('/home-koordinator', (req, res) =>{
   res.render('dosenkoorinator/home-koordinator',{userName});
 })
 
-app.get('/Asdos-list', (req, res) =>{
-  res.render('dosenkoorinator/Asdos-list');
-})
+app.get('/Asdos-list', authenticateUser, (req, res) => {
+  const query = `
+  SELECT * FROM asdos_submissions INNER JOIN users ON asdos_submissions.user_id = users.id WHERE pdf_path IS NOT NULL;
+  `;
+
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Error querying database:', err);
+      return res.status(500).send('Internal Server Error');
+    }
+    console.log(results);
+
+    // Render the page with the data
+    res.render('dosenkoorinator/Asdos-list', { submissions: results });
+  });
+});
+
+
+
+
+app.post('/Asdos-list', authenticateUser, (req, res) => {
+  // Assuming user_id is available in the session
+  const userId = req.session.user.userId;
+
+  // Assuming you have form data in req.body
+  const { someFormData } = req.body;
+
+  // Update the asdos_submissions table based on the user_id
+  const updateQuery = 'UPDATE asdos_submissions SET some_column = ? WHERE user_id = ?';
+
+  connection.query(updateQuery, [someFormData, userId], (updateErr) => {
+    if (updateErr) {
+      console.error('Error updating database:', updateErr);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    // Redirect to the Asdos-list page after processing the form
+    res.redirect('/Asdos-list');
+  });
+});
+
+
+// app.get('/Asdos-list', (req, res) => {
+//   res.render('dosenkoorinator/Asdos-list');
+// });
 
 app.get('/Assign-jadwal', (req, res) =>{
   res.render('dosenkoorinator/Assign-jadwal');

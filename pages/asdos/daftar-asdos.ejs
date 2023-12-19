@@ -79,28 +79,29 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div id="myModal" class="modal">
+   <!-- Modal -->
+<div id="myModal" class="modal">
+    <form action="/upload" method="post" enctype="multipart/form-data">
         <div class="classTranskrip">
             <label for="transkrip">Transkrip Nilai:</label>
-            <input type="file" accept=".pdf" id="transkrip" placeholder="Transkrip Nilai">
-        </div>
-        
-        <div class="classCV">
-            <label for="cv">CV:</label>
-            <input type="file" accept=".pdf" id="cv" placeholder="CV">
+            <input type="file" name="transkrip" accept=".pdf" id="transkrip" placeholder="Transkrip Nilai" required>
         </div>
 
-        
+        <div class="classCV">
+            <label for="cv">CV:</label>
+            <input type="file" name="cv" accept=".pdf" id="cv" placeholder="CV" required>
+        </div>
+
         <div class="classSuratLamaran">
             <label id="labelSuratLamaran" for="suratLamaran">Surat Lamaran Kerja:</label>
-            <input type="file" accept=".pdf" id="suratLamaran" placeholder="Surat Lamaran Kerja">
+            <input type="file" name="suratLamaran" accept=".pdf" id="suratLamaran" placeholder="Surat Lamaran Kerja" required>
         </div>
-        
-    
-        <button onclick="uploadFiles()">Submit</button>
-        <button onclick="closeModal()">Close</button>
-    </div>
+
+        <button type="submit">Submit</button>
+        <button type="button" onclick="closeModal()">Close</button>
+    </form>
+</div>
+
     
 
     <script>

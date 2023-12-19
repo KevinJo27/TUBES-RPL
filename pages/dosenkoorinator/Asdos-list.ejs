@@ -79,21 +79,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- You can manually populate this table with your data when connected -->
-                    <tr>
-                        <td>1</td>
-                        <td>John Doe</td>
-                        <td>Assistant</td>
-                        <td>
-                            <button onclick="showJadwal('John Doe')">Jadwal</button>
-                            <button onclick="showNilai('John Doe')">Nilai</button>
-                        </td>
-                    </tr>
-                    <!-- Repeat the above row structure for other data entries -->
-                </tbody>
-            </table>
-        </div>
-    </div>
+                    <!-- Inside your <tbody> tag -->
+                        <% submissions.forEach((submission, index) => { %>
+                            <tr>
+                                <td><%= index + 1 %></td>
+                                <td><%= submission.name %></td>
+                                <td>Assistant</td>
+                                <td>
+                                    <button onclick="showJadwal('<%= submission.name %>')">Jadwal</button>
+                                    <button onclick="showNilai('<%= submission.name %>')">Nilai</button>
+                                </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
     <script>
         function showJadwal(nama) {

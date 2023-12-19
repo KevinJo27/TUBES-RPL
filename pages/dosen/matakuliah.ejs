@@ -65,36 +65,21 @@
                         <th>Jumlah Asisten</th>
                     </tr>
                 </thead>
+                <!-- ... Your HTML code ... -->
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Pemrograman Berbasis Web</td>
-                        <td>4</td>
-                        <td>
-                            <span class="material-icons-outlined" onclick="showEditPopup(1)">edit</span>
-                            <span class="material-icons-outlined" onclick="showDeletePopup(1)">delete</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Pemrograman Berorientasi Objek</td>
-                        <td>3</td>
-                        <td>
-                            <span class="material-icons-outlined" onclick="showEditPopup(2)">edit</span>
-                            <span class="material-icons-outlined" onclick="showDeletePopup(2)">delete</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Algoritma dan Struktur Data</td>
-                        <td>4</td>
-                        <td>
-                            <span class="material-icons-outlined" onclick="showEditPopup(3)">edit</span>
-                            <span class="material-icons-outlined" onclick="showDeletePopup(3)">delete</span>
-                        </td>
-                    </tr>
-                </tbody>
-
+                    <% subjects.forEach((subject, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= subject.title %></td>
+                            <td>
+                                <!-- You can add other columns as needed -->
+                                <span class="material-icons-outlined" onclick="showEditPopup('<%= subject.id %>')">edit</span>
+                                <span class="material-icons-outlined" onclick="showDeletePopup('<%= subject.id %>')">delete</span>
+                            </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                    <!-- ... Your HTML code ... -->
             </table>
             <div class="upload-button">
                 <button onclick="showPopup()">Upload</button>

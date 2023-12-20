@@ -81,7 +81,7 @@
 
    <!-- Modal -->
 <div id="myModal" class="modal">
-    <form action="/upload" method="post" enctype="multipart/form-data">
+    <form id="formUpload" action="/upload" method="post" enctype="multipart/form-data" onsubmit="event.preventDefault();uploadFiles();">
         <div class="classTranskrip">
             <label for="transkrip">Transkrip Nilai:</label>
             <input type="file" name="transkrip" accept=".pdf" id="transkrip" placeholder="Transkrip Nilai" required>
@@ -98,9 +98,19 @@
         </div>
 
         <button type="submit">Submit</button>
+
         <button type="button" onclick="closeModal()">Close</button>
     </form>
 </div>
+
+  <!-- Modal -->
+  <div id="myModal2" class="modal2">
+    <h1 id="textBerhasilUpload">Berhasil Upload</h1>
+    <img src="/includes/images/check_icon.png" id="imgCheck">
+    <button onclick="closeModal2()" id="closeButton">
+        <img id="imgCloseButton" src="/includes/images/close_button.png">
+    </button>
+  </div>
 
     
 
@@ -114,8 +124,26 @@
         }
 
         function uploadFiles() {
+            var transkrip = document.getElementById("transkrip")
+            var cv = document.getElementById("cv");
+            var suratLamaran = document.getElementById("suratLamaran");
+            if (transkrip.files.length > 0 && cv.files.length > 0 && suratLamaran.files.length > 0) {
             closeModal();
+            openModal2();
+            }else{
+                alert("Harap Upload Semua File")
+            }
         }
+
+        function openModal2(){
+            document.getElementById("myModal2").style.display = "block";
+        }
+
+        function closeModal2(){
+            document.getElementById("myModal2").style.display = "none";
+        }
+
+
     </script>
 </body>
 

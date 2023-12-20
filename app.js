@@ -12,8 +12,8 @@ const upload = multer({ dest: 'uploads/' }); // Specify the upload directory
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
-  database: 'database_rpltb'
+  password: '12345678',
+  database: 'mysql'
 });
 
 connection.connect((err) => {
@@ -260,21 +260,67 @@ app.get('/jadwal-asdos', (req, res) =>{
 })
 
 app.get('/matakuliah', (req, res) => {
+  if (!req.session.user || !req.session.user.authenticated) {
+    return res.redirect('/');
+  }
+
+  // Get the user ID from the session
+  const userId = req.session.user.userId;
   const query = `
-    SELECT ds.*, s.title
-    FROM dosen_subjects ds
-    JOIN subjects s ON ds.subject_id = s.id
+  SELECT ds.*, s.title
+  FROM dosen_subjects ds
+  JOIN subjects s ON ds.subject_id = s.id
+  WHERE ds.user_id = ?
   `;
 
   // Execute the query and handle the result
-  connection.query(query, (err, results) => {
-    if (err) throw err;
+  connection.query(query, [userId], (err, results) => {
+    if (err) {
+      console.error('Error querying database:', err);
+      return res.status(500).send('Internal Server Error');
+    }
   
     // Render the page and pass the results to the template
     res.render('dosen/matakuliah', { subjects: results });
   });
 });
 
+app.post('/matakuliah', (req, res) => {
+  const { subjectId } = req.body;
+
+  // Check if subjectId is provided
+  if (!subjectId) {
+    return res.status(400).send('Bad Request: Missing subjectId');
+  }
+
+  // Delete data from subjects table
+  const deleteSubjectQuery = 'DELETE FROM subjects WHERE id = ?';
+
+  connection.query(deleteSubjectQuery, [subjectId], (err, subjectResult) => {
+    if (err) {
+      console.error('Error deleting subject from database:', err);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    if (subjectResult.affectedRows === 0) {
+      // Subject not found, return an appropriate response or handle it as needed
+      return res.status(404).send('Subject not found');
+    }
+
+    // If subject is deleted from subjects table, delete from dosen_subjects table
+    const deleteDosenSubjectQuery = 'DELETE FROM dosen_subjects WHERE subject_id = ?';
+
+    connection.query(deleteDosenSubjectQuery, [subjectId], (dosenSubjectErr) => {
+      if (dosenSubjectErr) {
+        console.error('Error deleting dosen_subject from database:', dosenSubjectErr);
+        return res.status(500).send('Internal Server Error');
+      }
+
+      // Send a success response
+      res.status(200).send('Delete successful');
+    });
+  });
+});
 
 
 app.get('/AsistenDosen', (req, res) =>{

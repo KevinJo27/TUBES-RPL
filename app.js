@@ -260,26 +260,150 @@ app.get('/jadwal-asdos', (req, res) =>{
 })
 
 app.get('/matakuliah', (req, res) => {
+  if (!req.session.user || !req.session.user.authenticated) {
+    return res.redirect('/');
+  }
+
+  // Get the user ID from the session
+  const userId = req.session.user.userId;
   const query = `
-    SELECT ds.*, s.title
-    FROM dosen_subjects ds
-    JOIN subjects s ON ds.subject_id = s.id
+  SELECT ds.*, s.title
+  FROM dosen_subjects ds
+  JOIN subjects s ON ds.subject_id = s.id
+  WHERE ds.user_id = ?
   `;
 
   // Execute the query and handle the result
-  connection.query(query, (err, results) => {
-    if (err) throw err;
+  connection.query(query, [userId], (err, results) => {
+    if (err) {
+      console.error('Error querying database:', err);
+      return res.status(500).send('Internal Server Error');
+    }
   
     // Render the page and pass the results to the template
     res.render('dosen/matakuliah', { subjects: results });
   });
 });
 
+app.post('/matakuliah', (req, res) => {
+  const { subjectId } = req.body;
+
+  // Check if subjectId is provided
+  if (!subjectId) {
+    return res.status(400).send('Bad Request: Missing subjectId');
+  }
+
+  // Delete data from subjects table
+  const deleteSubjectQuery = 'DELETE FROM subjects WHERE id = ?';
+
+  connection.query(deleteSubjectQuery, [subjectId], (err, subjectResult) => {
+    if (err) {
+      console.error('Error deleting subject from database:', err);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    if (subjectResult.affectedRows === 0) {
+      // Subject not found, return an appropriate response or handle it as needed
+      return res.status(404).send('Subject not found');
+    }
+
+    // If subject is deleted from subjects table, delete from dosen_subjects table
+    const deleteDosenSubjectQuery = 'DELETE FROM dosen_subjects WHERE subject_id = ?';
+
+    connection.query(deleteDosenSubjectQuery, [subjectId], (dosenSubjectErr) => {
+      if (dosenSubjectErr) {
+        console.error('Error deleting dosen_subject from database:', dosenSubjectErr);
+        return res.status(500).send('Internal Server Error');
+      }
+
+      // Send a success response
+      res.status(200).send('Delete successful');
+    });
+  });
+});
 
 
-app.get('/AsistenDosen', (req, res) =>{
-  res.render('dosen/AssistenDosen');
-})
+app.get('/AsistenDosen', (req, res) => {
+  if (!req.session.user || !req.session.user.authenticated) {
+    return res.redirect('/');
+  }
+
+  // Get the user ID from the session
+  const userId = req.session.user.userId;
+
+  // Query to get subjects assigned to the user in dosen_subjects
+  const dosenSubjectsQuery = `
+    SELECT ds.*, s.title as subject_title
+    FROM dosen_subjects ds
+    JOIN subjects s ON ds.subject_id = s.id
+    WHERE ds.user_id = ?
+  `;
+
+  connection.query(dosenSubjectsQuery, [userId], (dosenSubjectsErr, dosenSubjectsResults) => {
+    if (dosenSubjectsErr) {
+      console.error('Error querying dosen_subjects:', dosenSubjectsErr);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    // Iterate through the results and perform additional queries
+    const subjectsWithUsersPromises = dosenSubjectsResults.map((subject) => {
+      // Query to get the subject_id from subjects table
+      const subjectQuery = 'SELECT id FROM subjects WHERE title = ?';
+
+      return new Promise((resolve) => {
+        connection.query(subjectQuery, [subject.subject_title], (subjectQueryErr, subjectQueryResults) => {
+          if (subjectQueryErr) {
+            console.error('Error querying subjects:', subjectQueryErr);
+            resolve(null);
+          } else if (subjectQueryResults.length === 0) {
+            console.error('Subject not found in subjects table');
+            resolve(null);
+          } else {
+            const subjectId = subjectQueryResults[0].id;
+
+            // Query to get users_id from asdos_assigns table
+            const asdosAssignsQuery = 'SELECT user_id FROM asdos_assigns WHERE subject_id = ?';
+
+            connection.query(asdosAssignsQuery, [subjectId], (asdosAssignsErr, asdosAssignsResults) => {
+              if (asdosAssignsErr) {
+                console.error('Error querying asdos_assigns:', asdosAssignsErr);
+                resolve(null);
+              } else if (asdosAssignsResults.length === 0) {
+                console.error('No users assigned to the subject');
+                resolve(null);
+              } else {
+                const usersId = asdosAssignsResults.map((asdosAssign) => asdosAssign.user_id);
+
+                // Query to get users' names from users table
+                const usersQuery = 'SELECT id, name FROM users WHERE id IN (?)';
+
+                connection.query(usersQuery, [usersId], (usersErr, usersResults) => {
+                  if (usersErr) {
+                    console.error('Error querying users:', usersErr);
+                    resolve(null);
+                  } else {
+                    const subjectWithUsers = {
+                      title: subject.subject_title,
+                      users: usersResults,
+                    };                    
+                    resolve(subjectWithUsers);
+                  }
+                });
+              }
+            });
+          }
+        });
+      });
+    });
+
+    // Wait for all promises to resolve and then render the page
+    Promise.all(subjectsWithUsersPromises).then((subjectsWithUsers) => {
+      res.render('dosen/AssistenDosen', { subjects: subjectsWithUsers });
+    });
+  });
+});
+
+
 
 app.get('/home-koordinator', (req, res) =>{
   const { userName } = req.session.user;

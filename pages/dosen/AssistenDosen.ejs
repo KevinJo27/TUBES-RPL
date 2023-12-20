@@ -82,19 +82,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Kevin</td>
-                        <td>Rekayasa Perangkat Lunak</td>
-                        <td><button>Jadwal</button></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Jonathan</td>
-                        <td>Rekayasa Perangkat Lunak</td>
-                        <td><button>Jadwal</button></td>
-                    </tr>
-                </tbody>
+                    <% subjects.forEach((subject, index) => { %>
+                      <!-- Check if there are users assigned to the subject -->
+                      <% if (subject.users && subject.users.length > 0) { %>
+                        <!-- Iterate through each user and display their name in a new row -->
+                        <% subject.users.forEach((user, userIndex) => { %>
+                          <tr>
+                            <!-- Display a unique index for each row, including rows for user names -->
+                            <td><%= userIndex + 1 %></td>
+                            <td><%= user.name %></td>
+                            <td><%= subject.title %></td>
+                            <td><button onclick="showDetails('<%= subject.id %>')">Jadwal</button></td>
+                          </tr>
+                        <% }); %>
+                      <% } else { %>
+                        <!-- If no users assigned, display a message in the first column -->
+                        <tr>
+                          <td><%= index + 1 %></td>
+                          <td colspan="4">No users assigned</td>
+                        </tr>
+                      <% } %>
+                    <% }); %>
+                  </tbody>
+                  
             </table>
         </div>
     </div>

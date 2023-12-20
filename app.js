@@ -259,9 +259,22 @@ app.get('/jadwal-asdos', (req, res) =>{
   res.render('asdos/jadwal-asdos');
 })
 
-app.get('/matakuliah', (req, res) =>{
-  res.render('dosen/matakuliah');
-})
+app.get('/matakuliah', (req, res) => {
+  const query = `
+    SELECT ds.*, s.title
+    FROM dosen_subjects ds
+    JOIN subjects s ON ds.subject_id = s.id
+  `;
+
+  // Execute the query and handle the result
+  connection.query(query, (err, results) => {
+    if (err) throw err;
+  
+    // Render the page and pass the results to the template
+    res.render('dosen/matakuliah', { subjects: results });
+  });
+});
+
 
 
 app.get('/AsistenDosen', (req, res) =>{

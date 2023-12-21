@@ -21,6 +21,10 @@
         function openHomeKoordinator(){
             window.location.href = "/home-koordinator"
         }
+
+        function openJadwalInsert(){
+            window.location.href = "/jadwal-insert"
+        }
     </script>  
 </head>
 
@@ -86,7 +90,7 @@
                                 <td><%= submission.name %></td>
                                 <td>Assistant</td>
                                 <td>
-                                    <button onclick="showJadwal('<%= submission.name %>')">Jadwal</button>
+                                    <button onclick="openJadwalInsert()">Jadwal</button>
                                     <button onclick="showNilai('<%= submission.name %>')">Nilai</button>
                                 </td>
                             </tr>

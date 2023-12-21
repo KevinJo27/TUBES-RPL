@@ -483,6 +483,9 @@ app.get('/jadwal-views', (req, res) => {
   });
 });
 
+app.get('/jadwal-insert', (req, res) =>{
+  res.render('dosenkoorinator/jadwal-insert');
+})
 
 app.get('/Assign-jadwal', (req, res) =>{
   res.render('dosenkoorinator/Assign-jadwal');

@@ -1,0 +1,299 @@
+body 
+{
+    height: 100%;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #46d2b5, #418ba4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.master{
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 86%;
+    height: 800px;
+    background-color: white;
+    
+}
+
+.container {
+    position: relative;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 86%;
+    height: 650px;
+    top:-230px
+}
+
+.day-label, .hour-label, .schedule-cell {
+    border: 1px solid #ddd;
+    text-align: center;
+    line-height: 2;
+}
+
+.day-label {
+    grid-column: 1;
+    grid-row: span 11;
+}
+
+.hour-label {
+    grid-row: span 2;
+}
+
+.upload-button {
+    grid-column: span 11;
+    text-align: center;
+    margin-top: -25px;
+}
+
+button {
+    padding: 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+table {
+    width: 86%;
+    margin-right: 100px;
+    margin-top: 15px;
+    margin-bottom: 50px;
+}
+
+th, td {
+    padding: 8px;
+}
+
+/* Navigation Bar */
+.navRectangle{
+    animation: transitionIn 0.75s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    width: 50px;
+    height: 480px;
+    padding: 40px;
+    margin-right: 1385px;
+    margin-top: 100px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-left: 20px;
+    justify-content: flex-start;
+}
+
+.navigationHomeAsdos span{
+    color: black;
+    padding-left: 25px;
+    padding-top: -10px;
+}
+
+.navigationHomeAsdos{
+    text-decoration: none;
+    align-self: flex-start;
+    
+}
+
+.navigationProfileAsdos span{
+    color: black;
+    padding-left: 25px;
+    padding-top: -10px;
+}
+
+.navigationProfileAsdos{
+    text-decoration: none;
+    align-self: flex-start;
+}
+
+.navigationProfileAsdos img{
+    padding-top: 50px;
+    max-height: 50px;
+    margin-left: 22px;
+}
+
+#borderNavHomeAsdos{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+#borderNavProfileAsdos{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+    padding: 3px;
+}
+
+#borderNavProfileAsdos img{
+    padding: 0px;
+}
+
+#borderNavDaftarAsdos{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+    padding: 3px;
+    margin-top: 15px;
+}
+
+.navigationDaftarAsdos{
+    text-decoration: none;
+}
+
+.navigationDaftarAsdos span{
+    color: black;
+    margin-left: 23px;
+}
+
+.navigationDaftarAsdos img{
+    max-width: 60px;
+    margin-left: 17px;
+}
+
+#borderNavJadwalAsdos{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+    padding: 3px;
+    margin-top: 15px;
+}
+
+.navigationJadwalAsdos{
+    text-decoration: none;
+}
+
+.navigationJadwalAsdos span{
+    color: black;
+    margin-left: 20px;
+}
+
+.navigationJadwalAsdos img{
+    max-width: 50px;
+    margin-left: 22px;
+}
+
+#borderNavLogOutAsdos{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+    padding: 3px;
+    margin-top: 15px;
+    padding-top: 10px;
+}
+
+.navigationLogOutAsdos{
+    text-decoration: none;
+}
+
+.navigationLogOutAsdos span{
+    color: black;
+    margin-left: 20px;
+}
+
+.navigationLogOutAsdos img{
+    max-width: 50px;
+    margin-left: 22px;
+}
+
+.container{
+    margin-top: 50px;
+    height: 550px;
+    margin-left: 150px;
+
+}
+
+center{
+    margin-top: -110px;
+    margin-left: 700px;
+}
+
+h2{
+    margin-top: -550px;
+    margin-left: 500px;
+}
+
+button{
+    margin:10px;
+}
+
+td,th{
+    padding: 15px;
+}
+
+td{
+    border-bottom: 1px solid #ddd;
+}
+
+thead th{
+    border-bottom: 2px solid black;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #eceaea;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 100px;
+    width: 200px;
+    height: 250px;
+}
+
+.modal label {
+    display: block;
+    margin-top: 10px;
+}
+
+.modal input {
+    display: block;
+    margin: 5px auto;
+}
+
+.modal button {
+    display: block;
+    margin: 10px auto;
+}
+
+#transkrip{
+    margin-left: 60px;
+}
+
+#cv{
+    margin-left: 60px;
+}
+
+#suratLamaran{
+    margin-left: 60px;
+}
+
+#labelSuratLamaran{
+    margin-left: 10px;
+}
+
+.classHari{
+    margin-bottom: 15px;
+}
+
+.classJamMulai{
+    margin-bottom: 10px;
+}
+
+.classJamSelesai{
+    margin-bottom: 20px;
+}
+

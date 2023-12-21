@@ -456,6 +456,34 @@ app.post('/Asdos-list', authenticateUser, (req, res) => {
 //   res.render('dosenkoorinator/Asdos-list');
 // });
 
+// ...
+
+app.get('/jadwal-views', (req, res) => {
+  if (!req.session.user || !req.session.user.authenticated) {
+    return res.redirect('/');
+  }
+
+  // Get the user ID from the session
+  const userId = req.session.user.userId;
+
+  // Query to get the user's name from the users table
+  const userNameQuery = 'SELECT name FROM users WHERE id = ?';
+
+  connection.query(userNameQuery, [userId], (userNameErr, userNameResults) => {
+    if (userNameErr) {
+      console.error('Error querying user name:', userNameErr);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    // If user name is found, store it in a variable
+    const userName = userNameResults.length > 0 ? userNameResults[0].name : 'Unknown';
+
+    // Render the EJS template and pass the user name
+    res.render('dosen/jadwal-views', { userName });
+  });
+});
+
+
 app.get('/Assign-jadwal', (req, res) =>{
   res.render('dosenkoorinator/Assign-jadwal');
 })

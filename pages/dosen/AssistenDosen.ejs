@@ -16,11 +16,15 @@
         }
 
         function openProfileDosen() {
-            window.location.href = "/profil-dosen"
+            window.location.href = "/profil-dosen";
         }
 
         function openHomeDosen() {
-            window.location.href = "/home-dosen"
+            window.location.href = "/home-dosen";
+        }
+
+        function openJadwalViews() {
+            window.location.href = "/jadwal-views";
         }
     </script>
 </head>
@@ -92,7 +96,7 @@
                             <td><%= userIndex + 1 %></td>
                             <td><%= user.name %></td>
                             <td><%= subject.title %></td>
-                            <td><button onclick="showDetails('<%= subject.id %>')">Jadwal</button></td>
+                            <td><button onclick="openJadwalViews()">Jadwal</button></td>
                           </tr>
                         <% }); %>
                       <% } else { %>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal ASDOS</title>
+    <link rel="stylesheet" href="/includes/css/css dosen lab/jadwalviews.css">
+    <script>
+        function openAsistenDosen() {
+            window.location.href = '/AsistenDosen';
+        }
+
+        function openMatakuliah() {
+            window.location.href = '/Matakuliah';
+        }
+
+        function openProfileDosen() {
+            window.location.href = "/profil-dosen";
+        }
+
+        function openHomeDosen() {
+            window.location.href = "/home-dosen";
+        }
+
+        function openJadwalViews(){
+            windq.location.href = "/jadwal-views";
+        }
+    </script> 
+</head>
+
+<body>
+   <!-- Navigation Bar -->
+   <div class="navRectangle">
+    <nav class="navigationBar">
+        <div id="borderNavHomeAsdos">
+            <a href="#" class="navigationHomeAsdos" onclick="openHomeDosen()">
+                <img src="/includes/images/home icon.png" alt="Navigation Home">
+                <span>Home</span>
+            </a>
+        </div>
+        
+        <div id="borderNavProfileAsdos">
+            <a href="#" class="navigationProfileAsdos" onclick="openProfileDosen()">
+                <img src="/includes/images/profile navigation icon.png"alt="Navigation Profile Asdos">
+                <span>Profile</span>
+            </a>
+        </div>
+
+        <div id="borderNavDaftarAsdos">
+            <a href="#" class="navigationDaftarAsdos" onclick="openMatakuliah()">
+                <img src="/includes/images/icon daftar asdos.png"alt="Navigation Daftar Asdos">
+                <span>Matakuliah</span>
+            </a>
+        </div>
+
+        <div id="borderNavJadwalAsdos">
+            <a href="#" class="navigationJadwalAsdos" onclick="openAsistenDosen()">
+                <img src="/includes/images/icon jadwal.png"alt="Navigation Jadwal Asdos">
+                <span>Asisten Dosen</span>
+            </a>
+        </div>
+
+        <div id="borderNavLogOutAsdos">
+            <a href="login-asdos.html" class="navigationLogOutAsdos">
+                <img src="/includes/images/log out.png"alt="Navigation Logout Asdos">
+                <span>Logout</span>
+            </a>
+        </div>
+    </nav>
+</div>
+<!-- Navigation Bar -->
+
+    <div class="container">
+        <h2 style="color: white;">Jadwal Milik : <%= userName %></h2>
+    <div class="master">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <div id="bottomBorderMain"></div>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>07.00</td>
+                </tr>
+                <tr>
+                    <td>08.00</td>
+                </tr>
+                <tr>
+                    <td>09.00</td>
+                </tr>
+                <tr>
+                    <td>10.00</td>
+                </tr>
+                <tr>
+                    <td>11.00</td>
+                </tr>
+                <tr>
+                    <td>12.00</td>
+                </tr>
+                <tr>
+                    <td>13.00</td>
+                </tr>
+                <tr>
+                    <td>14.00</td>
+                </tr>
+                <tr>
+                    <td>15.00</td>
+                </tr>
+                <tr>
+                    <td>16.00</td>
+                </tr>
+                <tr>
+                    <td>17.00</td>
+                </tr>
+            </tbody>
+            
+        </table>
+    </div>
+</div>
+
+<!--Modal -->
+<div id="myModal" class="modal">
+    <div class="classHari">
+        <label for="Hari">Hari:</label>
+        <select id="dropDownHari">
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+        </select>
+    </div>
+    
+    <div class="classJamMulai">
+        <label for="jamMulai">Jam Mulai:</label>
+        <select id="dropDownJamMulai">
+            <option value="7">07.00</option>
+            <option value="8">08.00</option>
+            <option value="9">09.00</option>
+            <option value="10">10.00</option>
+            <option value="11">11.00</option>
+            <option value="12">12.00</option>
+            <option value="13">13.00</option>
+            <option value="14">14.00</option>
+            <option value="15">15.00</option>
+            <option value="16">16.00</option>
+        </select>
+    </div>
+
+    
+    <div class="classJamSelesai">
+        <label for="jamSelesai">Jam Selesai:</label>
+        <select id="dropDownJamSelesai">
+            <option value="8">08.00</option>
+            <option value="9">09.00</option>
+            <option value="10">10.00</option>
+            <option value="11">11.00</option>
+            <option value="12">12.00</option>
+            <option value="13">13.00</option>
+            <option value="14">14.00</option>
+            <option value="15">15.00</option>
+            <option value="16">16.00</option>
+            <option value="17">17.00</option>
+        </select>
+    </div>
+    
+
+    <button onclick="closeModal()">Submit</button>
+</div>
+
+</body>
+
+</html>
+
+<script>
+    function openModal(){
+        document.getElementById("myModal").style.display = "block";
+    }
+    function closeModal(){
+        document.getElementById("myModal").style.display = "none";
+    }
+</script>

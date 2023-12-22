@@ -24,7 +24,7 @@
         }
 
         function openJadwalViews(){
-            windq.location.href = "/jadwal-views";
+            window.location.href = "/jadwal-views";
         }
     </script> 
 </head>
@@ -189,4 +189,18 @@
     function closeModal(){
         document.getElementById("myModal").style.display = "none";
     }
+    function getParamUserName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+var userName = getParamUserName('user');
+
+document.querySelector('h2').innerText = 'Jadwal Milik: ' + userName;
+
 </script>

@@ -12,8 +12,8 @@ const upload = multer({ dest: 'uploads/' }); // Specify the upload directory
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
-  database: 'database_rpltb'
+  password: '12345678',
+  database: 'mysql'
 });
 
 connection.connect((err) => {

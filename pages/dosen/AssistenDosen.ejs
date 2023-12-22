@@ -23,8 +23,8 @@
             window.location.href = "/home-dosen";
         }
 
-        function openJadwalViews() {
-            window.location.href = "/jadwal-views";
+        function openJadwalViews(userName) {
+            window.location.href = "/jadwal-views?user="+userName;
         }
     </script>
 </head>
@@ -96,7 +96,7 @@
                             <td><%= userIndex + 1 %></td>
                             <td><%= user.name %></td>
                             <td><%= subject.title %></td>
-                            <td><button onclick="openJadwalViews()">Jadwal</button></td>
+                            <td><button onclick="openJadwalViews('<%= user.name %>')">Jadwal</button></td>
                           </tr>
                         <% }); %>
                       <% } else { %>

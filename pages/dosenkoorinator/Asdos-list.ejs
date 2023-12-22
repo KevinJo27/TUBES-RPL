@@ -7,6 +7,7 @@
     <title>List Asisten Dosen</title>
     <link rel="stylesheet" href="/includes/css/css koordinator/asdos-list.css">
     <script>
+        let nama = "";
         function openAsdosList() {
             window.location.href = '/Asdos-list';
         }
@@ -22,7 +23,8 @@
             window.location.href = "/home-koordinator"
         }
 
-        function openJadwalInsert(){
+        function openJadwalInsert(button){
+            // const name = button.getAttribute("data-name");
             window.location.href = "/jadwal-insert"
         }
     </script>  
@@ -90,7 +92,7 @@
                                 <td><%= submission.name %></td>
                                 <td>Assistant</td>
                                 <td>
-                                    <button onclick="openJadwalInsert()">Jadwal</button>
+                                    <button onclick="openJadwalInsert()" data-name = "<%= submission.name %>">Jadwal</button>
                                     <button onclick="showNilai('<%= submission.name %>')">Nilai</button>
                                 </td>
                             </tr>

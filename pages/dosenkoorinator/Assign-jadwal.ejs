@@ -94,13 +94,17 @@
     <div class="overlay" id="overlay" onclick="closePopup()"></div>
     <div class="modal" id="popup">
         <h3>Berikut daftar calon asisten dosen:</h3>
-        <ul>
-            <li>Calon Asisten 1</li>
-            <li>Calon Asisten 2</li>
-            <!-- Add more list items for each candidate assistant -->
-        </ul>
-        <button onclick="closePopup()">Close</button>
+        <form>
+            <label for="asistenList">Pilih Calon Asisten:</label>
+            <select id="asistenList" name="asistenList">
+                <option value="1">Calon Asisten 1</option>
+                <option value="2">Calon Asisten 2</option>
+                <!-- Add more options for each candidate assistant -->
+            </select>
+            <button type="button" onclick="closePopup()">Close</button>
+        </form>
     </div>
+    
 
     <script>
         function openPopup() {

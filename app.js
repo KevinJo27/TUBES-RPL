@@ -483,9 +483,11 @@ app.get('/jadwal-views', (req, res) => {
   });
 });
 
-app.get('/jadwal-insert', (req, res) =>{
-  res.render('dosenkoorinator/jadwal-insert');
-})
+app.get('/jadwal-insert', (req, res) => {
+  const name = req.query.name || 'Unknown';
+  res.render('dosenkoorinator/jadwal-insert', { name });
+});
+
 
 app.get('/Assign-jadwal', (req, res) =>{
   res.render('dosenkoorinator/Assign-jadwal');

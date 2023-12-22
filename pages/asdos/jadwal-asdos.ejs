@@ -19,10 +19,64 @@
             window.location.href = "/profil-asdos"
         }
 
-        function openHomeAsdos(){
-            window.location.href = "/home-asdos"
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
         }
-    </script>    
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        function submitForm() {
+            var selectedHari = document.getElementById("dropDownHari").value;
+            var selectedJamMulai = parseFloat(document.getElementById("dropDownJamMulai").value);
+            var selectedJamSelesai = parseFloat(document.getElementById("dropDownJamSelesai").value);
+
+            clearHighlightedCells();
+            highlightCells(selectedHari, selectedJamMulai, selectedJamSelesai);
+
+            closeModal();
+        }
+
+        function clearHighlightedCells() {
+            var highlightedCells = document.querySelectorAll('.highlighted');
+            highlightedCells.forEach(function (cell) {
+                cell.classList.remove('highlighted');
+            });
+        }
+
+        function highlightCells(hari, jamMulai, jamSelesai) {
+            var table = document.querySelector('table');
+            var columnIndex = getColumnIndex(hari);
+
+            var startRowIndex = jamMulai - 7;
+            var endRowIndex = jamSelesai - 7;
+
+            for (var row = startRowIndex; row <= endRowIndex; row++) {
+                var cellId = 'row' + (row + 7) + 'col' + columnIndex;
+                var cell = document.getElementById(cellId);
+                cell.classList.add("highlighted");
+            }
+        }
+
+        function getColumnIndex(hari) {
+            switch (hari) {
+                case "monday": return 2;
+                case "tuesday": return 3;
+                case "wednesday": return 4;
+                case "thursday": return 5;
+                case "friday": return 6;
+                case "saturday": return 7;
+                default: return -1;
+            }
+        }
+
+    </script>
+            <style>
+                .highlighted {
+                    background-color: blue;
+                }
+            </style>
 </head>
 
 <body>
@@ -88,38 +142,104 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>07.00</td>
+                <tr id="row7">
+                    <td id="row7col1">07.00</td>
+                    <td id="row7col2"></td>
+                    <td id="row7col3"></td>
+                    <td id="row7col4"></td>
+                    <td id="row7col5"></td>
+                    <td id="row7col6"></td>
+                    <td id="row7col7"></td>
                 </tr>
-                <tr>
-                    <td>08.00</td>
+                <tr id="row8">
+                    <td id="row8col1">08.00</td>
+                    <td id="row8col2"></td>
+                    <td id="row8col3"></td>
+                    <td id="row8col4"></td>
+                    <td id="row8col5"></td>
+                    <td id="row8col6"></td>
+                    <td id="row8col7"></td>
                 </tr>
-                <tr>
-                    <td>09.00</td>
+                <tr id="row9">
+                    <td id="row9col1">09.00</td>
+                    <td id="row9col2"></td>
+                    <td id="row9col3"></td>
+                    <td id="row9col4"></td>
+                    <td id="row9col5"></td>
+                    <td id="row9col6"></td>
+                    <td id="row9col7"></td>
                 </tr>
-                <tr>
-                    <td>10.00</td>
+                <tr id="row10">
+                    <td id="row10col1">10.00</td>
+                    <td id="row10col2"></td>
+                    <td id="row10col3"></td>
+                    <td id="row10col4"></td>
+                    <td id="row10col5"></td>
+                    <td id="row10col6"></td>
+                    <td id="row10col7"></td>
                 </tr>
-                <tr>
-                    <td>11.00</td>
+                <tr id="row11">
+                    <td id="row11col1">11.00</td>
+                    <td id="row11col2"></td>
+                    <td id="row11col3"></td>
+                    <td id="row11col4"></td>
+                    <td id="row11col5"></td>
+                    <td id="row11col6"></td>
+                    <td id="row11col7"></td>
                 </tr>
-                <tr>
-                    <td>12.00</td>
+                <tr id="row12">
+                    <td id="row12col1">12.00</td>
+                    <td id="row12col2"></td>
+                    <td id="row12col3"></td>
+                    <td id="row12col4"></td>
+                    <td id="row12col5"></td>
+                    <td id="row12col6"></td>
+                    <td id="row12col7"></td>
                 </tr>
-                <tr>
-                    <td>13.00</td>
+                <tr id="row13">
+                    <td id="row13col1">13.00</td>
+                    <td id="row13col2"></td>
+                    <td id="row13col3"></td>
+                    <td id="row13col4"></td>
+                    <td id="row13col5"></td>
+                    <td id="row13col6"></td>
+                    <td id="row13col7"></td>
                 </tr>
-                <tr>
-                    <td>14.00</td>
+                <tr id="row14">
+                    <td id="row14col1">14.00</td>
+                    <td id="row14col2"></td>
+                    <td id="row14col3"></td>
+                    <td id="row14col4"></td>
+                    <td id="row14col5"></td>
+                    <td id="row14col6"></td>
+                    <td id="row14col7"></td>
                 </tr>
-                <tr>
-                    <td>15.00</td>
+                <tr id="row15">
+                    <td id="row15col1">15.00</td>
+                    <td id="row15col2"></td>
+                    <td id="row15col3"></td>
+                    <td id="row15col4"></td>
+                    <td id="row15col5"></td>
+                    <td id="row15col6"></td>
+                    <td id="row15col7"></td>
                 </tr>
-                <tr>
-                    <td>16.00</td>
+                <tr id="row16">
+                    <td id="row16col1">16.00</td>
+                    <td id="row16col2"></td>
+                    <td id="row16col3"></td>
+                    <td id="row16col4"></td>
+                    <td id="row16col5"></td>
+                    <td id="row16col6"></td>
+                    <td id="row16col7"></td>
                 </tr>
-                <tr>
-                    <td>17.00</td>
+                <tr id="row17">
+                    <td id="row17col1">17.00</td>
+                    <td id="row17col2"></td>
+                    <td id="row17col3"></td>
+                    <td id="row17col4"></td>
+                    <td id="row17col5"></td>
+                    <td id="row17col6"></td>
+                    <td id="row17col7"></td>
                 </tr>
             </tbody>
             
@@ -179,7 +299,7 @@
     </div>
     
 
-    <button onclick="closeModal()">Submit</button>
+    <button onclick="submitForm()">Submit</button>
 </div>
 
 </body>

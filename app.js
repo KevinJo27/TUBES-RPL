@@ -5,15 +5,41 @@ const mysql = require('mysql2'); // Add this line
 const app = express();
 const port = 3000;
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' }); // Specify the upload directory
+const storage = multer.diskStorage({
+  destination: 'uploads/',
+  filename: function (req, file, cb) {
+    const userId = req.session.user ? req.session.user.userId : null;
+    const subject = req.body.subject;
 
+    if (!userId) {
+      console.error('User ID not found in session');
+      return cb(new Error('Unauthorized'), null);
+    }
+
+    let fileName;
+    if (file.fieldname === 'transkrip') {
+      fileName = `${userId}_transkrip_${subject}.${file.originalname}`;
+    } else if (file.fieldname === 'cv') {
+      fileName = `${userId}_cv_${subject}.${file.originalname}`;
+    } else if (file.fieldname === 'suratLamaran') {
+      fileName = `${userId}_suratLamaran_${subject}.${file.originalname}`;
+    } else {
+      // Handle other file types if needed
+      fileName = file.originalname;
+    }
+
+    cb(null, fileName);
+  }
+});
+
+const upload = multer({ storage: storage });
 // const __dirname = path.resolve();
 
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '12345678',
-  database: 'mysql'
+  password: '',
+  database: 'database_rpltb'
 });
 
 connection.connect((err) => {
@@ -214,6 +240,7 @@ app.get('/upload', authenticateUser, (req, res) => {
   });
 });
 
+
 app.post('/upload', upload.fields([
   { name: 'transkrip', maxCount: 1 },
   { name: 'cv', maxCount: 1 },
@@ -226,27 +253,27 @@ app.post('/upload', upload.fields([
     const { transkrip, cv, suratLamaran } = req.files;
 
     if (!transkrip || !cv || !suratLamaran) {
-        return res.status(400).send('All files are required.');
+      return res.status(400).send('All files are required.');
     }
 
     // Assuming user_id is available in the session
     const userId = user.userId;
 
     // Assuming the pdf_path in the database is a URL or file path
-    const transkripPath = `/uploads/${transkrip[0].filename}`;
-    const cvPath = `/uploads/${cv[0].filename}`;
-    const suratLamaranPath = `/uploads/${suratLamaran[0].filename}`;
+    const transkripPath = `/uploads/${userId}_transkrip_${req.body.subject}.${transkrip[0].originalname}`;
+    const cvPath = `/uploads/${userId}_cv_${req.body.subject}.${cv[0].originalname}`;
+    const suratLamaranPath = `/uploads/${userId}_suratLamaran_${req.body.subject}.${suratLamaran[0].originalname}`;
 
     // Insert data into the asdos_submissions table
-    const query = 'INSERT INTO asdos_submissions (user_id, pdf_path) VALUES (?, ?)';
-    connection.query(query, [userId, transkripPath], (err) => {
-        if (err) {
-            console.error('Error inserting data into the database:', err);
-            return res.status(500).send('Internal Server Error');
-        }
+    const query = 'INSERT INTO asdos_submissions (user_id, pdf_path, cv_path, surat_lamaran_path) VALUES (?, ?, ?, ?)';
+    connection.query(query, [userId, transkripPath, cvPath, suratLamaranPath], (err) => {
+      if (err) {
+        console.error('Error inserting data into the database:', err);
+        return res.status(500).send('Internal Server Error');
+      }
 
-        console.log('Data inserted successfully');
-        res.redirect('/home-asdos');
+      console.log('Data inserted successfully');
+      res.redirect('/home-asdos');
     });
   } else {
     // Handle the case where user or user.userId is undefined or null
@@ -484,9 +511,26 @@ app.get('/jadwal-views', (req, res) => {
 });
 
 app.get('/jadwal-insert', (req, res) => {
-  const name = req.query.name || 'Unknown';
-  res.render('dosenkoorinator/jadwal-insert', { name });
+  if (!req.session.user || !req.session.user.authenticated) {
+    return res.redirect('/');
+  }
+
+  const userId = req.session.user.userId;
+
+  const userNameQuery = 'SELECT name FROM users WHERE id = ?';
+
+  connection.query(userNameQuery, [userId], (userNameErr, userNameResults) => {
+    if (userNameErr) {
+      console.error('Error querying user name:', userNameErr);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    const userName = userNameResults.length > 0 ? userNameResults[0].name : 'Unknown';
+    
+    res.render('dosenkoorinator/jadwal-insert', { userName });
+  });
 });
+
 
 
 app.get('/Assign-jadwal', (req, res) =>{

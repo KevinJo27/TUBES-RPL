@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MataKuliah</title>
+    <link rel="stylesheet" href="/includes/css/css koordinator/assign-jadwal.css">
+    <script>
+        function openAsdosList() {
+            window.location.href = '/Asdos-list';
+        }
+
+        function openAssignJadwal() {
+            window.location.href = '/Assign-jadwal';
+        }
+
+        function openProfileDosen(){
+            window.location.href = "/profil-dosen"
+        }
+        function openHomeKoordinator(){
+            window.location.href = "/home-koordinator"
+        }
+    </script>  
+</head>
+
+<body>
+      <!-- Navigation Bar -->
+  <div class="navRectangle">
+    <nav class="navigationBar">
+        <div id="borderNavHomeAsdos">
+            <a href="#" class="navigationHomeAsdos" onclick="openHomeKoordinator()">
+                <img src="/includes/images/home icon.png" alt="Navigation Home">
+                <span>Home</span>
+            </a>
+        </div>
+
+        <div id="borderNavProfileAsdos">
+            <a href="#" class="navigationProfileAsdos" onclick="openProfileDosen()">
+                <img src="/includes/images/profile navigation icon.png" alt="Navigation Profile Asdos">
+                <span>Profile</span>
+            </a>
+        </div>
+
+        <div id="borderNavMataKuliah">
+            <a href="#" class="navigationMataKuliah" onclick="openAssignJadwal()">
+                <img src="/includes/images/icon daftar asdos.png" alt="Navigation Mata Kuliah">
+                <span>Assign-Jadwal</span>
+            </a>
+        </div>
+
+        <div id="borderNavJadwalAsdos">
+            <a href="#" class="navigationJadwalAsdos" onclick="openAsdosList()">
+                <img src="/includes/images/icon jadwal.png" alt="Navigation Jadwal Asdos">
+                <span>Asdos-List</span>
+            </a>
+        </div>
+
+        <div id="borderNavLogOutAsdos">
+            <a href="login-asdos.html" class="navigationLogOutAsdos">
+                <img src="/includes/images/log out.png" alt="Navigation Logout Asdos">
+                <span>Logout</span>
+            </a>
+        </div>
+    </nav>
+</div>
+<!-- Navigation Bar -->
+    <h2 style="color: white;"><center>Asisten Dosen :</center></h2>
+    <div class="master">
+        <div class="container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama MataKuliah</th>
+                        <th>Jumlah Asisten</th>
+                        <th>Masukan Asisten</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- You can manually populate this table with your data when connected -->
+                    <tr>
+                        <td>1</td>
+                        <td>Rekayasa Perangkat Lunak</td>
+                        <td>3</td>
+                        <td><button onclick="openPopup()">Tambah</button></td>
+                    </tr>
+                    <!-- Repeat the above row structure for other data entries -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+    <div class="modal" id="popup">
+        <h3>Berikut daftar calon asisten dosen:</h3>
+        <form>
+            <label for="asistenList">Pilih Calon Asisten:</label>
+            <select id="asistenList" name="asistenList">
+                <option value="1">Calon Asisten 1</option>
+                <option value="2">Calon Asisten 2</option>
+                <!-- Add more options for each candidate assistant -->
+            </select>
+            <button type="button" onclick="closePopup()">Close</button>
+        </form>
+    </div>
+    
+
+    <script>
+        function openPopup() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+        }
+    </script>
+
+    <script>
+        function addAsisten(namaMataKuliah) {
+            console.log('Adding Asisten for:', namaMataKuliah);
+        }
+    </script>
+</body>
+
+</html>

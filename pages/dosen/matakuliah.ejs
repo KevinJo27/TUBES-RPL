@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MataKuliah</title>
+    <link rel="stylesheet" href="/includes/css/css dosen lab/matakuliah.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <script>
+        function openAsistenDosen() {
+            window.location.href = '/AsistenDosen';
+        }
+
+        function openMatakuliah() {
+            window.location.href = '/Matakuliah';
+        }
+
+        function openProfileDosen(){
+            window.location.href = "/profil-dosen"
+        }
+        function openHomeDosen(){
+            window.location.href = "/home-dosen"
+        }
+    </script>    
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <div class="navRectangle">
+        <nav class="navigationBar">
+            <div id="borderNavHomeAsdos">
+                <a href="#" class="navigationHomeAsdos" onclick="openHomeDosen()">
+                    <img src="/includes/images/home icon.png" alt="Navigation Home">
+                    <span>Home</span>
+                </a>
+            </div>
+
+            <div id="borderNavProfileAsdos">
+                <a href="#" class="navigationProfileAsdos" onclick="openProfileDosen()">
+                    <img src="/includes/images/profile navigation icon.png" alt="Navigation Profile Asdos">
+                    <span>Profile</span>
+                </a>
+            </div>
+
+            <div id="borderNavMataKuliah">
+                <a href="#" class="navigationMataKuliah" onclick="openMatakuliah()">
+                    <img src="/includes/images/icon daftar asdos.png" alt="Navigation Mata Kuliah">
+                    <span>Mata Kuliah</span>
+                </a>
+            </div>
+
+            <div id="borderNavJadwalAsdos">
+                <a href="#" class="navigationJadwalAsdos" onclick="openAsistenDosen()">
+                    <img src="/includes/images/icon jadwal.png" alt="Navigation Jadwal Asdos">
+                    <span>Asisten Dosen</span>
+                </a>
+            </div>
+
+            <div id="borderNavLogOutAsdos">
+                <a href="login-asdos.html" class="navigationLogOutAsdos">
+                    <img src="/includes/images/log out.png" alt="Navigation Logout Asdos">
+                    <span>Logout</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Navigation Bar -->
+    <h2 style="color: white;">
+        <center>Mata Kuliah :</center>
+    </h2>
+    <div class="master">
+        <div class="container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama MataKuliah</th>
+                        <th>Jumlah Asisten</th>
+                    </tr>
+                </thead>
+                <!-- ... Your HTML code ... -->
+                <tbody>
+                    <% subjects.forEach((subject, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= subject.title %></td>
+                            <td>
+                                <!-- You can add other columns as needed -->
+                                <span class="material-icons-outlined" onclick="showEditPopup('<%= subject.id %>')">edit</span>
+                                <span class="material-icons-outlined" onclick="showDeletePopup('<%= subject.id %>')">delete</span>
+                            </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                    <!-- ... Your HTML code ... -->
+            </table>
+            <div class="upload-button">
+                <button onclick="showPopup()">Upload</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Pop-up -->
+    <div class="overlay" id="overlay" onclick="hidePopup()"></div>
+    <div class="upload-popup" id="popup">
+        <div class="nama-mk">
+            <label for="namaMK">Nama MataKuliah :</label>
+            <select id="namaMK">
+                <option value="1">Pemrograman Berbasis Web</option>
+                <option value="2">Pemrograman Berorientasi Objek</option>
+                <option value="3">Algoritma dan Struktur Data</option>
+            </select>
+        </div>
+        <div class="jumlah-asisten">
+            <label for="jumlahAsisten">
+                Jumlah Asisten :
+            </label>
+            <select id="jumlahAsisten">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div class="button-container">
+            <button id="cancel-button" onclick="hidePopup()">Cancel</button>
+            <button id="submit-button" onclick="uploadData()">Submit</button>
+        </div>
+    </div>
+
+
+    <!-- Edit Pop-up -->
+    <div class="overlay" id="edit-overlay" onclick="hidePopup()"></div>
+    <div class="edit-popup" id="edit-popup">
+        <div class="jumlah-asisten">
+            <label for="jumlahAsisten">
+                Jumlah Asisten :
+            </label>
+            <select id="jumlahAsisten">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div class="button-container">
+            <button id="cancel-button" onclick="hideEditPopup()">Cancel</button>
+            <button id="save-button" onclick="saveData()">Save</button>
+        </div>
+    </div>
+
+    <!-- Delete Pop-up -->
+    <div class="delete-overlay" id="deleteOverlay" onclick="hideDeletePopup()"></div>
+    <div class="delete-popup" id="deletePopup">
+        <div class="delete-message">
+            <p>Apakah Anda yakin ingin menghapus catatan ini?</p>
+        </div>
+        <div class="delete-buttons">
+            <button id="cancel-delete-button" onclick="hideDeletePopup()">Cancel</button>
+            <button id="confirm-delete-button" onclick="deleteRow()">Delete</button>
+        </div>
+    </div>
+
+    <script src="/includes/js/Dosen/matakuliah.js"></script>
+</body>
+
+</html>

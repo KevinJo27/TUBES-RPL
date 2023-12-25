@@ -1,0 +1,373 @@
+body {
+    height: 100%;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #46d2b5, #418ba4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.master {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 86%;
+    height: 650px;
+    position: relative;
+}
+
+.container {
+    background-color: white;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 86%;
+    height: 650px;
+}
+
+.upload-button {
+    position: absolute;
+    bottom: 10px; 
+    right: 10px; 
+    text-align: center;
+    cursor: pointer;
+}
+.upload-button button:hover,
+.upload-button button:active{
+    background-color: #ddd; 
+}
+
+table {
+    margin-top: 5%;
+    width: 90%;
+    border-collapse: collapse;
+    background-color: white;
+    color: #333;
+}
+
+th {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    text-align: left;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: white;
+}
+
+button {
+    padding: 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.master{
+    margin-top: 20px;
+    max-height: 555px;
+    }
+    
+    h2{
+        margin-top: -625px;
+        margin-left: 500px;
+    }
+
+/* Navigation Bar */
+.navRectangle{
+    animation: transitionIn 0.75s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    width: 50px;
+    height: 480px;
+    padding: 40px;
+    margin-right: 1400px;
+    margin-top: 100px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-left: 20px;
+    justify-content: flex-start;
+
+}
+
+.navigationHomeAsdos span{
+    color: black;
+    padding-left: 25px;
+    padding-top: -10px;
+}
+
+.navigationHomeAsdos{
+    text-decoration: none;
+    align-self: flex-start;
+    
+}
+
+.navigationProfileAsdos span{
+    color: black;
+    padding-left: 25px;
+    padding-top: -10px;
+}
+
+.navigationProfileAsdos{
+    text-decoration: none;
+    align-self: flex-start;
+}
+
+.navigationProfileAsdos img{
+    padding-top: 50px;
+    max-height: 50px;
+    margin-left: 22px;
+}
+
+#borderNavHomeAsdos{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+#borderNavProfileAsdos{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+    padding: 3px;
+}
+
+#borderNavProfileAsdos img{
+    padding: 0px;
+}
+
+#borderNavMataKuliah{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+    margin-top: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.navigationMataKuliah{
+    text-decoration: none;
+}
+
+.navigationMataKuliah span{
+    color: black;
+    margin-left: 5px;
+}
+
+.navigationMataKuliah img{
+    max-width: 60px;
+    margin-left: 17px;
+}
+
+#borderNavJadwalAsdos{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+    padding: 3px;
+    margin-top: 15px;
+}
+
+.navigationJadwalAsdos{
+    text-decoration: none;
+}
+
+.navigationJadwalAsdos span{
+    color: black;
+    margin-left: 20px;
+}
+
+.navigationJadwalAsdos img{
+    max-width: 50px;
+    margin-left: 22px;
+}
+
+#borderNavLogOutAsdos{
+    border: solid #D3D3D3;
+    border-radius: 10px;
+    padding: 3px;
+    margin-top: 15px;
+    padding-top: 10px;
+}
+
+.navigationLogOutAsdos{
+    text-decoration: none;
+}
+
+.navigationLogOutAsdos span{
+    color: black;
+    margin-left: 20px;
+}
+
+.navigationLogOutAsdos img{
+    max-width: 50px;
+    margin-left: 22px;
+}
+
+/* Upload Pop-up */
+.upload-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    width: 500px;
+    height: auto;
+    border-radius: 5px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.button-container button {
+    margin-left: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.nama-mk{
+    font-size: 20px;
+}
+
+#namaMK {
+    font-size: 20px;
+    width: 60%;
+}
+
+.jumlah-asisten{
+    font-size: 20px;
+}
+
+#jumlahAsisten{
+    margin-left: 25px;
+    font-size: 20px;
+}
+
+#submit-button{
+    font-size: 15px;
+}
+
+#submit-button:hover{
+   background-color: #ddd;
+}
+
+#cancel-button {
+    background-color: #ff5555;
+    font-size: 15px;
+}
+
+#cancel-button:hover{
+   background-color: #ddd;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+/* Delete Konfirmasi Pop-up */
+.delete-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.delete-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 500px;
+    height: auto;
+}
+
+.material-icons-outlined {
+    cursor: pointer;
+    color: #000; 
+    transition: color 0.3s ease, background-color 0.3s ease; 
+}
+
+.material-icons-outlined:hover,
+.material-icons-outlined:active {
+    color: #fff;
+    background-color: #ddd; 
+}
+
+.delete-message p {
+    margin-bottom: 20px;
+}
+
+.delete-buttons button {
+    padding: 8px 16px;
+    margin-right: 10px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #4CAF50;
+}
+
+.delete-buttons button#confirm-delete-button {
+    background-color: #ff5555;
+    color: #fff;
+    border: none;
+}
+
+.delete-buttons button#cancel-delete-button:hover,
+.delete-buttons button#confirm-delete-button:hover {
+    background-color: #ddd;
+}
+
+.edit-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    width: 500px;
+    height: auto;
+    border-radius: 5px;
+}
+
+#save-button{
+    font-size: 15px;
+}
+
+#save-button:hover{
+   background-color: #ddd;
+}

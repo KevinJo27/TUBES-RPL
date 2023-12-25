@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal ASDOS</title>
+    <link rel="stylesheet" href="/includes/css/css dosen lab/jadwalviews.css">
+    <script>
+        function openAsistenDosen() {
+            window.location.href = '/AsistenDosen';
+        }
+
+        function openMatakuliah() {
+            window.location.href = '/Matakuliah';
+        }
+
+        function openProfileDosen() {
+            window.location.href = "/profil-dosen";
+        }
+
+        function openHomeDosen() {
+            window.location.href = "/home-dosen";
+        }
+
+        function openJadwalViews(){
+            window.location.href = "/jadwal-views";
+        }
+    </script> 
+</head>
+
+<body>
+   <!-- Navigation Bar -->
+   <div class="navRectangle">
+    <nav class="navigationBar">
+        <div id="borderNavHomeAsdos">
+            <a href="#" class="navigationHomeAsdos" onclick="openHomeDosen()">
+                <img src="/includes/images/home icon.png" alt="Navigation Home">
+                <span>Home</span>
+            </a>
+        </div>
+        
+        <div id="borderNavProfileAsdos">
+            <a href="#" class="navigationProfileAsdos" onclick="openProfileDosen()">
+                <img src="/includes/images/profile navigation icon.png"alt="Navigation Profile Asdos">
+                <span>Profile</span>
+            </a>
+        </div>
+
+        <div id="borderNavDaftarAsdos">
+            <a href="#" class="navigationDaftarAsdos" onclick="openMatakuliah()">
+                <img src="/includes/images/icon daftar asdos.png"alt="Navigation Daftar Asdos">
+                <span>Matakuliah</span>
+            </a>
+        </div>
+
+        <div id="borderNavJadwalAsdos">
+            <a href="#" class="navigationJadwalAsdos" onclick="openAsistenDosen()">
+                <img src="/includes/images/icon jadwal.png"alt="Navigation Jadwal Asdos">
+                <span>Asisten Dosen</span>
+            </a>
+        </div>
+
+        <div id="borderNavLogOutAsdos">
+            <a href="login-asdos.html" class="navigationLogOutAsdos">
+                <img src="/includes/images/log out.png"alt="Navigation Logout Asdos">
+                <span>Logout</span>
+            </a>
+        </div>
+    </nav>
+</div>
+<!-- Navigation Bar -->
+
+    <div class="container">
+        <h2 style="color: white;">Jadwal Milik : <%= userName %></h2>
+    <div class="master">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <div id="bottomBorderMain"></div>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="row7">
+                    <td id="row7col1">07.00</td>
+                    <td id="row7col2"></td>
+                    <td id="row7col3"></td>
+                    <td id="row7col4"></td>
+                    <td id="row7col5"></td>
+                    <td id="row7col6"></td>
+                    <td id="row7col7"></td>
+                </tr>
+                <tr id="row8">
+                    <td id="row8col1">08.00</td>
+                    <td id="row8col2"></td>
+                    <td id="row8col3"></td>
+                    <td id="row8col4"></td>
+                    <td id="row8col5"></td>
+                    <td id="row8col6"></td>
+                    <td id="row8col7"></td>
+                </tr>
+                <tr id="row9">
+                    <td id="row9col1">09.00</td>
+                    <td id="row9col2"></td>
+                    <td id="row9col3"></td>
+                    <td id="row9col4"></td>
+                    <td id="row9col5"></td>
+                    <td id="row9col6"></td>
+                    <td id="row9col7"></td>
+                </tr>
+                <tr id="row10">
+                    <td id="row10col1">10.00</td>
+                    <td id="row10col2"></td>
+                    <td id="row10col3"></td>
+                    <td id="row10col4"></td>
+                    <td id="row10col5"></td>
+                    <td id="row10col6"></td>
+                    <td id="row10col7"></td>
+                </tr>
+                <tr id="row11">
+                    <td id="row11col1">11.00</td>
+                    <td id="row11col2"></td>
+                    <td id="row11col3"></td>
+                    <td id="row11col4"></td>
+                    <td id="row11col5"></td>
+                    <td id="row11col6"></td>
+                    <td id="row11col7"></td>
+                </tr>
+                <tr id="row12">
+                    <td id="row12col1">12.00</td>
+                    <td id="row12col2"></td>
+                    <td id="row12col3"></td>
+                    <td id="row12col4"></td>
+                    <td id="row12col5"></td>
+                    <td id="row12col6"></td>
+                    <td id="row12col7"></td>
+                </tr>
+                <tr id="row13">
+                    <td id="row13col1">13.00</td>
+                    <td id="row13col2"></td>
+                    <td id="row13col3"></td>
+                    <td id="row13col4"></td>
+                    <td id="row13col5"></td>
+                    <td id="row13col6"></td>
+                    <td id="row13col7"></td>
+                </tr>
+                <tr id="row14">
+                    <td id="row14col1">14.00</td>
+                    <td id="row14col2"></td>
+                    <td id="row14col3"></td>
+                    <td id="row14col4"></td>
+                    <td id="row14col5"></td>
+                    <td id="row14col6"></td>
+                    <td id="row14col7"></td>
+                </tr>
+                <tr id="row15">
+                    <td id="row15col1">15.00</td>
+                    <td id="row15col2"></td>
+                    <td id="row15col3"></td>
+                    <td id="row15col4"></td>
+                    <td id="row15col5"></td>
+                    <td id="row15col6"></td>
+                    <td id="row15col7"></td>
+                </tr>
+                <tr id="row16">
+                    <td id="row16col1">16.00</td>
+                    <td id="row16col2"></td>
+                    <td id="row16col3"></td>
+                    <td id="row16col4"></td>
+                    <td id="row16col5"></td>
+                    <td id="row16col6"></td>
+                    <td id="row16col7"></td>
+                </tr>
+                <tr id="row17">
+                    <td id="row17col1">17.00</td>
+                    <td id="row17col2"></td>
+                    <td id="row17col3"></td>
+                    <td id="row17col4"></td>
+                    <td id="row17col5"></td>
+                    <td id="row17col6"></td>
+                    <td id="row17col7"></td>
+                </tr>
+            </tbody>
+            
+        </table>
+    </div>
+</div>
+
+<!--Modal -->
+<div id="myModal" class="modal">
+    <div class="classHari">
+        <label for="Hari">Hari:</label>
+        <select id="dropDownHari">
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+        </select>
+    </div>
+    
+    <div class="classJamMulai">
+        <label for="jamMulai">Jam Mulai:</label>
+        <select id="dropDownJamMulai">
+            <option value="7">07.00</option>
+            <option value="8">08.00</option>
+            <option value="9">09.00</option>
+            <option value="10">10.00</option>
+            <option value="11">11.00</option>
+            <option value="12">12.00</option>
+            <option value="13">13.00</option>
+            <option value="14">14.00</option>
+            <option value="15">15.00</option>
+            <option value="16">16.00</option>
+        </select>
+    </div>
+
+    
+    <div class="classJamSelesai">
+        <label for="jamSelesai">Jam Selesai:</label>
+        <select id="dropDownJamSelesai">
+            <option value="8">08.00</option>
+            <option value="9">09.00</option>
+            <option value="10">10.00</option>
+            <option value="11">11.00</option>
+            <option value="12">12.00</option>
+            <option value="13">13.00</option>
+            <option value="14">14.00</option>
+            <option value="15">15.00</option>
+            <option value="16">16.00</option>
+            <option value="17">17.00</option>
+        </select>
+    </div>
+    
+
+    <button onclick="closeModal()">Submit</button>
+</div>
+
+</body>
+
+</html>
+
+<script>
+    function openModal(){
+        document.getElementById("myModal").style.display = "block";
+    }
+    function closeModal(){
+        document.getElementById("myModal").style.display = "none";
+    }
+    function getParamUserName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+var userName = getParamUserName('user');
+
+document.querySelector('h2').innerText = 'Jadwal Milik: ' + userName;
+
+</script>

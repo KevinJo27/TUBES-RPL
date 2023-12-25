@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Asisten Dosen</title>
+    <link rel="stylesheet" type="text/css" href="/includes/css/css asdos/home-asdos.css">
+    <script>
+        function openDaftarAsdos() {
+            window.location.href = '/daftar-asdos';
+        }
+
+        function openJadwalAsdos() {
+            window.location.href = '/jadwal-asdos';
+        }
+
+        function openProfileAsdos(){
+            window.location.href = "/profil-asdos"
+        }
+    </script>    
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="/includes/images/logo-unpar-vector-idngrafis.png" alt="Logo">
+        </div>
+
+        <div class="statusUser">
+            <button>
+                <P><%= userName %></P>
+            </button>
+        </div>
+        <div class="profile">
+            <img src="/includes/images/profile.png" alt="Profile Picture">
+        </div>
+    </header>
+
+    <div class="background">
+    </div>
+
+    <!-- Navigation Bar -->
+    <div id="navigator">
+        <div class="container">
+            <div class="rectangle">
+
+                <a href="profil-asdos.html" class="nav-button">
+                    <img src="/includes/images/profile.png" alt="Navigation Profile">
+                    <span>
+                        Profile
+                    </span>
+                </a>
+                <a href="#" class="nav-button" onclick="openDaftarAsdos()">
+                    <img src="/includes/images/icon task.png" alt="Navigation Daftar Asdos">
+                    <span id="textDaftarASDOS">
+                        Daftar
+                    </span>
+                </a>                
+                <a href="#" class="nav-button" onclick="openJadwalAsdos()">
+                    <img src="/includes/images/icon jadwal.png" alt="Navigation Jadwal">
+                    <span>
+                        Jadwal
+                    </span>
+                </a>
+                <form method="post" action="/logout">
+                    <button style="border: none; background-color: #fff;" type="submit" class="nav-button">
+                        <img src="/includes/images/log out.png" alt="Navigation Log Out">
+                        <span>
+                            Log out
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Navigation Bar -->
+</body>
+
+</html>

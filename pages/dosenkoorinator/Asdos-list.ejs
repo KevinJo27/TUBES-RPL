@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Asisten Dosen</title>
+    <link rel="stylesheet" href="/includes/css/css koordinator/asdos-list.css">
+    <script>
+        let nama = "";
+        function openAsdosList() {
+            window.location.href = '/Asdos-list';
+        }
+
+        function openAssignJadwal() {
+            window.location.href = '/Assign-jadwal';
+        }
+
+        function openProfileDosen(){
+            window.location.href = "/profil-dosen"
+        }
+        function openHomeKoordinator(){
+            window.location.href = "/home-koordinator"
+        }
+
+        function openJadwalInsert(button){
+            // const name = button.getAttribute("data-name");
+            window.location.href = "/jadwal-insert"
+        }
+
+        function openJadwalInsert(userName) {
+            window.location.href = "/jadwal-insert?user="+userName;
+        }
+    </script>  
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <div class="navRectangle">
+    <nav class="navigationBar">
+        <div id="borderNavHomeAsdos">
+            <a href="#" class="navigationHomeAsdos" onclick="openHomeKoordinator()">
+                <img src="/includes/images/home icon.png" alt="Navigation Home">
+                <span>Home</span>
+            </a>
+        </div>
+
+        <div id="borderNavProfileAsdos">
+            <a href="#" class="navigationProfileAsdos" onclick="openProfileDosen()">
+                <img src="/includes/images/profile navigation icon.png" alt="Navigation Profile Asdos">
+                <span>Profile</span>
+            </a>
+        </div>
+
+        <div id="borderNavMataKuliah">
+            <a href="#" class="navigationMataKuliah" onclick="openAssignJadwal()">
+                <img src="/includes/images/icon daftar asdos.png" alt="Navigation Mata Kuliah">
+                <span>Assign-Jadwal</span>
+            </a>
+        </div>
+
+        <div id="borderNavJadwalAsdos">
+            <a href="#" class="navigationJadwalAsdos" onclick="openAsdosList()">
+                <img src="/includes/images/icon jadwal.png" alt="Navigation Jadwal Asdos">
+                <span>Asdos-List</span>
+            </a>
+        </div>
+
+        <div id="borderNavLogOutAsdos">
+            <a href="login-asdos.html" class="navigationLogOutAsdos">
+                <img src="/includes/images/log out.png" alt="Navigation Logout Asdos">
+                <span>Logout</span>
+            </a>
+        </div>
+    </nav>
+</div>
+<!-- Navigation Bar -->
+    
+    <h2 style="color: white;"><center>List Asisten Dosen :</center></h2>
+    <div class="master">
+        <div class="container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Keterangan</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Inside your <tbody> tag -->
+                        <% submissions.forEach((submission, index) => { %>
+                            <tr>
+                                <td><%= index + 1 %></td>
+                                <td><%= submission.name %></td>
+                                <td>Assistant</td>
+                                <td>
+                                    <button onclick="openJadwalInsert('<%= submission.name %>')">Jadwal</button>
+                                    <button onclick="openNewTab('<%= submission.pdf_path %>')">Nilai</button>
+                                </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+    <script>
+        function showJadwal(nama) {
+            console.log('Showing Jadwal for:', nama);
+        }
+        function openNewTab(pdfPath) {
+            window.open(pdfPath, '_blank');
+        }
+
+    </script>
+</body>
+
+</html>

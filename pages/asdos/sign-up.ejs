@@ -1,0 +1,40 @@
+<!-- sign-up.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/includes/css/styles.css">
+  <title>Sign-up Page</title>
+  <script defer>
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+  
+    if (error === 'semester') {
+      alert('Semester Tidak Memenuhi');
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="Signuppage-section">
+      <h2>Sign Up! Sebagai Pengajar</h2>
+
+      <form action="/signup" method="post">
+        <label for="nama">Nama :</label>
+        <input type="text" id="nama" name="nama" required>
+
+        <label for="npm_npwp">NPM / NPWP:</label>
+        <input type="text" id="npm_npwp" name="npm_npwp" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Submit</button>
+      </form>
+
+    </div>    
+  </div>
+</body>
+</html>

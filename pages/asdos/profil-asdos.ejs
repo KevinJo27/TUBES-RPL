@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile ASDOS</title>
+    <link rel="stylesheet" href="/includes/css/css asdos/profile-asdos.css">
+    <script>
+        function openDaftarAsdos() {
+            window.location.href = '/daftar-asdos';
+        }
+
+        function openJadwalAsdos() {
+            window.location.href = '/jadwal-asdos';
+        }
+
+        function openProfileAsdos(){
+            window.location.href = "/profil-asdos"
+        }
+
+        function openHomeAsdos(){
+            window.location.href = "/home-asdos"
+        }
+    </script>   
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <div class="navRectangle">
+        <nav class="navigationBar">
+            <div id="borderNavHomeAsdos">
+                <a href="#" class="navigationHomeAsdos" onclick="openHomeAsdos()">
+                    <img src="/includes/images/home icon.png" alt="Navigation Home">
+                    <span>Home</span>
+                </a>
+            </div>
+            
+            <div id="borderNavProfileAsdos">
+                <a href="#" class="navigationProfileAsdos" onclick="openProfileAsdos()">
+                    <img src="/includes/images/profile navigation icon.png"alt="Navigation Profile Asdos">
+                    <span>Profile</span>
+                </a>
+            </div>
+
+            <div id="borderNavDaftarAsdos">
+                <a href="#" class="navigationDaftarAsdos" onclick="openDaftarAsdos()">
+                    <img src="/includes/images/icon daftar asdos.png"alt="Navigation Daftar Asdos">
+                    <span>Daftar</span>
+                </a>
+            </div>
+
+            <div id="borderNavJadwalAsdos">
+                <a href="#" class="navigationJadwalAsdos" onclick="openJadwalAsdos()">
+                    <img src="/includes/images/icon jadwal.png"alt="Navigation Jadwal Asdos">
+                    <span>Jadwal</span>
+                </a>
+            </div>
+
+            <div id="borderNavLogOutAsdos">
+                <a href="login-asdos.html" class="navigationLogOutAsdos">
+                    <img src="/includes/images/log out.png"alt="Navigation Logout Asdos">
+                    <span>Logout</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+    <!-- Navigation Bar -->
+        
+        <div class="rectangle">
+            <h1 id="profil">Profile Asdos</h1>
+            <div class="line"></div>
+            <div class="nama">
+                <p>Tatang Suratang</p>
+            </div>
+            <div class="spacer-line"></div>
+            <div class="profile-details">
+                <div>
+                    <p>NPM</p>
+                    <p>Jenis Kelamin</p>
+                    <p>Tempat, Tanggal Lahir</p>
+                    <p>No HP</p>
+                    <p>Alamat</p>
+                </div>
+
+                <div>
+                    <p>6192001001</p>
+                    <p>Laki-Laki</p>
+                    <p>Bandung,10 Juni 2001</p>
+                    <p>08123456789</p>
+                    <p>Taman Kopo Indah</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jadwal ASDOS</title>
+    <link rel="stylesheet" href="/includes/css/css asdos/jadwal-asdos.css" />
+    <script>
+      var highlightCellArray = [];
+
+      function openDaftarAsdos() {
+        window.location.href = "/daftar-asdos";
+      }
+
+      function openJadwalAsdos() {
+        window.location.href = "/jadwal-asdos";
+      }
+
+      function openProfileAsdos() {
+        window.location.href = "/profil-asdos";
+      }
+
+      function openModal() {
+        document.getElementById("myModal").style.display = "block";
+      }
+
+      function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+      }
+
+      function submitFormTambah() {
+        var selectedHari = document.getElementById("dropDownHari").value;
+        var selectedJamMulai = parseFloat(
+          document.getElementById("dropDownJamMulai").value
+        );
+        var selectedJamSelesai = parseFloat(
+          document.getElementById("dropDownJamSelesai").value
+        );
+
+        highlightCell(selectedHari, selectedJamMulai, selectedJamSelesai);
+
+        closeModal();
+      }
+
+      function submitFormHapus() {
+        var selectedHari = document.getElementById("dropDownHariHapusJadwal").value;
+        var selectedJamMulai = parseFloat(
+          document.getElementById("dropDownJamMulaiHapusJadwal").value
+        );
+        var selectedJamSelesai = parseFloat(
+          document.getElementById("dropDownJamSelesaiHapusJadwal").value
+        );
+
+        removeHighlightCell(selectedHari, selectedJamMulai, selectedJamSelesai);
+
+        closeModal2();
+      }
+
+      // function clearHighlightedCells() {
+      //     var highlightedCells = document.querySelectorAll('.highlighted');
+      //     highlightedCells.forEach(function (cell) {
+      //         cell.classList.remove('highlighted');
+      //     });
+      // }
+
+      function highlightCell(hari, jamMulai, jamSelesai) {
+        var table = document.querySelector("table");
+        var columnIndex = getColumnIndex(hari);
+
+        var startRowIndex = jamMulai - 7;
+        var endRowIndex = jamSelesai - 7;
+
+        for (var row = startRowIndex; row <= endRowIndex; row++) {
+          var cellId = "row" + (row + 7) + "col" + columnIndex;
+          var cell = document.getElementById(cellId);
+
+          if (!cell.classList.contains("highlighted")) {
+            cell.classList.add("highlighted");
+            highlightCellArray.push(cell);
+          }
+        }
+      }
+
+      function removeHighlightCell(hari, jamMulai, jamSelesai) {
+        var table = document.querySelector("table");
+        var columnIndex = getColumnIndex(hari);
+        var startRowIndex = jamMulai - 7;
+        var endRowIndex = jamSelesai - 7;
+
+        for (var row = startRowIndex; row <= endRowIndex; row++) {
+          var cellId = "row" + (row + 7) + "col" + columnIndex;
+          var cell = document.getElementById(cellId);
+
+          if (cell && cell.classList.contains("highlighted")) {
+            //menghapus jadwal
+            cell.classList.remove("highlighted");
+            cell.style.backgroundColor = "white";
+            highlightCellArray = highlightCellArray.filter(function (highlightedCell) {
+                return highlightedCell.id !== cellId;
+            });
+          }
+        }
+      }
+
+      function getColumnIndex(hari) {
+        switch (hari) {
+          case "monday":
+            return 2;
+          case "tuesday":
+            return 3;
+          case "wednesday":
+            return 4;
+          case "thursday":
+            return 5;
+          case "friday":
+            return 6;
+          case "saturday":
+            return 7;
+          default:
+            return -1;
+        }
+      }
+    </script>
+    <style>
+      .highlighted {
+        background-color: blue;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Navigation Bar -->
+    <div class="navRectangle">
+      <nav class="navigationBar">
+        <div id="borderNavHomeAsdos">
+          <a href="#" class="navigationHomeAsdos" onclick="openHomeAsdos()">
+            <img src="/includes/images/home icon.png" alt="Navigation Home" />
+            <span>Home</span>
+          </a>
+        </div>
+
+        <div id="borderNavProfileAsdos">
+          <a
+            href="#"
+            class="navigationProfileAsdos"
+            onclick="openProfileAsdos()"
+          >
+            <img
+              src="/includes/images/profile navigation icon.png"
+              alt="Navigation Profile Asdos"
+            />
+            <span>Profile</span>
+          </a>
+        </div>
+
+        <div id="borderNavDaftarAsdos">
+          <a href="#" class="navigationDaftarAsdos" onclick="openDaftarAsdos()">
+            <img
+              src="/includes/images/icon daftar asdos.png"
+              alt="Navigation Daftar Asdos"
+            />
+            <span>Daftar</span>
+          </a>
+        </div>
+
+        <div id="borderNavJadwalAsdos">
+          <a href="#" class="navigationJadwalAsdos" onclick="openJadwalAsdos()">
+            <img
+              src="/includes/images/icon jadwal.png"
+              alt="Navigation Jadwal Asdos"
+            />
+            <span>Jadwal</span>
+          </a>
+        </div>
+
+        <div id="borderNavLogOutAsdos">
+          <a href="login-asdos.html" class="navigationLogOutAsdos">
+            <img
+              src="/includes/images/log out.png"
+              alt="Navigation Logout Asdos"
+            />
+            <span>Logout</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+    <!-- Navigation Bar -->
+
+    <div class="container">
+      <h2 style="color: white">
+        Silahkan Masukan Jadwal Kuliah Anda Semester ini :
+      </h2>
+      <div class="master">
+        <button id="buttonTambahJadwal" onclick="openModal()" type="button">
+          + Tambah Jadwal
+        </button>
+        <button id="buttonHapusJadwal" onclick="openModal2()" type="button">
+          Hapus Jadwal
+        </button>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+              <div id="bottomBorderMain"></div>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="row7">
+              <td id="row7col1">07.00</td>
+              <td id="row7col2"></td>
+              <td id="row7col3"></td>
+              <td id="row7col4"></td>
+              <td id="row7col5"></td>
+              <td id="row7col6"></td>
+              <td id="row7col7"></td>
+            </tr>
+            <tr id="row8">
+              <td id="row8col1">08.00</td>
+              <td id="row8col2"></td>
+              <td id="row8col3"></td>
+              <td id="row8col4"></td>
+              <td id="row8col5"></td>
+              <td id="row8col6"></td>
+              <td id="row8col7"></td>
+            </tr>
+            <tr id="row9">
+              <td id="row9col1">09.00</td>
+              <td id="row9col2"></td>
+              <td id="row9col3"></td>
+              <td id="row9col4"></td>
+              <td id="row9col5"></td>
+              <td id="row9col6"></td>
+              <td id="row9col7"></td>
+            </tr>
+            <tr id="row10">
+              <td id="row10col1">10.00</td>
+              <td id="row10col2"></td>
+              <td id="row10col3"></td>
+              <td id="row10col4"></td>
+              <td id="row10col5"></td>
+              <td id="row10col6"></td>
+              <td id="row10col7"></td>
+            </tr>
+            <tr id="row11">
+              <td id="row11col1">11.00</td>
+              <td id="row11col2"></td>
+              <td id="row11col3"></td>
+              <td id="row11col4"></td>
+              <td id="row11col5"></td>
+              <td id="row11col6"></td>
+              <td id="row11col7"></td>
+            </tr>
+            <tr id="row12">
+              <td id="row12col1">12.00</td>
+              <td id="row12col2"></td>
+              <td id="row12col3"></td>
+              <td id="row12col4"></td>
+              <td id="row12col5"></td>
+              <td id="row12col6"></td>
+              <td id="row12col7"></td>
+            </tr>
+            <tr id="row13">
+              <td id="row13col1">13.00</td>
+              <td id="row13col2"></td>
+              <td id="row13col3"></td>
+              <td id="row13col4"></td>
+              <td id="row13col5"></td>
+              <td id="row13col6"></td>
+              <td id="row13col7"></td>
+            </tr>
+            <tr id="row14">
+              <td id="row14col1">14.00</td>
+              <td id="row14col2"></td>
+              <td id="row14col3"></td>
+              <td id="row14col4"></td>
+              <td id="row14col5"></td>
+              <td id="row14col6"></td>
+              <td id="row14col7"></td>
+            </tr>
+            <tr id="row15">
+              <td id="row15col1">15.00</td>
+              <td id="row15col2"></td>
+              <td id="row15col3"></td>
+              <td id="row15col4"></td>
+              <td id="row15col5"></td>
+              <td id="row15col6"></td>
+              <td id="row15col7"></td>
+            </tr>
+            <tr id="row16">
+              <td id="row16col1">16.00</td>
+              <td id="row16col2"></td>
+              <td id="row16col3"></td>
+              <td id="row16col4"></td>
+              <td id="row16col5"></td>
+              <td id="row16col6"></td>
+              <td id="row16col7"></td>
+            </tr>
+            <tr id="row17">
+              <td id="row17col1">17.00</td>
+              <td id="row17col2"></td>
+              <td id="row17col3"></td>
+              <td id="row17col4"></td>
+              <td id="row17col5"></td>
+              <td id="row17col6"></td>
+              <td id="row17col7"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="upload-button">
+          <button>Upload</button>
+        </div>
+      </div>
+    </div>
+
+    <!--Modal Tambah Jadwal -->
+    <div id="myModalTambahJadwal" class="modalTambahJadwal">
+      <div class="classHari">
+        <label for="Hari">Hari:</label>
+        <select id="dropDownHari">
+          <option value="monday">Monday</option>
+          <option value="tuesday">Tuesday</option>
+          <option value="wednesday">Wednesday</option>
+          <option value="thursday">Thursday</option>
+          <option value="friday">Friday</option>
+          <option value="saturday">Saturday</option>
+        </select>
+      </div>
+
+      <div class="classJamMulai">
+        <label for="jamMulai">Jam Mulai:</label>
+        <select id="dropDownJamMulai">
+          <option value="7">07.00</option>
+          <option value="8">08.00</option>
+          <option value="9">09.00</option>
+          <option value="10">10.00</option>
+          <option value="11">11.00</option>
+          <option value="12">12.00</option>
+          <option value="13">13.00</option>
+          <option value="14">14.00</option>
+          <option value="15">15.00</option>
+          <option value="16">16.00</option>
+        </select>
+      </div>
+
+      <div class="classJamSelesai">
+        <label for="jamSelesai">Jam Selesai:</label>
+        <select id="dropDownJamSelesai">
+          <option value="8">08.00</option>
+          <option value="9">09.00</option>
+          <option value="10">10.00</option>
+          <option value="11">11.00</option>
+          <option value="12">12.00</option>
+          <option value="13">13.00</option>
+          <option value="14">14.00</option>
+          <option value="15">15.00</option>
+          <option value="16">16.00</option>
+          <option value="17">17.00</option>
+        </select>
+      </div>
+      
+      <button onclick="submitFormTambah()">Submit</button>
+      <button id="buttonClose1" onclick="closeModal()">Close</button>
+    </div>
+
+    <!--Modal Hapus Jadwal -->
+    <div id="myModalHapusJadwal" class="modalHapusJadwal">
+        <div class="classHari">
+          <label for="Hari">Hari:</label>
+          <select id="dropDownHariHapusJadwal">
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+          </select>
+        </div>
+  
+        <div class="classJamMulai">
+          <label for="jamMulaiHapusJadwal">Jam Mulai:</label>
+          <select id="dropDownJamMulaiHapusJadwal">
+            <option value="7">07.00</option>
+            <option value="8">08.00</option>
+            <option value="9">09.00</option>
+            <option value="10">10.00</option>
+            <option value="11">11.00</option>
+            <option value="12">12.00</option>
+            <option value="13">13.00</option>
+            <option value="14">14.00</option>
+            <option value="15">15.00</option>
+            <option value="16">16.00</option>
+          </select>
+        </div>
+  
+        <div class="classJamSelesai">
+          <label for="jamSelesaiHapusJadwal">Jam Selesai:</label>
+          <select id="dropDownJamSelesaiHapusJadwal">
+            <option value="8">08.00</option>
+            <option value="9">09.00</option>
+            <option value="10">10.00</option>
+            <option value="11">11.00</option>
+            <option value="12">12.00</option>
+            <option value="13">13.00</option>
+            <option value="14">14.00</option>
+            <option value="15">15.00</option>
+            <option value="16">16.00</option>
+            <option value="17">17.00</option>
+          </select>
+        </div>
+  
+        <button onclick="submitFormHapus()">Submit</button>
+        <button id="buttonClose2" onclick="closeModal2()">Close</button>
+      </div>
+
+  </body>
+</html>
+
+<script>
+  function openModal() {
+    document.getElementById("myModalTambahJadwal").style.display = "block";
+  }
+  function closeModal() {
+    document.getElementById("myModalTambahJadwal").style.display = "none";
+  }
+
+  function openModal2() {
+    document.getElementById("myModalHapusJadwal").style.display = "block";
+  }
+
+  function closeModal2() {
+    document.getElementById("myModalHapusJadwal").style.display = "none";
+  }
+  
+</script>

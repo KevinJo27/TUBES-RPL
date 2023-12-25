@@ -362,10 +362,6 @@ app.get('/matakuliah', (req, res) => {
       console.error('Error querying database:', err);
       return res.status(500).send('Internal Server Error');
     }
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
     // Render the page and pass the results to the template
     res.render('dosen/matakuliah', { subjects: results });
   });
@@ -611,11 +607,6 @@ app.get('/jadwal-insert', (req, res) => {
   });
 });
 
-<<<<<<< Updated upstream
-
-
-=======
->>>>>>> Stashed changes
 app.get('/Assign-jadwal', (req, res) => {
   res.render('dosenkoorinator/Assign-jadwal');
 })

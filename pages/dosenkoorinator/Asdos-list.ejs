@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="/includes/css/css koordinator/asdos-list.css">
     <script>
         let nama = "";
+
+        function Logout() {
+            window.location.href = "/";
+        }
         function openAsdosList() {
             window.location.href = '/Asdos-list';
         }
@@ -67,7 +71,7 @@
         </div>
 
         <div id="borderNavLogOutAsdos">
-            <a href="login-asdos.html" class="navigationLogOutAsdos">
+            <a href="#" class="navigationLogOutAsdos" onclick="Logout()">
                 <img src="/includes/images/log out.png" alt="Navigation Logout Asdos">
                 <span>Logout</span>
             </a>

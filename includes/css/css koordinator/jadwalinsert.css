@@ -16,7 +16,7 @@ body
     flex-direction: column;
     align-items: flex-end;
     width: 86%;
-    height: 800px;
+    height: 850px;
     background-color: white;
     
 }
@@ -63,6 +63,29 @@ button {
     border-radius: 5px;
     cursor: pointer;
 }
+
+#buttonHapusJadwal{
+    padding: 15px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#buttonClose1{
+    position:relative;
+    bottom: 5px;
+    background-color: red;
+}
+
+#buttonClose2{
+    position:relative;
+    bottom: 5px;
+    background-color: red;
+}
+
+
 
 table {
     width: 86%;
@@ -222,7 +245,9 @@ h2{
 
 button{
     margin:10px;
+    
 }
+
 
 td,th{
     padding: 15px;
@@ -237,7 +262,7 @@ thead th{
 }
 
 /* Modal */
-.modal {
+.modalTambahJadwal {
     display: none;
     position: absolute;
     top: 50%;
@@ -254,17 +279,49 @@ thead th{
     height: 250px;
 }
 
-.modal label {
+.modalHapusJadwal {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #eceaea;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 100px;
+    width: 200px;
+    height: 250px;
+}
+
+.modalTambahJadwal label {
     display: block;
     margin-top: 10px;
 }
 
-.modal input {
+.modalTambahJadwal input {
     display: block;
     margin: 5px auto;
 }
 
-.modal button {
+.modalTambahJadwal button {
+    display: block;
+    margin: 10px auto;
+}
+
+.modalHapusJadwal label {
+    display: block;
+    margin-top: 10px;
+}
+
+.modalHapusJadwal input {
+    display: block;
+    margin: 5px auto;
+}
+
+.modalHapusJadwal button {
     display: block;
     margin: 10px auto;
 }
@@ -296,4 +353,5 @@ thead th{
 .classJamSelesai{
     margin-bottom: 20px;
 }
+
 

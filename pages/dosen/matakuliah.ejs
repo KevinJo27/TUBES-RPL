@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/includes/css/css dosen lab/matakuliah.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
     <script>
+        function Logout()   {
+            window.location.href="/";
+        }
         function openAsistenDosen() {
             window.location.href = '/AsistenDosen';
         }
@@ -58,7 +61,7 @@
             </div>
 
             <div id="borderNavLogOutAsdos">
-                <a href="login-asdos.html" class="navigationLogOutAsdos">
+                <a href="#" class="navigationLogOutAsdos" onclick="Logout()">
                     <img src="/includes/images/log out.png" alt="Navigation Logout Asdos">
                     <span>Logout</span>
                 </a>

@@ -8,12 +8,19 @@
     <script>
       var highlightCellArray = [];
 
+      function Logout(){
+        window.location.href="/";
+      }
       function openDaftarAsdos() {
         window.location.href = "/daftar-asdos";
       }
 
       function openJadwalAsdos() {
         window.location.href = "/jadwal-asdos";
+      }
+
+      function openHomeAsdos(){
+        window.location.href = "/home-asdos";
       }
 
       function openProfileAsdos() {
@@ -174,7 +181,7 @@
         </div>
 
         <div id="borderNavLogOutAsdos">
-          <a href="login-asdos.html" class="navigationLogOutAsdos">
+          <a href="#" class="navigationLogOutAsdos" onclick="Logout()">
             <img
               src="/includes/images/log out.png"
               alt="Navigation Logout Asdos"
@@ -312,10 +319,6 @@
             </tr>
           </tbody>
         </table>
-
-        <div class="upload-button">
-          <button>Upload</button>
-        </div>
       </div>
     </div>
 

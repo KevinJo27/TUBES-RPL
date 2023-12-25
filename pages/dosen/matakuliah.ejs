@@ -13,16 +13,16 @@
         }
 
         function openMatakuliah() {
-            window.location.href = '/Matakuliah';
+            window.location.href = '/matakuliah';
         }
 
-        function openProfileDosen(){
+        function openProfileDosen() {
             window.location.href = "/profil-dosen"
         }
-        function openHomeDosen(){
+        function openHomeDosen() {
             window.location.href = "/home-dosen"
         }
-    </script>    
+    </script>
 </head>
 
 <body>
@@ -78,26 +78,33 @@
                         <th>No</th>
                         <th>Nama MataKuliah</th>
                         <th>Jumlah Asisten</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
-                <!-- ... Your HTML code ... -->
                 <tbody>
-                    <% subjects.forEach((subject, index) => { %>
-                        <tr>
-                            <td><%= index + 1 %></td>
-                            <td><%= subject.title %></td>
+                    <% subjects.forEach((subject, index)=> { %>
+                        <tr id="row_<%= subject.id %>">
                             <td>
-                                <!-- You can add other columns as needed -->
-                                <span class="material-icons-outlined" onclick="showEditPopup('<%= subject.id %>')">edit</span>
-                                <span class="material-icons-outlined" onclick="showDeletePopup('<%= subject.id %>')">delete</span>
+                                <%= index + 1 %>
+                            </td>
+                            <td>
+                                <%= subject.title %>
+                            </td>
+                            <td>
+                                <%= subject.asdos_quota %>
+                            </td>
+                            <td>
+                                <span class="material-icons-outlined"
+                                    onclick="showEditPopup('<%= subject.id %>')">edit</span>
+                                <span class="material-icons-outlined"
+                                    onclick="showDeletePopup('<%= subject.id %>')">delete</span>
                             </td>
                         </tr>
                         <% }); %>
-                    </tbody>
-                    <!-- ... Your HTML code ... -->
+                </tbody>
             </table>
             <div class="upload-button">
-                <button onclick="showPopup()">Upload</button>
+                <button onclick="showPopup()">Tambah</button>
             </div>
         </div>
     </div>
@@ -127,7 +134,7 @@
         </div>
         <div class="button-container">
             <button id="cancel-button" onclick="hidePopup()">Cancel</button>
-            <button id="submit-button" onclick="uploadData()">Submit</button>
+            <button id="submit-button" onclick="tambahMataKuliah()">Submit</button>
         </div>
     </div>
 

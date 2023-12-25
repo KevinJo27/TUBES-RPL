@@ -18,10 +18,11 @@ INSERT INTO
 VALUES
 	('Dosen');
 
-CREATE TABLE subjects (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	title VARCHAR(50) NOT NULL,
-	asdos_quota INT NOT NULL
+CREATE TABLE `subjects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) NOT NULL,
+  `asdos_quota` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
 CREATE TABLE users (
@@ -43,12 +44,16 @@ CREATE TABLE asdos_submissions (
 	FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE dosen_subjects (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	user_id INT NOT NULL,
-	subject_id INT NOT NULL,
-	FOREIGN KEY (user_id) REFERENCES users(id),
-	FOREIGN KEY (subject_id) REFERENCES subjects(id)
+CREATE TABLE `dosen_subjects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `asdos_quota` int(11) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `subject_id` (`subject_id`),
+  CONSTRAINT `dosen_subjects_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `dosen_subjects_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`)
 );
 
 CREATE TABLE asdos_subjects (

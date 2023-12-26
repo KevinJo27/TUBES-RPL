@@ -73,10 +73,11 @@ CREATE TABLE course_schedules (
   schedule_category ENUM('matakuliah', 'asistensi') NOT NULL,
   start_time TIME NOT NULL,
   end_time TIME NOT NULL,
-  day_of_week DATE NOT NULL,
+  day_of_week VARCHAR(20) NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (subject_id) REFERENCES subjects(id)
 );
+
 
 
 

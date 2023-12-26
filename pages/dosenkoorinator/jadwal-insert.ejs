@@ -219,112 +219,34 @@ function getColumnIndex(hari) {
           </tr>
         </thead>
         <tbody>
-          <tr id="row7">
-            <td id="row7col1">07.00</td>
-            <td id="row7col2"></td>
-            <td id="row7col3"></td>
-            <td id="row7col4"></td>
-            <td id="row7col5"></td>
-            <td id="row7col6"></td>
-            <td id="row7col7"></td>
-          </tr>
-          <tr id="row8">
-            <td id="row8col1">08.00</td>
-            <td id="row8col2"></td>
-            <td id="row8col3"></td>
-            <td id="row8col4"></td>
-            <td id="row8col5"></td>
-            <td id="row8col6"></td>
-            <td id="row8col7"></td>
-          </tr>
-          <tr id="row9">
-            <td id="row9col1">09.00</td>
-            <td id="row9col2"></td>
-            <td id="row9col3"></td>
-            <td id="row9col4"></td>
-            <td id="row9col5"></td>
-            <td id="row9col6"></td>
-            <td id="row9col7"></td>
-          </tr>
-          <tr id="row10">
-            <td id="row10col1">10.00</td>
-            <td id="row10col2"></td>
-            <td id="row10col3"></td>
-            <td id="row10col4"></td>
-            <td id="row10col5"></td>
-            <td id="row10col6"></td>
-            <td id="row10col7"></td>
-          </tr>
-          <tr id="row11">
-            <td id="row11col1">11.00</td>
-            <td id="row11col2"></td>
-            <td id="row11col3"></td>
-            <td id="row11col4"></td>
-            <td id="row11col5"></td>
-            <td id="row11col6"></td>
-            <td id="row11col7"></td>
-          </tr>
-          <tr id="row12">
-            <td id="row12col1">12.00</td>
-            <td id="row12col2"></td>
-            <td id="row12col3"></td>
-            <td id="row12col4"></td>
-            <td id="row12col5"></td>
-            <td id="row12col6"></td>
-            <td id="row12col7"></td>
-          </tr>
-          <tr id="row13">
-            <td id="row13col1">13.00</td>
-            <td id="row13col2"></td>
-            <td id="row13col3"></td>
-            <td id="row13col4"></td>
-            <td id="row13col5"></td>
-            <td id="row13col6"></td>
-            <td id="row13col7"></td>
-          </tr>
-          <tr id="row14">
-            <td id="row14col1">14.00</td>
-            <td id="row14col2"></td>
-            <td id="row14col3"></td>
-            <td id="row14col4"></td>
-            <td id="row14col5"></td>
-            <td id="row14col6"></td>
-            <td id="row14col7"></td>
-          </tr>
-          <tr id="row15">
-            <td id="row15col1">15.00</td>
-            <td id="row15col2"></td>
-            <td id="row15col3"></td>
-            <td id="row15col4"></td>
-            <td id="row15col5"></td>
-            <td id="row15col6"></td>
-            <td id="row15col7"></td>
-          </tr>
-          <tr id="row16">
-            <td id="row16col1">16.00</td>
-            <td id="row16col2"></td>
-            <td id="row16col3"></td>
-            <td id="row16col4"></td>
-            <td id="row16col5"></td>
-            <td id="row16col6"></td>
-            <td id="row16col7"></td>
-          </tr>
-          <tr id="row17">
-            <td id="row17col1">17.00</td>
-            <td id="row17col2"></td>
-            <td id="row17col3"></td>
-            <td id="row17col4"></td>
-            <td id="row17col5"></td>
-            <td id="row17col6"></td>
-            <td id="row17col7"></td>
-          </tr>
-        </tbody>
+          <% for (let i = 7; i <= 17; i++) { %>
+            <tr id="row<%= i %>">
+              <td id="row<%= i %>col1"><%= i %>.00</td>
+              <% const weekdays = ['', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] %>
+              <% for (let j = 1; j <= 7; j++) { %>
+                <% try { 
+                  const schedule = scheduleData.find(entry => entry.day_of_week=== weekdays[j] && 
+                                                              (entry.start_time) <= i && 
+                                                              (entry.end_time) >= i);
+                  if (schedule) { %>
+                    <td id="row<%= i %>col<%= j + 1 %>" style="background-color: blue; display: block;">MK</td>
+                  <% } else { %>
+                    <td id="row<%= i %>col<%= j + 1 %>"></td>
+                  <% } 
+                } catch (e) { %>
+                  <td id="row<%= i %>col<%= j + 1 %>">Error: <%= e.message %></td>
+                <% } %>
+              <% } %>
+            </tr>
+          <% } %>            
+        </tbody>             
       </table>
     </div>
   </div>
 
   <!--Modal Tambah Jadwal -->
   <div id="myModalTambahJadwal" class="modalTambahJadwal">
+    <form action="/submitScheduleAS" method="POST">
     <div class="classHari">
       <label for="Hari">Hari:</label>
       <select id="dropDownHari">
@@ -371,10 +293,13 @@ function getColumnIndex(hari) {
     
     <button onclick="submitFormTambah()">Submit</button>
     <button id="buttonClose1" onclick="closeModal()">Close</button>
+    </form>
   </div>
+  
 
   <!--Modal Hapus Jadwal -->
   <div id="myModalHapusJadwal" class="modalHapusJadwal">
+    <form action="/removeScheduleAS" method="POST">
       <div class="classHari">
         <label for="Hari">Hari:</label>
         <select id="dropDownHariHapusJadwal">
@@ -422,7 +347,7 @@ function getColumnIndex(hari) {
       <button onclick="submitFormHapus()">Submit</button>
       <button id="buttonClose2" onclick="closeModal2()">Close</button>
     </div>
-
+  </form>
 </body>
 </html>
 

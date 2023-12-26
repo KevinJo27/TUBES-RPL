@@ -6,9 +6,7 @@
     <title>Jadwal ASDOS</title>
     <link rel="stylesheet" href="/includes/css/css asdos/jadwal-asdos.css" />
     <script>
-      const weekdays = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-      var highlightCellArray = [];
+      
       
       function Logout(){
         window.location.href="/";
@@ -223,11 +221,14 @@
             <% for (let i = 7; i <= 17; i++) { %>
               <tr id="row<%= i %>">
                 <td id="row<%= i %>col1"><%= i %>.00</td>
+                <% const weekdays = ['', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] %>
                 <% for (let j = 1; j <= 7; j++) { %>
                   <% try { 
-                    const schedule = scheduleData.find(entry => entry.day_of_week === weekdays[j] && entry.start_time === i);
+                    const schedule = scheduleData.find(entry => entry.day_of_week=== weekdays[j] && 
+                                                                (entry.start_time) <= i && 
+                                                                (entry.end_time) >= i);
                     if (schedule) { %>
-                      <td id="row<%= i %>col<%= j + 1 %>" style="background-color: blue; display: block;"><%= schedule.end_time %></td>
+                      <td id="row<%= i %>col<%= j + 1 %>" style="background-color: blue; display: block;">MK</td>
                     <% } else { %>
                       <td id="row<%= i %>col<%= j + 1 %>"></td>
                     <% } 
@@ -237,9 +238,7 @@
                 <% } %>
               </tr>
             <% } %>            
-          </tbody>
-          
-          
+          </tbody>             
         </table>
       </div>
     </div>
@@ -298,6 +297,7 @@
 
     <!--Modal Hapus Jadwal -->
     <div id="myModalHapusJadwal" class="modalHapusJadwal">
+      <form action="/removeSchedule" method="POST">
         <div class="classHari">
           <label for="Hari">Hari:</label>
           <select id="dropDownHariHapusJadwal" name="day_of_week">
@@ -344,27 +344,29 @@
         <input type="hidden" name="user_id" value="<%= user_id %>">
         <button onclick="submitFormHapus()">Submit</button>
         <button id="buttonClose2" onclick="closeModal2()">Close</button>
-      
       </div>
-
+    </form>
+    <script>
+    
+    var highlightCellArray = [];
+      
+      function openModal() {
+        document.getElementById("myModalTambahJadwal").style.display = "block";
+      }
+      function closeModal() {
+        document.getElementById("myModalTambahJadwal").style.display = "none";
+      }
+    
+      function openModal2() {
+        document.getElementById("myModalHapusJadwal").style.display = "block";
+      }
+    
+      function closeModal2() {
+        document.getElementById("myModalHapusJadwal").style.display = "none";
+      }
+    
+    </script>
   </body>
 </html>
 
-<script>
-  
-  function openModal() {
-    document.getElementById("myModalTambahJadwal").style.display = "block";
-  }
-  function closeModal() {
-    document.getElementById("myModalTambahJadwal").style.display = "none";
-  }
 
-  function openModal2() {
-    document.getElementById("myModalHapusJadwal").style.display = "block";
-  }
-
-  function closeModal2() {
-    document.getElementById("myModalHapusJadwal").style.display = "none";
-  }
-
-</script>

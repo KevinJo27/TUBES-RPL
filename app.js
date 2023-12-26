@@ -294,47 +294,51 @@
     }
   });
 
+  
 
-  app.get('/jadwal-asdos', (req, res) => {
-    console.log('Session:', req.session);
-  
-    if (!req.session.user || !req.session.user.userName) {
-      console.error('User session or userName not available');
-      return res.status(401).send('Unauthorized');
-    }
-  
-    const { userName } = req.session.user;
-  
-    const getUserIdQuery = 'SELECT id FROM users WHERE name = ?';
-  
-    connection.query(getUserIdQuery, [userName], (err, results) => {
-      if (err) {
-        console.error('Error fetching user ID:', err);
-        return res.status(500).send('Internal Server Error');
+    app.get('/jadwal-asdos', (req, res) => {
+
+      console.log('Session:', req.session);
+    
+      if (!req.session.user || !req.session.user.userName) {
+        console.error('User session or userName not available');
+        return res.status(401).send('Unauthorized');
       }
-  
-      const user_id = results.length > 0 ? results[0].id : null;
-  
-      if (!user_id) {
-        console.error('User ID not found in the database');
-        return res.status(500).send('Internal Server Error');
-      }
-  
-      // Fetch schedule data for the user
-      const getScheduleQuery = 'SELECT * FROM course_schedules WHERE user_id = ?';
-  
-      connection.query(getScheduleQuery, [user_id], (scheduleErr, scheduleResults) => {
-        if (scheduleErr) {
-          console.error('Error fetching schedule data:', scheduleErr);
+    
+      const { userName } = req.session.user;
+    
+      const getUserIdQuery = 'SELECT id FROM users WHERE name = ?';
+    
+      connection.query(getUserIdQuery, [userName], (err, results) => {
+        if (err) {
+          console.error('Error fetching user ID:', err);
           return res.status(500).send('Internal Server Error');
         }
-  
-        const scheduleData = scheduleResults || [];
-  
-        res.render('asdos/jadwal-asdos', { user_id, scheduleData });
+    
+        const user_id = results.length > 0 ? results[0].id : null;
+    
+        if (!user_id) {
+          console.error('User ID not found in the database');
+          return res.status(500).send('Internal Server Error');
+        }
+    
+        // Fetch schedule data for the user
+        const getScheduleQuery = 'SELECT * FROM course_schedules WHERE user_id = ?';
+    
+        connection.query(getScheduleQuery, [user_id], (scheduleErr, scheduleResults) => {
+          if (scheduleErr) {
+            console.error('Error fetching schedule data:', scheduleErr);
+            return res.status(500).send('Internal Server Error');
+          }
+    
+          const scheduleData = scheduleResults || [];
+          console.log(scheduleData);
+          const weekdays = ['', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
+          res.render('asdos/jadwal-asdos', { user_id, scheduleData });
+        });
       });
     });
-  });
   
   
   
@@ -538,38 +542,65 @@
   // });
 
   // ...
-
   app.get('/jadwal-views', (req, res) => {
-    if (!req.session.user || !req.session.user.authenticated) {
-      return res.redirect('/');
+    const userNameParam = req.query.user;
+  
+    if (!userNameParam) {
+      return res.status(400).send('Missing user parameter');
     }
-
-    // Get the user ID from the session
-    const userId = req.session.user.userId;
-
-    // Query to get the user's name from the users table
-    const userNameQuery = 'SELECT name FROM users WHERE id = ?';
-
-    connection.query(userNameQuery, [userId], (userNameErr, userNameResults) => {
+  
+    const getUserNameQuery = 'SELECT id, name FROM users WHERE name = ?';
+  
+    connection.query(getUserNameQuery, [userNameParam], (userNameErr, userNameResults) => {
       if (userNameErr) {
-        console.error('Error querying user name:', userNameErr);
+        console.error('Error querying user:', userNameErr);
         return res.status(500).send('Internal Server Error');
       }
-
-      // If user name is found, store it in a variable
-      const userName = userNameResults.length > 0 ? userNameResults[0].name : 'Unknown';
-
-      // Render the EJS template and pass the user name
-      res.render('dosen/jadwal-views', { userName });
+  
+      if (userNameResults.length === 0) {
+        return res.status(404).send('User not found');
+      }
+  
+      const { id, name: userName } = userNameResults[0];
+  
+      // Fetch schedule data for the user
+      const getScheduleQuery = 'SELECT * FROM course_schedules WHERE user_id = ?';
+  
+      connection.query(getScheduleQuery, [id], (scheduleErr, scheduleResults) => {
+        if (scheduleErr) {
+          console.error('Error fetching schedule data:', scheduleErr);
+          return res.status(500).send('Internal Server Error');
+        }
+  
+        const scheduleData = scheduleResults || [];
+        console.log(scheduleData);
+        const weekdays = ['', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  
+        res.render('dosen/jadwal-views', { userName, scheduleData, weekdays });
+      });
     });
   });
 
   app.get('/jadwal-insert', (req, res) => {
-    if (!req.session.user || !req.session.user.authenticated) {
-      return res.redirect('/');
+  const userNameParam = req.query.user;
+
+  if (!userNameParam) {
+    return res.status(400).send('Missing user parameter');
+  }
+
+  const getUserIdQuery = 'SELECT id FROM users WHERE name = ?';
+
+  connection.query(getUserIdQuery, [userNameParam], (userIdErr, userIdResults) => {
+    if (userIdErr) {
+      console.error('Error querying user ID:', userIdErr);
+      return res.status(500).send('Internal Server Error');
     }
 
-    const userId = req.session.user.userId;
+    if (userIdResults.length === 0) {
+      return res.status(404).send('User not found');
+    }
+
+    const userId = userIdResults[0].id;
 
     const userNameQuery = 'SELECT name FROM users WHERE id = ?';
 
@@ -580,10 +611,25 @@
       }
 
       const userName = userNameResults.length > 0 ? userNameResults[0].name : 'Unknown';
-      
-      res.render('dosenkoorinator/jadwal-insert', { userName });
+
+      // Fetch schedule data for the user
+      const getScheduleQuery = 'SELECT * FROM course_schedules WHERE user_id = ?';
+
+      connection.query(getScheduleQuery, [userId], (scheduleErr, scheduleResults) => {
+        if (scheduleErr) {
+          console.error('Error fetching schedule data:', scheduleErr);
+          return res.status(500).send('Internal Server Error');
+        }
+
+        const scheduleData = scheduleResults || [];
+
+        res.render('dosenkoorinator/jadwal-insert', { userName, userId, scheduleData });
+      });
     });
   });
+});
+
+  
 
 
 
@@ -676,11 +722,95 @@ app.post('/removeSchedule', (req, res) => {
           res.status(500).send('Internal Server Error');
       } else {
           console.log('Data deleted from course_schedules.');
-          res.redirect('/jadwal-asdos', { user_id });
+          res.redirect(`/jadwal-asdos?user_id=${user_id}`);
       }
   });
 });
 
+app.post('/submitScheduleAS', (req, res) => {
+  const { user_id, start_time, end_time, day_of_week } = req.body;
+
+  // Check for overlapping schedules
+  const conflictCheckQuery = `
+      SELECT * FROM course_schedules
+      WHERE user_id = ? 
+      AND day_of_week = ?
+      AND (
+          (start_time <= ? AND end_time >= ?)   -- New schedule starts in existing schedule
+          OR (start_time <= ? AND end_time >= ?) -- New schedule ends in existing schedule
+          OR (start_time >= ? AND end_time <= ?) -- New schedule is within existing schedule
+      );
+  `;
+
+  connection.query(
+      conflictCheckQuery,
+      [user_id, day_of_week, start_time, start_time, end_time, end_time, start_time, end_time],
+      (conflictCheckErr, conflictCheckResults) => {
+          if (conflictCheckErr) {
+              console.error('Error checking for conflicting schedules:', conflictCheckErr);
+              return res.status(500).send('Internal Server Error');
+          }
+
+          if (conflictCheckResults.length > 0) {
+              // Conflict found. Send an alert to the client
+              const alertMessage = 'Jadwal bertabrakan';
+              return res.status(200).send(`<script>alert('${alertMessage}');</script>`);
+          }
+
+          const insertQuery = `
+              INSERT INTO course_schedules (user_id, schedule_category, start_time, end_time, day_of_week)
+              VALUES (?, 'asistensi', ?, ?, ?)
+          `;
+
+          connection.query(insertQuery, [user_id, start_time, end_time, day_of_week], (err, result) => {
+              console.log(user_id);
+              console.log(start_time);
+              console.log(end_time);
+              console.log(day_of_week);
+
+              if (err) {
+                  console.error('Error inserting data into course_schedules:', err);
+                  res.status(500).send('Internal Server Error');
+              } else {
+                  console.log('Data inserted into course_schedules.');
+                  res.redirect(302, `/jadwal-asdos?user_id=${user_id}`);
+
+              }
+          });
+      }
+  );
+});
+
+
+// Assuming you have already defined your express app and MySQL connection...
+
+// Add this route for removing a schedule
+app.post('/removeScheduleAS', (req, res) => {
+const { user_id, start_time, end_time, day_of_week } = req.body;
+
+const deleteQuery = `
+    DELETE FROM course_schedules 
+    WHERE user_id = ? 
+    AND start_time = ? 
+    AND end_time = ? 
+    AND day_of_week = ?;
+`;
+
+connection.query(deleteQuery, [user_id, start_time, end_time, day_of_week], (err, result) => {
+    console.log(user_id);
+    console.log(start_time);
+    console.log(end_time);
+    console.log(day_of_week);
+
+    if (err) {
+        console.error('Error deleting data from course_schedules:', err);
+        res.status(500).send('Internal Server Error');
+    } else {
+        console.log('Data deleted from course_schedules.');
+        res.redirect(`/jadwal-asdos?user_id=${user_id}`);
+    }
+});
+});
 
   app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);

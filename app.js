@@ -344,7 +344,7 @@ app.get('/matakuliah', (req, res) => {
       console.error('Error querying dosen_subjects:', dosenSubjectsErr);
       return res.status(500).send('Internal Server Error');
     }
-    
+
     // Iterate through the results and perform additional queries
     const subjectsWithUsersPromises = dosenSubjectsResults.map((subject) => {
       // Query to get the subject_id from subjects table
@@ -427,10 +427,7 @@ app.get('/matakuliah', (req, res) => {
     });
   });
 
-app.get('/home-koordinator', (req, res) => {
-const { userName } = req.session.user;
-res.render('dosenkoorinator/home-koordinator', { userName });
-})
+
 
 
   app.post('/Asdos-list', authenticateUser, (req, res) => {
@@ -504,4 +501,4 @@ app.post('/logout', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
-
+})

@@ -5,15 +5,41 @@ const mysql = require('mysql2'); // Add this line
 const app = express();
 const port = 3000;
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' }); // Specify the upload directory
+const storage = multer.diskStorage({
+  destination: 'uploads/',
+  filename: function (req, file, cb) {
+    const userId = req.session.user ? req.session.user.userId : null;
+    const subject = req.body.subject;
 
+    if (!userId) {
+      console.error('User ID not found in session');
+      return cb(new Error('Unauthorized'), null);
+    }
+
+    let fileName;
+    if (file.fieldname === 'transkrip') {
+      fileName = `${userId}_transkrip_${subject}.${file.originalname}`;
+    } else if (file.fieldname === 'cv') {
+      fileName = `${userId}_cv_${subject}.${file.originalname}`;
+    } else if (file.fieldname === 'suratLamaran') {
+      fileName = `${userId}_suratLamaran_${subject}.${file.originalname}`;
+    } else {
+      // Handle other file types if needed
+      fileName = file.originalname;
+    }
+
+    cb(null, fileName);
+  }
+});
+
+const upload = multer({ storage: storage });
 // const __dirname = path.resolve();
 
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '12345678',
-  database: 'mysql'
+  password: '',
+  database: 'database_rpltb'
 });
 
 connection.connect((err) => {
@@ -27,6 +53,7 @@ connection.connect((err) => {
 const staticPath = path.join(__dirname, 'includes');
 const cssPath = path.join(staticPath, 'css');
 
+app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: true })); // Parse form data
 app.use('/includes', express.static(staticPath));
@@ -138,6 +165,11 @@ app.post('/signup', (req, res) => {
     res.redirect('/signup'); // Redirect back to the signup page on error
     return;
   }
+  console.log('User registered successfully');
+  res.redirect('/');
+});
+
+
 
   // Calculate semester
   const currentYear = new Date().getFullYear();
@@ -156,6 +188,16 @@ app.post('/signup', (req, res) => {
   const query = 'INSERT INTO users (name, npm, password, semester, role_id) VALUES (?, ?, ?, ?, 1)';
   const role_id = 3; // Assuming 3 is the role_id for Mahasiswa
 
+
+app.get('/home-asdos', authenticateUser, (req, res) => {
+const { userName } = req.session.user;
+res.render('asdos/home-asdos', { userName });
+});
+
+app.get('/daftar-asdos', (req, res) => {
+res.render('asdos/daftar-asdos');
+})
+
   connection.query(query, [nama, npm_npwp, password, currentSemester, role_id], (err) => {
     if (err) {
       console.error('Error inserting user into the database:', err);
@@ -166,7 +208,8 @@ app.post('/signup', (req, res) => {
     console.log('User registered successfully');
     res.redirect('/');
   });  
-});
+
+
 
 
 
@@ -177,8 +220,21 @@ app.get('/home-dosen', authenticateUser, (req, res) => {
 
 app.get('/home-asdos', authenticateUser, (req, res) => {
   const { userName } = req.session.user;
-  res.render('asdos/home-asdos',{userName});
+
+  const getUserIdQuery = 'SELECT id FROM users WHERE name = ?';
+
+  connection.query(getUserIdQuery, [userName], (err, results) => {
+    if (err) {
+      console.error('Error fetching user ID:', err);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    const user_id = results.length > 0 ? results[0].id : null;
+
+    res.render('asdos/home-asdos', { userName, user_id });
+  });
 });
+
 
 app.get('/daftar-asdos', (req, res) =>{
   res.render('asdos/daftar-asdos');
@@ -214,6 +270,70 @@ app.get('/upload', authenticateUser, (req, res) => {
   });
 });
 
+app.get('/jadwal-asdos', (req, res) => {
+res.render('asdos/jadwal-asdos');
+})
+
+// CRUD -> CREATE PART
+app.post('/matakuliah', (req, res) => {
+try {
+  const userId = req.session.user.userId;
+
+  const { subjectId, assistantQuota } = req.body;
+
+  let dosenSubjectResultId;
+
+  // Execute the query to insert data into the subjects table
+  connection.execute(
+    `INSERT INTO dosen_subjects (user_id, subject_id, asdos_quota) VALUES (${userId}, ${subjectId}, ${assistantQuota})`,
+    (error, results) => {
+      if (error) {
+        console.error('Error inserting data:', error);
+        res.status(500).json({ error: 'Internal server error' });
+      } else {
+        // Send a response with the inserted data
+        dosenSubjectResultId = results.insertId;
+
+        // Execute Query get details from dosen_subjects record table
+        const query = `
+          SELECT ds.*, s.title
+          FROM dosen_subjects ds
+          JOIN subjects s ON ds.subject_id = s.id
+          WHERE ds.id = ${dosenSubjectResultId}
+        `;
+
+        connection.execute(
+          query,
+          (err, resQueryTwo) => {
+            if (err) {
+              console.error('Error querying data', error);
+              res.status(500).json({ error: 'Internal server error' });
+            } else {
+              const finalResult = resQueryTwo[0];
+              console.log(finalResult);
+              res.status(200).json({
+                id: finalResult.id,
+                title: finalResult.title,
+                asdos_quota: finalResult.asdos_quota
+              });
+            }
+          }
+        );
+      }
+    }
+  );
+} catch (error) {
+  console.error('Error uploading data:', error);
+  res.status(500).json({ error: 'Internal server error' });
+}
+});
+
+// CRUD -> READ PART
+app.get('/matakuliah', (req, res) => {
+if (!req.session.user || !req.session.user.authenticated) {
+  return res.redirect('/');
+}
+
 app.post('/upload', upload.fields([
   { name: 'transkrip', maxCount: 1 },
   { name: 'cv', maxCount: 1 },
@@ -225,43 +345,144 @@ app.post('/upload', upload.fields([
   if (user && user.userId) {
     const { transkrip, cv, suratLamaran } = req.files;
 
+
     if (!transkrip || !cv || !suratLamaran) {
-        return res.status(400).send('All files are required.');
+      return res.status(400).send('All files are required.');
     }
 
     // Assuming user_id is available in the session
     const userId = user.userId;
 
     // Assuming the pdf_path in the database is a URL or file path
-    const transkripPath = `/uploads/${transkrip[0].filename}`;
-    const cvPath = `/uploads/${cv[0].filename}`;
-    const suratLamaranPath = `/uploads/${suratLamaran[0].filename}`;
+    const transkripPath = `/uploads/${userId}_transkrip_${req.body.subject}.${transkrip[0].originalname}`;
+    const cvPath = `/uploads/${userId}_cv_${req.body.subject}.${cv[0].originalname}`;
+    const suratLamaranPath = `/uploads/${userId}_suratLamaran_${req.body.subject}.${suratLamaran[0].originalname}`;
 
     // Insert data into the asdos_submissions table
-    const query = 'INSERT INTO asdos_submissions (user_id, pdf_path) VALUES (?, ?)';
-    connection.query(query, [userId, transkripPath], (err) => {
-        if (err) {
-            console.error('Error inserting data into the database:', err);
-            return res.status(500).send('Internal Server Error');
-        }
+    const query = 'INSERT INTO asdos_submissions (user_id, pdf_path, cv_path, surat_lamaran_path) VALUES (?, ?, ?, ?)';
+    connection.query(query, [userId, transkripPath, cvPath, suratLamaranPath], (err) => {
+      if (err) {
+        console.error('Error inserting data into the database:', err);
+        return res.status(500).send('Internal Server Error');
+      }
 
-        console.log('Data inserted successfully');
-        res.redirect('/home-asdos');
+      console.log('Data inserted successfully');
+      res.redirect('/home-asdos');
     });
   } else {
     // Handle the case where user or user.userId is undefined or null
     res.status(401).send('Unauthorized');
   }
+
+  // Render the page and pass the results to the template
+  res.render('dosen/matakuliah', { subjects: results });
 });
 
 
-app.get('/jadwal-asdos', (req, res) =>{
-  res.render('asdos/jadwal-asdos');
-})
+// CRUD -> UPDATE PART
+app.put('/matakuliah/:dosenSubjectId', (req, res) => {
+try {
+  // Business logic put here
+  const userId = req.session.user.userId;
+
+  const { dosenSubjectId } = req.params;
+
+  const { asdosQuota } = req.body;
+
+  const query = `UPDATE dosen_subjects SET asdos_quota = ${asdosQuota} WHERE id = ${dosenSubjectId} and user_id = ${userId}`;
+
+  connection.execute(
+    query,
+    (err, finalResult) => {
+      if (err) {
+        console.error('Error editing dosen subject data', error);
+        res.status(500).json({ error: 'Internal server error' });
+      } else {
+        res.status(200).json({
+          id: dosenSubjectId,
+          title: finalResult.title,
+          asdos_quota: finalResult.asdos_quota
+        });
+      }
+    }
+  )
+} catch (error) {
+  console.error('Error edit data:', error);
+  res.status(500).json({ error: 'Internal server error' });
+}
+});
+
+// CRUD -> DELETE PART
+app.delete('/matakuliah/:dosenSubjectId', (req, res) => {
+const { dosenSubjectId } = req.params;
+
+// Check if subjectId is provided
+if (!dosenSubjectId) {
+  return res.status(400).send('Bad Request: Missing subjectId');
+}
+
+// Delete data from subjects table
+const deleteSubjectQuery = 'DELETE FROM dosen_subjects WHERE id = ?';
+
+connection.query(deleteSubjectQuery, [dosenSubjectId], (err, subjectResult) => {
+  if (err) {
+    console.error('Error deleting subject from database:', err);
+    return res.status(500).send('Internal Server Error');
+  }
+
+
+  app.get('/jadwal-asdos', (req, res) => {
+
+    console.log('Session:', req.session);
+  
+    if (!req.session.user || !req.session.user.userName) {
+      console.error('User session or userName not available');
+      return res.status(401).send('Unauthorized');
+    }
+  
+    const { userName } = req.session.user;
+  
+    const getUserIdQuery = 'SELECT id FROM users WHERE name = ?';
+  
+    connection.query(getUserIdQuery, [userName], (err, results) => {
+      if (err) {
+        console.error('Error fetching user ID:', err);
+        return res.status(500).send('Internal Server Error');
+      }
+  
+      const user_id = results.length > 0 ? results[0].id : null;
+  
+      if (!user_id) {
+        console.error('User ID not found in the database');
+        return res.status(500).send('Internal Server Error');
+      }
+  
+      // Fetch schedule data for the user
+      const getScheduleQuery = 'SELECT * FROM course_schedules WHERE user_id = ?';
+  
+      connection.query(getScheduleQuery, [user_id], (scheduleErr, scheduleResults) => {
+        if (scheduleErr) {
+          console.error('Error fetching schedule data:', scheduleErr);
+          return res.status(500).send('Internal Server Error');
+        }
+  
+        const scheduleData = scheduleResults || [];
+        console.log(scheduleData);
+        const weekdays = ['', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
+        res.render('asdos/jadwal-asdos', { user_id, scheduleData });
+      });
+    });
+  });
+
+
+
+
 
 app.get('/matakuliah', (req, res) => {
   if (!req.session.user || !req.session.user.authenticated) {
     return res.redirect('/');
+
   }
 
   // Get the user ID from the session
@@ -292,6 +513,9 @@ app.post('/matakuliah', (req, res) => {
   if (!subjectId) {
     return res.status(400).send('Bad Request: Missing subjectId');
   }
+
+
+
 
   // Delete data from subjects table
   const deleteSubjectQuery = 'DELETE FROM subjects WHERE id = ?';
@@ -344,7 +568,7 @@ app.get('/AsistenDosen', (req, res) => {
       console.error('Error querying dosen_subjects:', dosenSubjectsErr);
       return res.status(500).send('Internal Server Error');
     }
-
+    
     // Iterate through the results and perform additional queries
     const subjectsWithUsersPromises = dosenSubjectsResults.map((subject) => {
       // Query to get the subject_id from subjects table
@@ -427,7 +651,10 @@ app.get('/Asdos-list', authenticateUser, (req, res) => {
   });
 });
 
-
+app.get('/home-koordinator', (req, res) => {
+const { userName } = req.session.user;
+res.render('dosenkoorinator/home-koordinator', { userName });
+})
 
 
 app.post('/Asdos-list', authenticateUser, (req, res) => {
@@ -451,22 +678,67 @@ app.post('/Asdos-list', authenticateUser, (req, res) => {
   });
 });
 
-
-// app.get('/Asdos-list', (req, res) => {
-//   res.render('dosenkoorinator/Asdos-list');
-// });
-
-// ...
-
 app.get('/jadwal-views', (req, res) => {
-  if (!req.session.user || !req.session.user.authenticated) {
-    return res.redirect('/');
+  const userNameParam = req.query.user;
+
+  if (!userNameParam) {
+      return res.status(400).send('Missing user parameter');
   }
 
-  // Get the user ID from the session
-  const userId = req.session.user.userId;
+  const getUserNameQuery = 'SELECT id, name FROM users WHERE name = ?';
 
-  // Query to get the user's name from the users table
+  connection.query(getUserNameQuery, [userNameParam], (userNameErr, userNameResults) => {
+      if (userNameErr) {
+          console.error('Error querying user:', userNameErr);
+          return res.status(500).send('Internal Server Error');
+      }
+
+      if (userNameResults.length === 0) {
+          return res.status(404).send('User not found');
+      }
+
+      const { id, name: userName } = userNameResults[0];
+
+      const getScheduleQuery = 'SELECT * FROM course_schedules WHERE user_id = ?';
+
+      // Use 'id' from userNameResults instead of userIdResults
+      connection.query(getScheduleQuery, [id], (scheduleErr, scheduleResults) => {
+          if (scheduleErr) {
+              console.error('Error fetching schedule data:', scheduleErr);
+              return res.status(500).send('Internal Server Error');
+          }
+
+          const scheduleData = scheduleResults || [];
+          console.log(scheduleData);
+          const weekdays = ['', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
+          res.render('dosen/jadwal-views', { userName, userId: id, scheduleData, weekdays });
+      });
+  });
+});
+
+
+app.get('/jadwal-insert', (req, res) => {
+const userNameParam = req.query.user;
+
+if (!userNameParam) {
+  return res.status(400).send('Missing user parameter');
+}
+
+const getUserIdQuery = 'SELECT id FROM users WHERE name = ?';
+
+connection.query(getUserIdQuery, [userNameParam], (userIdErr, userIdResults) => {
+  if (userIdErr) {
+    console.error('Error querying user ID:', userIdErr);
+    return res.status(500).send('Internal Server Error');
+  }
+
+  if (userIdResults.length === 0) {
+    return res.status(404).send('User not found');
+  }
+
+  const userId = userIdResults[0].id;
+
   const userNameQuery = 'SELECT name FROM users WHERE id = ?';
 
   connection.query(userNameQuery, [userId], (userNameErr, userNameResults) => {
@@ -475,18 +747,27 @@ app.get('/jadwal-views', (req, res) => {
       return res.status(500).send('Internal Server Error');
     }
 
-    // If user name is found, store it in a variable
     const userName = userNameResults.length > 0 ? userNameResults[0].name : 'Unknown';
 
-    // Render the EJS template and pass the user name
-    res.render('dosen/jadwal-views', { userName });
+    // Fetch schedule data for the user
+    const getScheduleQuery = 'SELECT * FROM course_schedules WHERE user_id = ?';
+
+    connection.query(getScheduleQuery, [userId], (scheduleErr, scheduleResults) => {
+      if (scheduleErr) {
+        console.error('Error fetching schedule data:', scheduleErr);
+        return res.status(500).send('Internal Server Error');
+      }
+
+      const scheduleData = scheduleResults || [];
+
+      res.render('dosenkoorinator/jadwal-insert', { userName, userId, scheduleData });
+    });
   });
 });
-
-app.get('/jadwal-insert', (req, res) => {
-  const name = req.query.name || 'Unknown';
-  res.render('dosenkoorinator/jadwal-insert', { name });
 });
+
+
+
 
 
 app.get('/Assign-jadwal', (req, res) =>{
@@ -498,6 +779,178 @@ app.post('/logout', (req, res) => {
   res.redirect('/');
 });
 
+app.post('/submitSchedule', (req, res) => {
+  const { user_id, start_time, end_time, day_of_week } = req.body;
+
+  // Check for overlapping schedules
+  const conflictCheckQuery = `
+      SELECT * FROM course_schedules
+      WHERE user_id = ? 
+      AND day_of_week = ?
+      AND (
+          (start_time <= ? AND end_time >= ?)   -- New schedule starts in existing schedule
+          OR (start_time <= ? AND end_time >= ?) -- New schedule ends in existing schedule
+          OR (start_time >= ? AND end_time <= ?) -- New schedule is within existing schedule
+      );
+  `;
+
+  connection.query(
+      conflictCheckQuery,
+      [user_id, day_of_week, start_time, start_time, end_time, end_time, start_time, end_time],
+      (conflictCheckErr, conflictCheckResults) => {
+          if (conflictCheckErr) {
+              console.error('Error checking for conflicting schedules:', conflictCheckErr);
+              return res.status(500).send('Internal Server Error');
+          }
+
+          if (conflictCheckResults.length > 0) {
+              // Conflict found. Send an alert to the client
+              const alertMessage = 'Jadwal bertabrakan';
+              return res.status(200).send(`<script>alert('${alertMessage}');</script>`);
+          }
+
+          const insertQuery = `
+              INSERT INTO course_schedules (user_id, schedule_category, start_time, end_time, day_of_week)
+              VALUES (?, 'matakuliah', ?, ?, ?)
+          `;
+
+          connection.query(insertQuery, [user_id, start_time, end_time, day_of_week], (err, result) => {
+              console.log(user_id);
+              console.log(start_time);
+              console.log(end_time);
+              console.log(day_of_week);
+
+              if (err) {
+                  console.error('Error inserting data into course_schedules:', err);
+                  res.status(500).send('Internal Server Error');
+              } else {
+                  console.log('Data inserted into course_schedules.');
+                  res.redirect(302, `/jadwal-asdos?user_id=${user_id}`);
+
+              }
+          });
+      }
+  );
+});
+
+
+// Assuming you have already defined your express app and MySQL connection...
+
+// Add this route for removing a schedule
+app.post('/removeSchedule', (req, res) => {
+const { user_id, start_time, end_time, day_of_week } = req.body;
+
+const deleteQuery = `
+    DELETE FROM course_schedules 
+    WHERE user_id = ? 
+    AND start_time = ? 
+    AND end_time = ? 
+    AND day_of_week = ?;
+`;
+
+connection.query(deleteQuery, [user_id, start_time, end_time, day_of_week], (err, result) => {
+    console.log(user_id);
+    console.log(start_time);
+    console.log(end_time);
+    console.log(day_of_week);
+
+    if (err) {
+        console.error('Error deleting data from course_schedules:', err);
+        res.status(500).send('Internal Server Error');
+    } else {
+        console.log('Data deleted from course_schedules.');
+        res.redirect(`/jadwal-asdos?user_id=${user_id}`);
+    }
+});
+});
+
+app.post('/submitScheduleAS', (req, res) => {
+const { start_time, end_time, day_of_week, user } = req.body; // Use req.body.user to get the user
+
+console.log('Received request to submit schedule for user:', user);
+console.log('Received data:', req.body);
+
+const getUserIdQuery = 'SELECT id FROM users WHERE name = ?';
+
+connection.query(getUserIdQuery, [user], (userIdErr, userIdResults) => {
+  if (userIdErr) {
+    console.error('Error querying user ID:', userIdErr);
+    return res.status(500).send('Internal Server Error');
+  }
+  
+  const userName = userNameResults.length > 0 ? userNameResults[0].name : 'Unknown';
+
+  res.render('dosenkoorinator/jadwal-insert', { userName });
+});
+});
+
+app.get('/Assign-jadwal', (req, res) => {
+res.render('dosenkoorinator/Assign-jadwal');
+})
+
+  if (userIdResults.length === 0) {
+    console.log('User not found:', user);
+    return res.status(404).send('User not found');
+  }
+
+  const user_id = userIdResults[0].id;
+
+  const conflictCheckQuery = `
+    SELECT * FROM course_schedules
+    WHERE user_id = ? 
+    AND day_of_week = ?
+    AND (
+      (start_time <= ? AND end_time >= ?)
+      OR (start_time <= ? AND end_time >= ?)
+      OR (start_time >= ? AND end_time <= ?)
+    );
+  `;
+
+  connection.query(
+    conflictCheckQuery,
+    [user_id, day_of_week, start_time, start_time, end_time, end_time, start_time, end_time],
+    (conflictCheckErr, conflictCheckResults) => {
+      if (conflictCheckErr) {
+        console.error('Error checking for conflicting schedules:', conflictCheckErr);
+        return res.status(500).send('Internal Server Error');
+      }
+
+      if (conflictCheckResults.length > 0) {
+        // Conflict found. Send an alert to the client
+        const alertMessage = 'Jadwal bertabrakan';
+        console.log(alertMessage);
+        return res.status(200).send(`<script>alert('${alertMessage}');</script>`);
+      }
+
+      const insertQuery = `
+        INSERT INTO course_schedules (user_id, schedule_category, start_time, end_time, day_of_week)
+        VALUES (?, 'asistensi', ?, ?, ?)
+      `;
+
+      connection.query(insertQuery, [user_id, start_time, end_time, day_of_week], (err, result) => {
+        console.log('Inserted data into course_schedules:');
+        console.log('User ID:', user_id);
+        console.log('Start Time:', start_time);
+        console.log('End Time:', end_time);
+        console.log('Day of Week:', day_of_week);
+
+        if (err) {
+          console.error('Error inserting data into course_schedules:', err);
+          res.status(500).send('Internal Server Error');
+        } else {
+          console.log('Data inserted into course_schedules.');
+          res.redirect(302, `/jadwal-insert?user=${user}`);
+        }
+      });
+    }
+  );
+});
+});
+
+
+
+
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
+})

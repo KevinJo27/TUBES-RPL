@@ -227,12 +227,16 @@ app.get('/home-asdos', authenticateUser, (req, res) => {
 
     if (!transkrip || !cv || !suratLamaran) {
         return res.status(400).send('All files are required.');
+        return res.status(400).send('All files are required.');
     }
 
       // Assuming user_id is available in the session
       const userId = user.userId;
 
     // Assuming the pdf_path in the database is a URL or file path
+    const transkripPath = `/uploads/${transkrip[0].filename}`;
+    const cvPath = `/uploads/${cv[0].filename}`;
+    const suratLamaranPath = `/uploads/${suratLamaran[0].filename}`;
     const transkripPath = `/uploads/${transkrip[0].filename}`;
     const cvPath = `/uploads/${cv[0].filename}`;
     const suratLamaranPath = `/uploads/${suratLamaran[0].filename}`;
@@ -247,11 +251,19 @@ app.get('/home-asdos', authenticateUser, (req, res) => {
 
         console.log('Data inserted successfully');
         res.redirect('/home-asdos');
+        console.log('Data inserted successfully');
+        res.redirect('/home-asdos');
     });
   } else {
     // Handle the case where user or user.userId is undefined or null
     res.status(401).send('Unauthorized');
   }
+});
+
+
+app.get('/jadwal-asdos', (req, res) =>{
+  res.render('asdos/jadwal-asdos');
+})
 });
 
 
@@ -458,6 +470,13 @@ app.get('/matakuliah', (req, res) => {
 
 // ...
 
+
+// app.get('/Asdos-list', (req, res) => {
+//   res.render('dosenkoorinator/Asdos-list');
+// });
+
+// ...
+
 app.get('/jadwal-views', (req, res) => {
   if (!req.session.user || !req.session.user.authenticated) {
     return res.redirect('/');
@@ -501,4 +520,3 @@ app.post('/logout', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
-})

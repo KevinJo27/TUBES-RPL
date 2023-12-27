@@ -6,14 +6,21 @@
     <title>Jadwal ASDOS</title>
     <link rel="stylesheet" href="/includes/css/css asdos/jadwal-asdos.css" />
     <script>
-      var highlightCellArray = [];
-
+      
+      
+      function Logout(){
+        window.location.href="/";
+      }
       function openDaftarAsdos() {
         window.location.href = "/daftar-asdos";
       }
 
       function openJadwalAsdos() {
         window.location.href = "/jadwal-asdos";
+      }
+
+      function openHomeAsdos(){
+        window.location.href = "/home-asdos";
       }
 
       function openProfileAsdos() {
@@ -174,7 +181,7 @@
         </div>
 
         <div id="borderNavLogOutAsdos">
-          <a href="login-asdos.html" class="navigationLogOutAsdos">
+          <a href="#" class="navigationLogOutAsdos" onclick="Logout()">
             <img
               src="/includes/images/log out.png"
               alt="Navigation Logout Asdos"
@@ -211,119 +218,37 @@
             </tr>
           </thead>
           <tbody>
-            <tr id="row7">
-              <td id="row7col1">07.00</td>
-              <td id="row7col2"></td>
-              <td id="row7col3"></td>
-              <td id="row7col4"></td>
-              <td id="row7col5"></td>
-              <td id="row7col6"></td>
-              <td id="row7col7"></td>
-            </tr>
-            <tr id="row8">
-              <td id="row8col1">08.00</td>
-              <td id="row8col2"></td>
-              <td id="row8col3"></td>
-              <td id="row8col4"></td>
-              <td id="row8col5"></td>
-              <td id="row8col6"></td>
-              <td id="row8col7"></td>
-            </tr>
-            <tr id="row9">
-              <td id="row9col1">09.00</td>
-              <td id="row9col2"></td>
-              <td id="row9col3"></td>
-              <td id="row9col4"></td>
-              <td id="row9col5"></td>
-              <td id="row9col6"></td>
-              <td id="row9col7"></td>
-            </tr>
-            <tr id="row10">
-              <td id="row10col1">10.00</td>
-              <td id="row10col2"></td>
-              <td id="row10col3"></td>
-              <td id="row10col4"></td>
-              <td id="row10col5"></td>
-              <td id="row10col6"></td>
-              <td id="row10col7"></td>
-            </tr>
-            <tr id="row11">
-              <td id="row11col1">11.00</td>
-              <td id="row11col2"></td>
-              <td id="row11col3"></td>
-              <td id="row11col4"></td>
-              <td id="row11col5"></td>
-              <td id="row11col6"></td>
-              <td id="row11col7"></td>
-            </tr>
-            <tr id="row12">
-              <td id="row12col1">12.00</td>
-              <td id="row12col2"></td>
-              <td id="row12col3"></td>
-              <td id="row12col4"></td>
-              <td id="row12col5"></td>
-              <td id="row12col6"></td>
-              <td id="row12col7"></td>
-            </tr>
-            <tr id="row13">
-              <td id="row13col1">13.00</td>
-              <td id="row13col2"></td>
-              <td id="row13col3"></td>
-              <td id="row13col4"></td>
-              <td id="row13col5"></td>
-              <td id="row13col6"></td>
-              <td id="row13col7"></td>
-            </tr>
-            <tr id="row14">
-              <td id="row14col1">14.00</td>
-              <td id="row14col2"></td>
-              <td id="row14col3"></td>
-              <td id="row14col4"></td>
-              <td id="row14col5"></td>
-              <td id="row14col6"></td>
-              <td id="row14col7"></td>
-            </tr>
-            <tr id="row15">
-              <td id="row15col1">15.00</td>
-              <td id="row15col2"></td>
-              <td id="row15col3"></td>
-              <td id="row15col4"></td>
-              <td id="row15col5"></td>
-              <td id="row15col6"></td>
-              <td id="row15col7"></td>
-            </tr>
-            <tr id="row16">
-              <td id="row16col1">16.00</td>
-              <td id="row16col2"></td>
-              <td id="row16col3"></td>
-              <td id="row16col4"></td>
-              <td id="row16col5"></td>
-              <td id="row16col6"></td>
-              <td id="row16col7"></td>
-            </tr>
-            <tr id="row17">
-              <td id="row17col1">17.00</td>
-              <td id="row17col2"></td>
-              <td id="row17col3"></td>
-              <td id="row17col4"></td>
-              <td id="row17col5"></td>
-              <td id="row17col6"></td>
-              <td id="row17col7"></td>
-            </tr>
-          </tbody>
+            <% for (let i = 7; i <= 17; i++) { %>
+              <tr id="row<%= i %>">
+                <td id="row<%= i %>col1"><%= i %>.00</td>
+                <% const weekdays = ['', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] %>
+                <% for (let j = 1; j <= 7; j++) { %>
+                  <% try { 
+                    const schedule = scheduleData.find(entry => entry.day_of_week=== weekdays[j] && 
+                                                                (entry.start_time) <= i && 
+                                                                (entry.end_time) >= i);
+                    if (schedule) { %>
+                      <td id="row<%= i %>col<%= j + 1 %>" style="background-color: blue; display: block;">MK</td>
+                    <% } else { %>
+                      <td id="row<%= i %>col<%= j + 1 %>"></td>
+                    <% } 
+                  } catch (e) { %>
+                    <td id="row<%= i %>col<%= j + 1 %>">Error: <%= e.message %></td>
+                  <% } %>
+                <% } %>
+              </tr>
+            <% } %>            
+          </tbody>             
         </table>
-
-        <div class="upload-button">
-          <button>Upload</button>
-        </div>
       </div>
     </div>
 
     <!--Modal Tambah Jadwal -->
     <div id="myModalTambahJadwal" class="modalTambahJadwal">
+      <form action="/submitSchedule" method="POST">
       <div class="classHari">
         <label for="Hari">Hari:</label>
-        <select id="dropDownHari">
+        <select id="dropDownHari" name="day_of_week">
           <option value="monday">Monday</option>
           <option value="tuesday">Tuesday</option>
           <option value="wednesday">Wednesday</option>
@@ -335,7 +260,7 @@
 
       <div class="classJamMulai">
         <label for="jamMulai">Jam Mulai:</label>
-        <select id="dropDownJamMulai">
+        <select id="dropDownJamMulai" name="start_time">
           <option value="7">07.00</option>
           <option value="8">08.00</option>
           <option value="9">09.00</option>
@@ -351,7 +276,7 @@
 
       <div class="classJamSelesai">
         <label for="jamSelesai">Jam Selesai:</label>
-        <select id="dropDownJamSelesai">
+        <select id="dropDownJamSelesai" name="end_time">
           <option value="8">08.00</option>
           <option value="9">09.00</option>
           <option value="10">10.00</option>
@@ -364,16 +289,18 @@
           <option value="17">17.00</option>
         </select>
       </div>
-      
+      <input type="hidden" name="user_id" value="<%= user_id %>">
       <button onclick="submitFormTambah()">Submit</button>
       <button id="buttonClose1" onclick="closeModal()">Close</button>
+      </form>
     </div>
 
     <!--Modal Hapus Jadwal -->
     <div id="myModalHapusJadwal" class="modalHapusJadwal">
+      <form action="/removeSchedule" method="POST">
         <div class="classHari">
           <label for="Hari">Hari:</label>
-          <select id="dropDownHariHapusJadwal">
+          <select id="dropDownHariHapusJadwal" name="day_of_week">
             <option value="monday">Monday</option>
             <option value="tuesday">Tuesday</option>
             <option value="wednesday">Wednesday</option>
@@ -385,7 +312,7 @@
   
         <div class="classJamMulai">
           <label for="jamMulaiHapusJadwal">Jam Mulai:</label>
-          <select id="dropDownJamMulaiHapusJadwal">
+          <select id="dropDownJamMulaiHapusJadwal" name="start_time">
             <option value="7">07.00</option>
             <option value="8">08.00</option>
             <option value="9">09.00</option>
@@ -401,7 +328,7 @@
   
         <div class="classJamSelesai">
           <label for="jamSelesaiHapusJadwal">Jam Selesai:</label>
-          <select id="dropDownJamSelesaiHapusJadwal">
+          <select id="dropDownJamSelesaiHapusJadwal" name="end_time">
             <option value="8">08.00</option>
             <option value="9">09.00</option>
             <option value="10">10.00</option>
@@ -414,28 +341,32 @@
             <option value="17">17.00</option>
           </select>
         </div>
-  
+        <input type="hidden" name="user_id" value="<%= user_id %>">
         <button onclick="submitFormHapus()">Submit</button>
         <button id="buttonClose2" onclick="closeModal2()">Close</button>
       </div>
-
+    </form>
+    <script>
+    
+    var highlightCellArray = [];
+      
+      function openModal() {
+        document.getElementById("myModalTambahJadwal").style.display = "block";
+      }
+      function closeModal() {
+        document.getElementById("myModalTambahJadwal").style.display = "none";
+      }
+    
+      function openModal2() {
+        document.getElementById("myModalHapusJadwal").style.display = "block";
+      }
+    
+      function closeModal2() {
+        document.getElementById("myModalHapusJadwal").style.display = "none";
+      }
+    
+    </script>
   </body>
 </html>
 
-<script>
-  function openModal() {
-    document.getElementById("myModalTambahJadwal").style.display = "block";
-  }
-  function closeModal() {
-    document.getElementById("myModalTambahJadwal").style.display = "none";
-  }
 
-  function openModal2() {
-    document.getElementById("myModalHapusJadwal").style.display = "block";
-  }
-
-  function closeModal2() {
-    document.getElementById("myModalHapusJadwal").style.display = "none";
-  }
-  
-</script>

@@ -38,6 +38,8 @@ CREATE TABLE asdos_submissions (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	user_id INT NOT NULL,
 	pdf_path VARCHAR(100) NOT NULL,
+	cv_path VARCHAR(100) NOT NULL,
+	surat_lamaran_path VARCHAR(100) NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -66,15 +68,17 @@ CREATE TABLE asdos_assigns (
 );
 
 CREATE TABLE course_schedules (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	user_id INT NOT NULL,
-	subject_id INT NOT NULL,
-	start_time TIME NOT NULL,
-	end_time TIME NOT NULL,
-	day_of_week DATE NOT NULL,
-	FOREIGN KEY (user_id) REFERENCES users(id),
-	FOREIGN KEY (subject_id) REFERENCES subjects(id)
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  schedule_category ENUM('matakuliah', 'asistensi') NOT NULL,
+  start_time INT NOT NULL,
+  end_time INT NOT NULL,
+  day_of_week VARCHAR(20) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (subject_id) REFERENCES subjects(id)
 );
+
+
 
 
 INSERT INTO

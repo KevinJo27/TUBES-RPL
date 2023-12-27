@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="/includes/css/css koordinator/asdos-list.css">
     <script>
         let nama = "";
+
+        function Logout() {
+            window.location.href = "/";
+        }
         function openAsdosList() {
             window.location.href = '/Asdos-list';
         }
@@ -26,6 +30,10 @@
         function openJadwalInsert(button){
             // const name = button.getAttribute("data-name");
             window.location.href = "/jadwal-insert"
+        }
+
+        function openJadwalInsert(userName) {
+            window.location.href = "/jadwal-insert?user="+userName;
         }
     </script>  
 </head>
@@ -63,7 +71,7 @@
         </div>
 
         <div id="borderNavLogOutAsdos">
-            <a href="login-asdos.html" class="navigationLogOutAsdos">
+            <a href="#" class="navigationLogOutAsdos" onclick="Logout()">
                 <img src="/includes/images/log out.png" alt="Navigation Logout Asdos">
                 <span>Logout</span>
             </a>
@@ -92,8 +100,8 @@
                                 <td><%= submission.name %></td>
                                 <td>Assistant</td>
                                 <td>
-                                    <button onclick="openJadwalInsert()" data-name = "<%= submission.name %>">Jadwal</button>
-                                    <button onclick="showNilai('<%= submission.name %>')">Nilai</button>
+                                    <button onclick="openJadwalInsert('<%= submission.name %>')">Jadwal</button>
+                                    <button onclick="openNewTab('<%= submission.pdf_path %>')">Nilai</button>
                                 </td>
                             </tr>
                             <% }); %>
@@ -106,10 +114,10 @@
         function showJadwal(nama) {
             console.log('Showing Jadwal for:', nama);
         }
-
-        function showNilai(nama) {
-            console.log('Showing Nilai for:', nama);
+        function openNewTab(pdfPath) {
+            window.open(pdfPath, '_blank');
         }
+
     </script>
 </body>
 

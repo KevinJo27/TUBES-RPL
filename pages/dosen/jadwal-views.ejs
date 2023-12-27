@@ -7,6 +7,9 @@
     <title>Jadwal ASDOS</title>
     <link rel="stylesheet" href="/includes/css/css dosen lab/jadwalviews.css">
     <script>
+        function Logout(){
+        window.location.href="/";
+      }
         function openAsistenDosen() {
             window.location.href = '/AsistenDosen';
         }
@@ -62,7 +65,7 @@
         </div>
 
         <div id="borderNavLogOutAsdos">
-            <a href="login-asdos.html" class="navigationLogOutAsdos">
+            <a href="#" class="navigationLogOutAsdos" onclick="Logout()">
                 <img src="/includes/images/log out.png"alt="Navigation Logout Asdos">
                 <span>Logout</span>
             </a>
@@ -88,40 +91,27 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>07.00</td>
-                </tr>
-                <tr>
-                    <td>08.00</td>
-                </tr>
-                <tr>
-                    <td>09.00</td>
-                </tr>
-                <tr>
-                    <td>10.00</td>
-                </tr>
-                <tr>
-                    <td>11.00</td>
-                </tr>
-                <tr>
-                    <td>12.00</td>
-                </tr>
-                <tr>
-                    <td>13.00</td>
-                </tr>
-                <tr>
-                    <td>14.00</td>
-                </tr>
-                <tr>
-                    <td>15.00</td>
-                </tr>
-                <tr>
-                    <td>16.00</td>
-                </tr>
-                <tr>
-                    <td>17.00</td>
-                </tr>
-            </tbody>
+                <% for (let i = 7; i <= 17; i++) { %>
+                  <tr id="row<%= i %>">
+                    <td id="row<%= i %>col1"><%= i %>.00</td>
+                    <% const weekdays = ['', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] %>
+                    <% for (let j = 1; j <= 7; j++) { %>
+                      <% try { 
+                        const schedule = scheduleData.find(entry => entry.day_of_week=== weekdays[j] && 
+                                                                    (entry.start_time) <= i && 
+                                                                    (entry.end_time) >= i);
+                        if (schedule) { %>
+                          <td id="row<%= i %>col<%= j + 1 %>" style="background-color: blue; display: block;">MK</td>
+                        <% } else { %>
+                          <td id="row<%= i %>col<%= j + 1 %>"></td>
+                        <% } 
+                      } catch (e) { %>
+                        <td id="row<%= i %>col<%= j + 1 %>">Error: <%= e.message %></td>
+                      <% } %>
+                    <% } %>
+                  </tr>
+                <% } %>            
+              </tbody>
             
         </table>
     </div>
@@ -198,9 +188,9 @@
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
-
-var userName = getParamUserName('user');
+var userName = getParamUserName('user', window.location.href);
 
 document.querySelector('h2').innerText = 'Jadwal Milik: ' + userName;
+
 
 </script>

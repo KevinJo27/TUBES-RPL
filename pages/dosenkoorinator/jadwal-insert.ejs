@@ -5,8 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jadwal ASDOS</title>
-    <link rel="stylesheet" href="/includes/css/css dosen lab/jadwalviews.css">
+    <link rel="stylesheet" href="/includes/css/css koordinator/jadwalinsert.css">
     <script>
+        
+
+        function Logout() {
+            window.location.href = "/";
+        }
+
         function openAsdosList() {
             window.location.href = '/Asdos-list';
         }
@@ -30,50 +36,98 @@
             document.getElementById("myModal").style.display = "none";
         }
 
-        function submitForm() {
-            var selectedHari = document.getElementById("dropDownHari").value;
-            var selectedJamMulai = parseInt(document.getElementById("dropDownJamMulai").value);
-            var selectedJamSelesai = parseInt(document.getElementById("dropDownJamSelesai").value);
+      //   function submitFormTambah() {
+      //   var selectedHari = document.getElementById("dropDownHari").value;
+      //   var selectedJamMulai = parseFloat(
+      //     document.getElementById("dropDownJamMulai").value
+      //   );
+      //   var selectedJamSelesai = parseFloat(
+      //     document.getElementById("dropDownJamSelesai").value
+      //   );
 
-            clearHighlightedCells();
-            highlightCells(selectedHari, selectedJamMulai, selectedJamSelesai);
+      //   highlightCell(selectedHari, selectedJamMulai, selectedJamSelesai);
 
-            closeModal();
+      //   closeModal();
+      // }
+
+      function submitFormHapus() {
+        var selectedHari = document.getElementById("dropDownHariHapusJadwal").value;
+        var selectedJamMulai = parseFloat(
+          document.getElementById("dropDownJamMulaiHapusJadwal").value
+        );
+        var selectedJamSelesai = parseFloat(
+          document.getElementById("dropDownJamSelesaiHapusJadwal").value
+        );
+
+        removeHighlightCell(selectedHari, selectedJamMulai, selectedJamSelesai);
+
+        closeModal2();
+      }
+
+        // function clearHighlightedCells() {
+        //     var highlightedCells = document.querySelectorAll('.highlighted');
+        //     highlightedCells.forEach(function (cell) {
+        //         cell.classList.remove('highlighted');
+        //     });
+        // }
+
+        function highlightCell(hari, jamMulai, jamSelesai) {
+        var table = document.querySelector("table");
+        var columnIndex = getColumnIndex(hari);
+
+        var startRowIndex = jamMulai - 7;
+        var endRowIndex = jamSelesai - 7;
+
+        for (var row = startRowIndex; row <= endRowIndex; row++) {
+          var cellId = "row" + (row + 7) + "col" + columnIndex;
+          var cell = document.getElementById(cellId);
+
+          if (!cell.classList.contains("highlighted")) {
+            cell.classList.add("highlighted");
+            highlightCellArray.push(cell);
+          }
         }
+      }
 
-        function clearHighlightedCells() {
-            var highlightedCells = document.querySelectorAll('.highlighted');
-            highlightedCells.forEach(function (cell) {
-                cell.classList.remove('highlighted');
+      function removeHighlightCell(hari, jamMulai, jamSelesai) {
+        var table = document.querySelector("table");
+        var columnIndex = getColumnIndex(hari);
+        var startRowIndex = jamMulai - 7;
+        var endRowIndex = jamSelesai - 7;
+
+        for (var row = startRowIndex; row <= endRowIndex; row++) {
+          var cellId = "row" + (row + 7) + "col" + columnIndex;
+          var cell = document.getElementById(cellId);
+
+          if (cell && cell.classList.contains("highlighted")) {
+            //menghapus jadwal
+            cell.classList.remove("highlighted");
+            cell.style.backgroundColor = "white";
+            highlightCellArray = highlightCellArray.filter(function (highlightedCell) {
+                return highlightedCell.id !== cellId;
             });
+          }
         }
-
-        function highlightCells(hari, jamMulai, jamSelesai) {
-    var table = document.querySelector('table');
-    var columnIndex = getColumnIndex(hari);
-
-    var startRowIndex = jamMulai - 7; // 7 is the starting hour in the table
-    var endRowIndex = jamSelesai - 7;
-
-    for (var row = startRowIndex; row <= endRowIndex; row++) {
-        var cellId = 'row' + (row + 7) + 'col' + columnIndex;
-        var cell = document.getElementById(cellId);
-        cell.classList.add("highlighted");
-    }
-}
+      }
 
 function getColumnIndex(hari) {
-    switch (hari) {
-        case "monday": return 2;
-        case "tuesday": return 3;
-        case "wednesday": return 4;
-        case "thursday": return 5;
-        case "friday": return 6;
-        case "saturday": return 7;
-        default: return -1;
-    }
-}
-
+  switch (hari) {
+          case "monday":
+            return 2;
+          case "tuesday":
+            return 3;
+          case "wednesday":
+            return 4;
+          case "thursday":
+            return 5;
+          case "friday":
+            return 6;
+          case "saturday":
+            return 7;
+          default:
+            return -1;
+        }
+      }
     </script>
         <style>
             .highlighted {
@@ -88,35 +142,51 @@ function getColumnIndex(hari) {
     <nav class="navigationBar">
         <div id="borderNavHomeAsdos">
             <a href="#" class="navigationHomeAsdos" onclick="openHomeKoordinator()">
-                <img src="/includes/images/home icon.png" alt="Navigation Home">
+                <img src="/includes/images/home icon.png" alt="Navigation Home"
+                />
                 <span>Home</span>
             </a>
         </div>
         
         <div id="borderNavProfileAsdos">
-            <a href="#" class="navigationProfileAsdos" onclick="openProfileDosen()">
-                <img src="/includes/images/profile navigation icon.png"alt="Navigation Profile Asdos">
+            <a 
+              href="#" 
+              class="navigationProfileAsdos" 
+              onclick="openProfileDosen()">
+                <img 
+                  src="/includes/images/profile navigation icon.png"
+                  alt="Navigation Profile Asdos"
+                  />
                 <span>Profile</span>
             </a>
         </div>
 
         <div id="borderNavDaftarAsdos">
             <a href="#" class="navigationDaftarAsdos" onclick="openAssignJadwal()">
-                <img src="/includes/images/icon daftar asdos.png"alt="Navigation Daftar Asdos">
+                <img 
+                  src="/includes/images/icon daftar asdos.png"
+                  alt="Navigation Daftar Asdos"
+                  />
                 <span>Asign Asdos</span>
             </a>
         </div>
 
         <div id="borderNavJadwalAsdos">
             <a href="#" class="navigationJadwalAsdos" onclick="openAsdosList()">
-                <img src="/includes/images/icon jadwal.png"alt="Navigation Jadwal Asdos">
+                <img 
+                  src="/includes/images/icon jadwal.png"
+                  alt="Navigation Jadwal Asdos"
+                  />
                 <span>Asisten Dosen</span>
             </a>
         </div>
 
         <div id="borderNavLogOutAsdos">
-            <a href="login-asdos.html" class="navigationLogOutAsdos">
-                <img src="/includes/images/log out.png"alt="Navigation Logout Asdos">
+            <a href="#" class="navigationLogOutAsdos" onclick="Logout()">
+                <img 
+                  src="/includes/images/log out.png"
+                  alt="Navigation Logout Asdos"
+                  />
                 <span>Logout</span>
             </a>
         </div>
@@ -124,196 +194,195 @@ function getColumnIndex(hari) {
 </div>
 <!-- Navigation Bar -->
 
-    <div class="container">
-
-        <h2 style="color: white;">Nama Asdos: <%= name %></h2>
+<div class="container">
+    <h2 style="color: white">
+      Silahkan Masukan Jadwal Asistensi : <%= userName %>
+    </h2>
     <div class="master">
-        <button onclick="openModal()" type="button">
-            + Tambah Jadwal 
-        </button>
-        <table>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                    <div id="bottomBorderMain"></div>
-                </tr>
-            </thead>
-            <tbody>
-                <tr id="row7">
-                    <td id="row7col1">07.00</td>
-                    <td id="row7col2"></td>
-                    <td id="row7col3"></td>
-                    <td id="row7col4"></td>
-                    <td id="row7col5"></td>
-                    <td id="row7col6"></td>
-                    <td id="row7col7"></td>
-                </tr>
-                <tr id="row8">
-                    <td id="row8col1">08.00</td>
-                    <td id="row8col2"></td>
-                    <td id="row8col3"></td>
-                    <td id="row8col4"></td>
-                    <td id="row8col5"></td>
-                    <td id="row8col6"></td>
-                    <td id="row8col7"></td>
-                </tr>
-                <tr id="row9">
-                    <td id="row9col1">09.00</td>
-                    <td id="row9col2"></td>
-                    <td id="row9col3"></td>
-                    <td id="row9col4"></td>
-                    <td id="row9col5"></td>
-                    <td id="row9col6"></td>
-                    <td id="row9col7"></td>
-                </tr>
-                <tr id="row10">
-                    <td id="row10col1">10.00</td>
-                    <td id="row10col2"></td>
-                    <td id="row10col3"></td>
-                    <td id="row10col4"></td>
-                    <td id="row10col5"></td>
-                    <td id="row10col6"></td>
-                    <td id="row10col7"></td>
-                </tr>
-                <tr id="row11">
-                    <td id="row11col1">11.00</td>
-                    <td id="row11col2"></td>
-                    <td id="row11col3"></td>
-                    <td id="row11col4"></td>
-                    <td id="row11col5"></td>
-                    <td id="row11col6"></td>
-                    <td id="row11col7"></td>
-                </tr>
-                <tr id="row12">
-                    <td id="row12col1">12.00</td>
-                    <td id="row12col2"></td>
-                    <td id="row12col3"></td>
-                    <td id="row12col4"></td>
-                    <td id="row12col5"></td>
-                    <td id="row12col6"></td>
-                    <td id="row12col7"></td>
-                </tr>
-                <tr id="row13">
-                    <td id="row13col1">13.00</td>
-                    <td id="row13col2"></td>
-                    <td id="row13col3"></td>
-                    <td id="row13col4"></td>
-                    <td id="row13col5"></td>
-                    <td id="row13col6"></td>
-                    <td id="row13col7"></td>
-                </tr>
-                <tr id="row14">
-                    <td id="row14col1">14.00</td>
-                    <td id="row14col2"></td>
-                    <td id="row14col3"></td>
-                    <td id="row14col4"></td>
-                    <td id="row14col5"></td>
-                    <td id="row14col6"></td>
-                    <td id="row14col7"></td>
-                </tr>
-                <tr id="row15">
-                    <td id="row15col1">15.00</td>
-                    <td id="row15col2"></td>
-                    <td id="row15col3"></td>
-                    <td id="row15col4"></td>
-                    <td id="row15col5"></td>
-                    <td id="row15col6"></td>
-                    <td id="row15col7"></td>
-                </tr>
-                <tr id="row16">
-                    <td id="row16col1">16.00</td>
-                    <td id="row16col2"></td>
-                    <td id="row16col3"></td>
-                    <td id="row16col4"></td>
-                    <td id="row16col5"></td>
-                    <td id="row16col6"></td>
-                    <td id="row16col7"></td>
-                </tr>
-                <tr id="row17">
-                    <td id="row17col1">17.00</td>
-                    <td id="row17col2"></td>
-                    <td id="row17col3"></td>
-                    <td id="row17col4"></td>
-                    <td id="row17col5"></td>
-                    <td id="row17col6"></td>
-                    <td id="row17col7"></td>
-                </tr>
-            </tbody>
-            
-        </table>
-
-        <div class="upload-button">
-            <button>Upload</button>
-        </div>
+      <button id="buttonTambahJadwal" onclick="openModal()" type="button">
+        + Tambah Jadwal
+      </button>
+      <button id="buttonHapusJadwal" onclick="openModal2()" type="button">
+        Hapus Jadwal
+      </button>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <div id="bottomBorderMain"></div>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let i = 7; i <= 17; i++) { %>
+            <tr id="row<%= i %>">
+              <td id="row<%= i %>col1"><%= i %>.00</td>
+              <% const weekdays = ['', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] %>
+              <% for (let j = 1; j <= 7; j++) { %>
+                <% try { 
+                  const schedule = scheduleData.find(entry => entry.day_of_week=== weekdays[j] && 
+                                                              (entry.start_time) <= i && 
+                                                              (entry.end_time) >= i);
+                  if (schedule) { %>
+                    <td id="row<%= i %>col<%= j + 1 %>" style="background-color: blue; display: block;">MK</td>
+                  <% } else { %>
+                    <td id="row<%= i %>col<%= j + 1 %>"></td>
+                  <% } 
+                } catch (e) { %>
+                  <td id="row<%= i %>col<%= j + 1 %>">Error: <%= e.message %></td>
+                <% } %>
+              <% } %>
+            </tr>
+          <% } %>            
+        </tbody>             
+      </table>
     </div>
-</div>
+  </div>
 
-<!--Modal -->
-<div id="myModal" class="modal">
+  <!--Modal Tambah Jadwal -->
+<div id="myModalTambahJadwal" class="modalTambahJadwal">
+  <form id="jadwalForm" action="/submitScheduleAS" method="POST">
     <div class="classHari">
-        <label for="Hari">Hari:</label>
-        <select id="dropDownHari">
-            <option value="monday">Monday</option>
-            <option value="tuesday">Tuesday</option>
-            <option value="wednesday">Wednesday</option>
-            <option value="thursday">Thursday</option>
-            <option value="friday">Friday</option>
-            <option value="saturday">Saturday</option>
-        </select>
+      <label for="Hari">Hari:</label>
+      <select id="dropDownHari">
+        <option value="monday">Monday</option>
+        <option value="tuesday">Tuesday</option>
+        <option value="wednesday">Wednesday</option>
+        <option value="thursday">Thursday</option>
+        <option value="friday">Friday</option>
+        <option value="saturday">Saturday</option>
+      </select>
     </div>
-    
+
     <div class="classJamMulai">
-        <label for="jamMulai">Jam Mulai:</label>
-        <select id="dropDownJamMulai">
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-        </select>
+      <label for="jamMulai">Jam Mulai:</label>
+      <select id="dropDownJamMulai">
+        <option value="7">07.00</option>
+        <option value="8">08.00</option>
+        <option value="9">09.00</option>
+        <option value="10">10.00</option>
+        <option value="11">11.00</option>
+        <option value="12">12.00</option>
+        <option value="13">13.00</option>
+        <option value="14">14.00</option>
+        <option value="15">15.00</option>
+        <option value="16">16.00</option>
+      </select>
     </div>
 
-    
     <div class="classJamSelesai">
-        <label for="jamSelesai">Jam Selesai:</label>
-        <select id="dropDownJamSelesai">
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-        </select>
+      <label for="jamSelesai">Jam Selesai:</label>
+      <select id="dropDownJamSelesai">
+        <option value="8">08.00</option>
+        <option value="9">09.00</option>
+        <option value="10">10.00</option>
+        <option value="11">11.00</option>
+        <option value="12">12.00</option>
+        <option value="13">13.00</option>
+        <option value="14">14.00</option>
+        <option value="15">15.00</option>
+        <option value="16">16.00</option>
+        <option value="17">17.00</option>
+      </select>
     </div>
-    
 
-    <button onclick="submitForm()">Submit</button>
+    <input type="hidden" name="user" value="<%= userName %>">
+    <button type="submit">Submit</button>
+    <button type="button" id="buttonClose1" onclick="closeModal()">Close</button>
+  </form>
 </div>
 
-</body>
+  
 
+  <!--Modal Hapus Jadwal -->
+  <div id="myModalHapusJadwal" class="modalHapusJadwal">
+    <form action="/removeScheduleAS" method="POST">
+      <div class="classHari">
+        <label for="Hari">Hari:</label>
+        <select id="dropDownHariHapusJadwal">
+          <option value="monday">Monday</option>
+          <option value="tuesday">Tuesday</option>
+          <option value="wednesday">Wednesday</option>
+          <option value="thursday">Thursday</option>
+          <option value="friday">Friday</option>
+          <option value="saturday">Saturday</option>
+        </select>
+      </div>
+
+      <div class="classJamMulai">
+        <label for="jamMulaiHapusJadwal">Jam Mulai:</label>
+        <select id="dropDownJamMulaiHapusJadwal">
+          <option value="7">07.00</option>
+          <option value="8">08.00</option>
+          <option value="9">09.00</option>
+          <option value="10">10.00</option>
+          <option value="11">11.00</option>
+          <option value="12">12.00</option>
+          <option value="13">13.00</option>
+          <option value="14">14.00</option>
+          <option value="15">15.00</option>
+          <option value="16">16.00</option>
+        </select>
+      </div>
+
+      <div class="classJamSelesai">
+        <label for="jamSelesaiHapusJadwal">Jam Selesai:</label>
+        <select id="dropDownJamSelesaiHapusJadwal">
+          <option value="8">08.00</option>
+          <option value="9">09.00</option>
+          <option value="10">10.00</option>
+          <option value="11">11.00</option>
+          <option value="12">12.00</option>
+          <option value="13">13.00</option>
+          <option value="14">14.00</option>
+          <option value="15">15.00</option>
+          <option value="16">16.00</option>
+          <option value="17">17.00</option>
+        </select>
+      </div>
+      <input type="hidden" name="user" value="<%= userName %>">
+      <button onclick="submitFormHapus()">Submit</button>
+      <button id="buttonClose2" onclick="closeModal2()">Close</button>
+    </div>
+  </form>
+</body>
 </html>
 
 <script>
-    function openModal(){
-        document.getElementById("myModal").style.display = "block";
-    }
-    function closeModal(){
-        document.getElementById("myModal").style.display = "none";
-    }
+  var highlightCellArray = [];
+
+function openModal() {
+  document.getElementById("myModalTambahJadwal").style.display = "block";
+}
+function closeModal() {
+  document.getElementById("myModalTambahJadwal").style.display = "none";
+}
+
+function openModal2() {
+  document.getElementById("myModalHapusJadwal").style.display = "block";
+}
+
+function closeModal2() {
+  document.getElementById("myModalHapusJadwal").style.display = "none";
+}
+
+function getParamUserName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+var userName = getParamUserName('user');
+
+document.querySelector('h2').innerText = 'Jadwal Milik: ' + userName;
+
 </script>

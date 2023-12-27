@@ -7,7 +7,7 @@
     <title>Jadwal ASDOS</title>
     <link rel="stylesheet" href="/includes/css/css koordinator/jadwalinsert.css">
     <script>
-        var highlightCellArray = [];
+        
 
         function Logout() {
             window.location.href = "/";
@@ -36,19 +36,19 @@
             document.getElementById("myModal").style.display = "none";
         }
 
-        function submitFormTambah() {
-        var selectedHari = document.getElementById("dropDownHari").value;
-        var selectedJamMulai = parseFloat(
-          document.getElementById("dropDownJamMulai").value
-        );
-        var selectedJamSelesai = parseFloat(
-          document.getElementById("dropDownJamSelesai").value
-        );
+      //   function submitFormTambah() {
+      //   var selectedHari = document.getElementById("dropDownHari").value;
+      //   var selectedJamMulai = parseFloat(
+      //     document.getElementById("dropDownJamMulai").value
+      //   );
+      //   var selectedJamSelesai = parseFloat(
+      //     document.getElementById("dropDownJamSelesai").value
+      //   );
 
-        highlightCell(selectedHari, selectedJamMulai, selectedJamSelesai);
+      //   highlightCell(selectedHari, selectedJamMulai, selectedJamSelesai);
 
-        closeModal();
-      }
+      //   closeModal();
+      // }
 
       function submitFormHapus() {
         var selectedHari = document.getElementById("dropDownHariHapusJadwal").value;
@@ -245,8 +245,8 @@ function getColumnIndex(hari) {
   </div>
 
   <!--Modal Tambah Jadwal -->
-  <div id="myModalTambahJadwal" class="modalTambahJadwal">
-    <form action="/submitScheduleAS" method="POST">
+<div id="myModalTambahJadwal" class="modalTambahJadwal">
+  <form id="jadwalForm" action="/submitScheduleAS" method="POST">
     <div class="classHari">
       <label for="Hari">Hari:</label>
       <select id="dropDownHari">
@@ -290,11 +290,13 @@ function getColumnIndex(hari) {
         <option value="17">17.00</option>
       </select>
     </div>
-    
-    <button onclick="submitFormTambah()">Submit</button>
-    <button id="buttonClose1" onclick="closeModal()">Close</button>
-    </form>
-  </div>
+
+    <input type="hidden" name="user" value="<%= userName %>">
+    <button type="submit">Submit</button>
+    <button type="button" id="buttonClose1" onclick="closeModal()">Close</button>
+  </form>
+</div>
+
   
 
   <!--Modal Hapus Jadwal -->
@@ -343,7 +345,7 @@ function getColumnIndex(hari) {
           <option value="17">17.00</option>
         </select>
       </div>
-
+      <input type="hidden" name="user" value="<%= userName %>">
       <button onclick="submitFormHapus()">Submit</button>
       <button id="buttonClose2" onclick="closeModal2()">Close</button>
     </div>
@@ -352,6 +354,8 @@ function getColumnIndex(hari) {
 </html>
 
 <script>
+  var highlightCellArray = [];
+
 function openModal() {
   document.getElementById("myModalTambahJadwal").style.display = "block";
 }

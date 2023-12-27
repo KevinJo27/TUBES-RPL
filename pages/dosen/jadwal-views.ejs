@@ -188,9 +188,9 @@
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
-
-var userName = getParamUserName('user');
+var userName = getParamUserName('user', window.location.href);
 
 document.querySelector('h2').innerText = 'Jadwal Milik: ' + userName;
+
 
 </script>

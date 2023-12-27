@@ -692,9 +692,6 @@
 });
 
 
-  // Assuming you have already defined your express app and MySQL connection...
-
-// Add this route for removing a schedule
 app.post('/removeSchedule', (req, res) => {
   const { user_id, start_time, end_time, day_of_week } = req.body;
 
@@ -794,11 +791,6 @@ app.post('/submitScheduleAS', (req, res) => {
     );
   });
 });
-
-
-
-
-
 
 
   app.listen(port, () => {

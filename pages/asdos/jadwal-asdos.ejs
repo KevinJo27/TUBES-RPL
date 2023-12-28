@@ -217,28 +217,36 @@
               <div id="bottomBorderMain"></div>
             </tr>
           </thead>
-          <tbody>
-            <% for (let i = 7; i <= 17; i++) { %>
-              <tr id="row<%= i %>">
-                <td id="row<%= i %>col1"><%= i %>.00</td>
-                <% const weekdays = ['', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] %>
-                <% for (let j = 1; j <= 7; j++) { %>
-                  <% try { 
-                    const schedule = scheduleData.find(entry => entry.day_of_week=== weekdays[j] && 
-                                                                (entry.start_time) <= i && 
-                                                                (entry.end_time) >= i);
-                    if (schedule) { %>
-                      <td id="row<%= i %>col<%= j + 1 %>" style="background-color: blue; display: block;">MK</td>
-                    <% } else { %>
-                      <td id="row<%= i %>col<%= j + 1 %>"></td>
-                    <% } 
-                  } catch (e) { %>
-                    <td id="row<%= i %>col<%= j + 1 %>">Error: <%= e.message %></td>
-                  <% } %>
-                <% } %>
-              </tr>
-            <% } %>            
-          </tbody>             
+          <!-- Inside the table body -->
+<tbody>
+  <% for (let i = 7; i <= 17; i++) { %>
+    <tr id="row<%= i %>">
+      <td id="row<%= i %>col1"><%= i %>.00</td>
+      <% const weekdays = ['', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] %>
+      <% for (let j = 1; j <= 7; j++) { %>
+        <% try { 
+          const schedule = scheduleData.find(entry => entry.day_of_week === weekdays[j] && 
+                                                      (entry.start_time) <= i && 
+                                                      (entry.end_time) >= i);
+          if (schedule) { %>
+            <% if (schedule.schedule_category === 'asistensi') { %>
+              <td id="row<%= i %>col<%= j + 1 %>" style="background-color: orange; display: block;">AS</td>
+            <% } else if (schedule.schedule_category === 'matakuliah') { %>
+              <td id="row<%= i %>col<%= j + 1 %>" style="background-color: blue; display: block;">MK</td>
+            <% } else { %>
+              <td id="row<%= i %>col<%= j + 1 %>"></td>
+            <% } %>
+          <% } else { %>
+            <td id="row<%= i %>col<%= j + 1 %>"></td>
+          <% } 
+        } catch (e) { %>
+          <td id="row<%= i %>col<%= j + 1 %>">Error: <%= e.message %></td>
+        <% } %>
+      <% } %>
+    </tr>
+  <% } %>            
+</tbody>
+           
         </table>
       </div>
     </div>
@@ -247,6 +255,7 @@
     <div id="myModalTambahJadwal" class="modalTambahJadwal">
       <form action="/submitSchedule" method="POST">
       <div class="classHari">
+        
         <label for="Hari">Hari:</label>
         <select id="dropDownHari" name="day_of_week">
           <option value="monday">Monday</option>

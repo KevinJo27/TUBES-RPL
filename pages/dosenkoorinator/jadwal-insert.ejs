@@ -1,310 +1,263 @@
-<!DOCTYPE html>
-<html lang="en">
+  <!DOCTYPE html>
+  <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jadwal ASDOS</title>
-    <link rel="stylesheet" href="/includes/css/css koordinator/jadwalinsert.css">
-    <script>
-        
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Jadwal ASDOS</title>
+      <link rel="stylesheet" href="/includes/css/css koordinator/jadwalinsert.css">
+      <script>
+          
 
-        function Logout() {
-            window.location.href = "/";
-        }
+          function Logout() {
+              window.location.href = "/";
+          }
 
-        function openAsdosList() {
-            window.location.href = '/Asdos-list';
-        }
+          function openAsdosList() {
+              window.location.href = '/Asdos-list';
+          }
 
-        function openAssignJadwal() {
-            window.location.href = '/Assign-jadwal';
-        }
+          function openAssignJadwal() {
+              window.location.href = '/Assign-jadwal';
+          }
 
-        function openProfileDosen(){
-            window.location.href = "/profil-dosen"
-        }
-        function openHomeKoordinator(){
-            window.location.href = "/home-koordinator"
-        }
+          function openProfileDosen(){
+              window.location.href = "/profil-dosen"
+          }
+          function openHomeKoordinator(){
+              window.location.href = "/home-koordinator"
+          }
 
-        function openModal() {
-            document.getElementById("myModal").style.display = "block";
-        }
+          function openModal() {
+              document.getElementById("myModal").style.display = "block";
+          }
 
-        function closeModal() {
-            document.getElementById("myModal").style.display = "none";
-        }
+          function closeModal() {
+              document.getElementById("myModal").style.display = "none";
+          }
 
-      //   function submitFormTambah() {
-      //   var selectedHari = document.getElementById("dropDownHari").value;
-      //   var selectedJamMulai = parseFloat(
-      //     document.getElementById("dropDownJamMulai").value
-      //   );
-      //   var selectedJamSelesai = parseFloat(
-      //     document.getElementById("dropDownJamSelesai").value
-      //   );
+        //   function submitFormTambah() {
+        //   var selectedHari = document.getElementById("dropDownHari").value;
+        //   var selectedJamMulai = parseFloat(
+        //     document.getElementById("dropDownJamMulai").value
+        //   );
+        //   var selectedJamSelesai = parseFloat(
+        //     document.getElementById("dropDownJamSelesai").value
+        //   );
 
-      //   highlightCell(selectedHari, selectedJamMulai, selectedJamSelesai);
+        //   highlightCell(selectedHari, selectedJamMulai, selectedJamSelesai);
 
-      //   closeModal();
-      // }
-
-      function submitFormHapus() {
-        var selectedHari = document.getElementById("dropDownHariHapusJadwal").value;
-        var selectedJamMulai = parseFloat(
-          document.getElementById("dropDownJamMulaiHapusJadwal").value
-        );
-        var selectedJamSelesai = parseFloat(
-          document.getElementById("dropDownJamSelesaiHapusJadwal").value
-        );
-
-        removeHighlightCell(selectedHari, selectedJamMulai, selectedJamSelesai);
-
-        closeModal2();
-      }
-
-        // function clearHighlightedCells() {
-        //     var highlightedCells = document.querySelectorAll('.highlighted');
-        //     highlightedCells.forEach(function (cell) {
-        //         cell.classList.remove('highlighted');
-        //     });
+        //   closeModal();
         // }
 
-        function highlightCell(hari, jamMulai, jamSelesai) {
-        var table = document.querySelector("table");
-        var columnIndex = getColumnIndex(hari);
+        function submitFormHapus() {
+          var selectedHari = document.getElementById("dropDownHariHapusJadwal").value;
+          var selectedJamMulai = parseFloat(
+            document.getElementById("dropDownJamMulaiHapusJadwal").value
+          );
+          var selectedJamSelesai = parseFloat(
+            document.getElementById("dropDownJamSelesaiHapusJadwal").value
+          );
 
-        var startRowIndex = jamMulai - 7;
-        var endRowIndex = jamSelesai - 7;
+          removeHighlightCell(selectedHari, selectedJamMulai, selectedJamSelesai);
 
-        for (var row = startRowIndex; row <= endRowIndex; row++) {
-          var cellId = "row" + (row + 7) + "col" + columnIndex;
-          var cell = document.getElementById(cellId);
-
-          if (!cell.classList.contains("highlighted")) {
-            cell.classList.add("highlighted");
-            highlightCellArray.push(cell);
-          }
+          closeModal2();
         }
-      }
 
-      function removeHighlightCell(hari, jamMulai, jamSelesai) {
-        var table = document.querySelector("table");
-        var columnIndex = getColumnIndex(hari);
-        var startRowIndex = jamMulai - 7;
-        var endRowIndex = jamSelesai - 7;
+          // function clearHighlightedCells() {
+          //     var highlightedCells = document.querySelectorAll('.highlighted');
+          //     highlightedCells.forEach(function (cell) {
+          //         cell.classList.remove('highlighted');
+          //     });
+          // }
 
-        for (var row = startRowIndex; row <= endRowIndex; row++) {
-          var cellId = "row" + (row + 7) + "col" + columnIndex;
-          var cell = document.getElementById(cellId);
+          function highlightCell(hari, jamMulai, jamSelesai) {
+          var table = document.querySelector("table");
+          var columnIndex = getColumnIndex(hari);
 
-          if (cell && cell.classList.contains("highlighted")) {
-            //menghapus jadwal
-            cell.classList.remove("highlighted");
-            cell.style.backgroundColor = "white";
-            highlightCellArray = highlightCellArray.filter(function (highlightedCell) {
-                return highlightedCell.id !== cellId;
-            });
-          }
-        }
-      }
+          var startRowIndex = jamMulai - 7;
+          var endRowIndex = jamSelesai - 7;
 
-function getColumnIndex(hari) {
-  switch (hari) {
-          case "monday":
-            return 2;
-          case "tuesday":
-            return 3;
-          case "wednesday":
-            return 4;
-          case "thursday":
-            return 5;
-          case "friday":
-            return 6;
-          case "saturday":
-            return 7;
-          default:
-            return -1;
-        }
-      }
-    </script>
-        <style>
-            .highlighted {
-                background-color: orange;
+          for (var row = startRowIndex; row <= endRowIndex; row++) {
+            var cellId = "row" + (row + 7) + "col" + columnIndex;
+            var cell = document.getElementById(cellId);
+
+            if (!cell.classList.contains("highlighted")) {
+              cell.classList.add("highlighted");
+              highlightCellArray.push(cell);
             }
-        </style>
-</head>
+          }
+        }
 
-<body>
-   <!-- Navigation Bar -->
-   <div class="navRectangle">
-    <nav class="navigationBar">
-        <div id="borderNavHomeAsdos">
-            <a href="#" class="navigationHomeAsdos" onclick="openHomeKoordinator()">
-                <img src="/includes/images/home icon.png" alt="Navigation Home"
-                />
-                <span>Home</span>
-            </a>
-        </div>
-        
-        <div id="borderNavProfileAsdos">
-            <a 
-              href="#" 
-              class="navigationProfileAsdos" 
-              onclick="openProfileDosen()">
-                <img 
-                  src="/includes/images/profile navigation icon.png"
-                  alt="Navigation Profile Asdos"
+        function removeHighlightCell(hari, jamMulai, jamSelesai) {
+          var table = document.querySelector("table");
+          var columnIndex = getColumnIndex(hari);
+          var startRowIndex = jamMulai - 7;
+          var endRowIndex = jamSelesai - 7;
+
+          for (var row = startRowIndex; row <= endRowIndex; row++) {
+            var cellId = "row" + (row + 7) + "col" + columnIndex;
+            var cell = document.getElementById(cellId);
+
+            if (cell && cell.classList.contains("highlighted")) {
+              //menghapus jadwal
+              cell.classList.remove("highlighted");
+              cell.style.backgroundColor = "white";
+              highlightCellArray = highlightCellArray.filter(function (highlightedCell) {
+                  return highlightedCell.id !== cellId;
+              });
+            }
+          }
+        }
+
+  function getColumnIndex(hari) {
+    switch (hari) {
+            case "monday":
+              return 2;
+            case "tuesday":
+              return 3;
+            case "wednesday":
+              return 4;
+            case "thursday":
+              return 5;
+            case "friday":
+              return 6;
+            case "saturday":
+              return 7;
+            default:
+              return -1;
+          }
+        }
+      </script>
+          <style>
+              .highlighted {
+                  background-color: orange;
+              }
+          </style>
+  </head>
+
+  <body>
+    <!-- Navigation Bar -->
+    <div class="navRectangle">
+      <nav class="navigationBar">
+          <div id="borderNavHomeAsdos">
+              <a href="#" class="navigationHomeAsdos" onclick="openHomeKoordinator()">
+                  <img src="/includes/images/home icon.png" alt="Navigation Home"
                   />
-                <span>Profile</span>
-            </a>
-        </div>
+                  <span>Home</span>
+              </a>
+          </div>
+          
+          <div id="borderNavProfileAsdos">
+              <a 
+                href="#" 
+                class="navigationProfileAsdos" 
+                onclick="openProfileDosen()">
+                  <img 
+                    src="/includes/images/profile navigation icon.png"
+                    alt="Navigation Profile Asdos"
+                    />
+                  <span>Profile</span>
+              </a>
+          </div>
 
-        <div id="borderNavDaftarAsdos">
-            <a href="#" class="navigationDaftarAsdos" onclick="openAssignJadwal()">
-                <img 
-                  src="/includes/images/icon daftar asdos.png"
-                  alt="Navigation Daftar Asdos"
-                  />
-                <span>Asign Asdos</span>
-            </a>
-        </div>
+          <div id="borderNavDaftarAsdos">
+              <a href="#" class="navigationDaftarAsdos" onclick="openAssignJadwal()">
+                  <img 
+                    src="/includes/images/icon daftar asdos.png"
+                    alt="Navigation Daftar Asdos"
+                    />
+                  <span>Asign Asdos</span>
+              </a>
+          </div>
 
-        <div id="borderNavJadwalAsdos">
-            <a href="#" class="navigationJadwalAsdos" onclick="openAsdosList()">
-                <img 
-                  src="/includes/images/icon jadwal.png"
-                  alt="Navigation Jadwal Asdos"
-                  />
-                <span>Asisten Dosen</span>
-            </a>
-        </div>
+          <div id="borderNavJadwalAsdos">
+              <a href="#" class="navigationJadwalAsdos" onclick="openAsdosList()">
+                  <img 
+                    src="/includes/images/icon jadwal.png"
+                    alt="Navigation Jadwal Asdos"
+                    />
+                  <span>Asisten Dosen</span>
+              </a>
+          </div>
 
-        <div id="borderNavLogOutAsdos">
-            <a href="#" class="navigationLogOutAsdos" onclick="Logout()">
-                <img 
-                  src="/includes/images/log out.png"
-                  alt="Navigation Logout Asdos"
-                  />
-                <span>Logout</span>
-            </a>
-        </div>
-    </nav>
-</div>
-<!-- Navigation Bar -->
-
-<div class="container">
-    <h2 style="color: white">
-      Silahkan Masukan Jadwal Asistensi : <%= userName %>
-    </h2>
-    <div class="master">
-      <button id="buttonTambahJadwal" onclick="openModal()" type="button">
-        + Tambah Jadwal
-      </button>
-      <button id="buttonHapusJadwal" onclick="openModal2()" type="button">
-        Hapus Jadwal
-      </button>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>Monday</th>
-            <th>Tuesday</th>
-            <th>Wednesday</th>
-            <th>Thursday</th>
-            <th>Friday</th>
-            <th>Saturday</th>
-            <div id="bottomBorderMain"></div>
-          </tr>
-        </thead>
-        <tbody>
-          <% for (let i = 7; i <= 17; i++) { %>
-            <tr id="row<%= i %>">
-              <td id="row<%= i %>col1"><%= i %>.00</td>
-              <% const weekdays = ['', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] %>
-              <% for (let j = 1; j <= 7; j++) { %>
-                <% try { 
-                  const schedule = scheduleData.find(entry => entry.day_of_week=== weekdays[j] && 
-                                                              (entry.start_time) <= i && 
-                                                              (entry.end_time) >= i);
-                  if (schedule) { %>
-                    <td id="row<%= i %>col<%= j + 1 %>" style="background-color: blue; display: block;">MK</td>
-                  <% } else { %>
-                    <td id="row<%= i %>col<%= j + 1 %>"></td>
-                  <% } 
-                } catch (e) { %>
-                  <td id="row<%= i %>col<%= j + 1 %>">Error: <%= e.message %></td>
-                <% } %>
-              <% } %>
-            </tr>
-          <% } %>            
-        </tbody>             
-      </table>
-    </div>
+          <div id="borderNavLogOutAsdos">
+              <a href="#" class="navigationLogOutAsdos" onclick="Logout()">
+                  <img 
+                    src="/includes/images/log out.png"
+                    alt="Navigation Logout Asdos"
+                    />
+                  <span>Logout</span>
+              </a>
+          </div>
+      </nav>
   </div>
+  <!-- Navigation Bar -->
 
-  <!--Modal Tambah Jadwal -->
-<div id="myModalTambahJadwal" class="modalTambahJadwal">
-  <form id="jadwalForm" action="/submitScheduleAS" method="POST">
-    <div class="classHari">
-      <label for="Hari">Hari:</label>
-      <select id="dropDownHari">
-        <option value="monday">Monday</option>
-        <option value="tuesday">Tuesday</option>
-        <option value="wednesday">Wednesday</option>
-        <option value="thursday">Thursday</option>
-        <option value="friday">Friday</option>
-        <option value="saturday">Saturday</option>
-      </select>
-    </div>
-
-    <div class="classJamMulai">
-      <label for="jamMulai">Jam Mulai:</label>
-      <select id="dropDownJamMulai">
-        <option value="7">07.00</option>
-        <option value="8">08.00</option>
-        <option value="9">09.00</option>
-        <option value="10">10.00</option>
-        <option value="11">11.00</option>
-        <option value="12">12.00</option>
-        <option value="13">13.00</option>
-        <option value="14">14.00</option>
-        <option value="15">15.00</option>
-        <option value="16">16.00</option>
-      </select>
-    </div>
-
-    <div class="classJamSelesai">
-      <label for="jamSelesai">Jam Selesai:</label>
-      <select id="dropDownJamSelesai">
-        <option value="8">08.00</option>
-        <option value="9">09.00</option>
-        <option value="10">10.00</option>
-        <option value="11">11.00</option>
-        <option value="12">12.00</option>
-        <option value="13">13.00</option>
-        <option value="14">14.00</option>
-        <option value="15">15.00</option>
-        <option value="16">16.00</option>
-        <option value="17">17.00</option>
-      </select>
-    </div>
-
-    <input type="hidden" name="user" value="<%= userName %>">
-    <button type="submit">Submit</button>
-    <button type="button" id="buttonClose1" onclick="closeModal()">Close</button>
-  </form>
-</div>
-
+  <div class="container">
+      <h2 style="color: white">
+        Silahkan Masukan Jadwal Asistensi : <%= userName %>
+      </h2>
+      <div class="master">
+        <button id="buttonTambahJadwal" onclick="openModal()" type="button">
+          + Tambah Jadwal
+        </button>
+        <button id="buttonHapusJadwal" onclick="openModal2()" type="button">
+          Hapus Jadwal
+        </button>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+              <div id="bottomBorderMain"></div>
+            </tr>
+          </thead>
+          <!-- Inside the table body -->
+<tbody>
+  <% for (let i = 7; i <= 17; i++) { %>
+    <tr id="row<%= i %>">
+      <td id="row<%= i %>col1"><%= i %>.00</td>
+      <% const weekdays = ['', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] %>
+      <% for (let j = 1; j <= 7; j++) { %>
+        <% try { 
+          const schedule = scheduleData.find(entry => entry.day_of_week === weekdays[j] && 
+                                                      (entry.start_time) <= i && 
+                                                      (entry.end_time) >= i);
+          if (schedule) { %>
+            <% if (schedule.schedule_category === 'asistensi') { %>
+              <td id="row<%= i %>col<%= j + 1 %>" style="background-color: orange; display: block;">AS</td>
+            <% } else if (schedule.schedule_category === 'matakuliah') { %>
+              <td id="row<%= i %>col<%= j + 1 %>" style="background-color: blue; display: block;">MK</td>
+            <% } else { %>
+              <td id="row<%= i %>col<%= j + 1 %>"></td>
+            <% } %>
+          <% } else { %>
+            <td id="row<%= i %>col<%= j + 1 %>"></td>
+          <% } 
+        } catch (e) { %>
+          <td id="row<%= i %>col<%= j + 1 %>">Error: <%= e.message %></td>
+        <% } %>
+      <% } %>
+    </tr>
+  <% } %>            
+</tbody>
   
+        </table>
+      </div>
+    </div>
 
-  <!--Modal Hapus Jadwal -->
-  <div id="myModalHapusJadwal" class="modalHapusJadwal">
-    <form action="/removeScheduleAS" method="POST">
+    <!--Modal Tambah Jadwal -->
+  <div id="myModalTambahJadwal" class="modalTambahJadwal">
+    <form id="jadwalForm" action="/submitScheduleAS/<%= userName %>" method="POST">
       <div class="classHari">
         <label for="Hari">Hari:</label>
-        <select id="dropDownHariHapusJadwal">
+        <select id="dropDownHari" name="day_of_week">
           <option value="monday">Monday</option>
           <option value="tuesday">Tuesday</option>
           <option value="wednesday">Wednesday</option>
@@ -315,8 +268,8 @@ function getColumnIndex(hari) {
       </div>
 
       <div class="classJamMulai">
-        <label for="jamMulaiHapusJadwal">Jam Mulai:</label>
-        <select id="dropDownJamMulaiHapusJadwal">
+        <label for="jamMulai">Jam Mulai:</label>
+        <select id="dropDownJamMulai" name="start_time">
           <option value="7">07.00</option>
           <option value="8">08.00</option>
           <option value="9">09.00</option>
@@ -331,8 +284,8 @@ function getColumnIndex(hari) {
       </div>
 
       <div class="classJamSelesai">
-        <label for="jamSelesaiHapusJadwal">Jam Selesai:</label>
-        <select id="dropDownJamSelesaiHapusJadwal">
+        <label for="jamSelesai">Jam Selesai:</label>
+        <select id="dropDownJamSelesai" name="end_time">
           <option value="8">08.00</option>
           <option value="9">09.00</option>
           <option value="10">10.00</option>
@@ -345,44 +298,99 @@ function getColumnIndex(hari) {
           <option value="17">17.00</option>
         </select>
       </div>
+
       <input type="hidden" name="user" value="<%= userName %>">
-      <button onclick="submitFormHapus()">Submit</button>
-      <button id="buttonClose2" onclick="closeModal2()">Close</button>
-    </div>
-  </form>
-</body>
-</html>
+      <button type="submit">Submit</button>
+      <button type="button" id="buttonClose1" onclick="closeModal()">Close</button>
+    </form>
+  </div>
 
-<script>
-  var highlightCellArray = [];
+    
 
-function openModal() {
-  document.getElementById("myModalTambahJadwal").style.display = "block";
-}
-function closeModal() {
-  document.getElementById("myModalTambahJadwal").style.display = "none";
-}
+    <!--Modal Hapus Jadwal -->
+    <div id="myModalHapusJadwal" class="modalHapusJadwal">
+      <form action="/removeScheduleAS" method="POST">
+        <div class="classHari">
+          <label for="Hari">Hari:</label>
+          <select id="dropDownHariHapusJadwal" name="day_of_week">
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+          </select>
+        </div>
 
-function openModal2() {
-  document.getElementById("myModalHapusJadwal").style.display = "block";
-}
+        <div class="classJamMulai">
+          <label for="jamMulaiHapusJadwal">Jam Mulai:</label>
+          <select id="dropDownJamMulaiHapusJadwal" name="start_time">
+            <option value="7">07.00</option>
+            <option value="8">08.00</option>
+            <option value="9">09.00</option>
+            <option value="10">10.00</option>
+            <option value="11">11.00</option>
+            <option value="12">12.00</option>
+            <option value="13">13.00</option>
+            <option value="14">14.00</option>
+            <option value="15">15.00</option>
+            <option value="16">16.00</option>
+          </select>
+        </div>
 
-function closeModal2() {
-  document.getElementById("myModalHapusJadwal").style.display = "none";
-}
+        <div class="classJamSelesai">
+          <label for="jamSelesaiHapusJadwal">Jam Selesai:</label>
+          <select id="dropDownJamSelesaiHapusJadwal" name="end_time">
+            <option value="8">08.00</option>
+            <option value="9">09.00</option>
+            <option value="10">10.00</option>
+            <option value="11">11.00</option>
+            <option value="12">12.00</option>
+            <option value="13">13.00</option>
+            <option value="14">14.00</option>
+            <option value="15">15.00</option>
+            <option value="16">16.00</option>
+            <option value="17">17.00</option>
+          </select>
+        </div>
+        <input type="hidden" name="user" value="<%= userName %>">
+        <button onclick="submitFormHapus()">Submit</button>
+        <button id="buttonClose2" onclick="closeModal2()">Close</button>
+      </div>
+    </form>
+  </body>
+  </html>
 
-function getParamUserName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
+  <script>
+    var highlightCellArray = [];
 
-var userName = getParamUserName('user');
+  function openModal() {
+    document.getElementById("myModalTambahJadwal").style.display = "block";
+  }
+  function closeModal() {
+    document.getElementById("myModalTambahJadwal").style.display = "none";
+  }
 
-document.querySelector('h2').innerText = 'Jadwal Milik: ' + userName;
+  function openModal2() {
+    document.getElementById("myModalHapusJadwal").style.display = "block";
+  }
 
-</script>
+  function closeModal2() {
+    document.getElementById("myModalHapusJadwal").style.display = "none";
+  }
+
+  function getParamUserName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  var userName = getParamUserName('user');
+
+  document.querySelector('h2').innerText = 'Jadwal Milik: ' + userName;
+
+  </script>

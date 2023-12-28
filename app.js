@@ -54,7 +54,7 @@
   const cssPath = path.join(staticPath, 'css');
 
   app.use('/uploads', express.static('uploads'));
-  app.use(express.urlencoded({ extended: true })); // Parse form data
+  app.use(express.urlencoded({ extended: true })); 
   app.use('/includes', express.static(staticPath));
   app.use('/css', express.static(cssPath));
 
@@ -719,26 +719,34 @@ app.post('/removeSchedule', (req, res) => {
   });
 });
 
-app.post('/submitScheduleAS', (req, res) => {
-  const { start_time, end_time, day_of_week, user } = req.body; // Use req.body.user to get the user
+app.post('/submitScheduleAS/:user', (req, res) => {
+  const { start_time, end_time, day_of_week } = req.body;
+  //const user_name = req.query.user; // Assuming user_name is the correct parameter from the URL
+  //console.log(user_name);
 
-  console.log('Received request to submit schedule for user:', user);
   console.log('Received data:', req.body);
 
+  // Assuming the user name is in the 'user' property of the req.body object
+  const user_name = req.body.user;
+  
+  console.log(user_name);
+  
   const getUserIdQuery = 'SELECT id FROM users WHERE name = ?';
 
-  connection.query(getUserIdQuery, [user], (userIdErr, userIdResults) => {
+  connection.query(getUserIdQuery, [user_name], (userIdErr, userIdResults) => {
     if (userIdErr) {
       console.error('Error querying user ID:', userIdErr);
       return res.status(500).send('Internal Server Error');
     }
 
     if (userIdResults.length === 0) {
-      console.log('User not found:', user);
       return res.status(404).send('User not found');
     }
 
     const user_id = userIdResults[0].id;
+
+    console.log(user_name);
+    console.log(user_id);
 
     const conflictCheckQuery = `
       SELECT * FROM course_schedules
@@ -767,6 +775,7 @@ app.post('/submitScheduleAS', (req, res) => {
           return res.status(200).send(`<script>alert('${alertMessage}');</script>`);
         }
 
+        console.log("masuk ke db : ")
         const insertQuery = `
           INSERT INTO course_schedules (user_id, schedule_category, start_time, end_time, day_of_week)
           VALUES (?, 'asistensi', ?, ?, ?)
@@ -784,13 +793,70 @@ app.post('/submitScheduleAS', (req, res) => {
             res.status(500).send('Internal Server Error');
           } else {
             console.log('Data inserted into course_schedules.');
-            res.redirect(302, `/jadwal-insert?user=${user}`);
+            res.redirect(302, `/jadwal-insert?user=${user_name}`);
           }
         });
       }
     );
   });
 });
+
+app.post('/removeScheduleAS', (req, res) => {
+  const { start_time, end_time, day_of_week, user } = req.body;
+
+  console.log('Received data for schedule removal:', req.body);
+
+  // Assuming the user name is in the 'user' property of the req.body object
+  const user_name = user;
+
+  console.log(user_name);
+
+  const getUserIdQuery = 'SELECT id FROM users WHERE name = ?';
+
+  connection.query(getUserIdQuery, [user_name], (userIdErr, userIdResults) => {
+    if (userIdErr) {
+      console.error('Error querying user ID:', userIdErr);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    if (userIdResults.length === 0) {
+      return res.status(404).send('User not found');
+    }
+
+    const user_id = userIdResults[0].id;
+
+    console.log(user_name);
+    console.log(user_id);
+
+    const deleteQuery = `
+      DELETE FROM course_schedules
+      WHERE user_id = ? 
+      AND day_of_week = ?
+      AND start_time = ?
+      AND end_time = ?;
+    `;
+
+    connection.query(
+      deleteQuery,
+      [user_id, day_of_week, start_time, end_time],
+      (deleteErr, deleteResult) => {
+        if (deleteErr) {
+          console.error('Error deleting schedule:', deleteErr);
+          return res.status(500).send('Internal Server Error');
+        }
+
+        console.log('Schedule deleted:');
+        console.log('User ID:', user_id);
+        console.log('Start Time:', start_time);
+        console.log('End Time:', end_time);
+        console.log('Day of Week:', day_of_week);
+
+        res.redirect(302, `/jadwal-insert?user=${user_name}`);
+      }
+    );
+  });
+});
+
 
 
   app.listen(port, () => {

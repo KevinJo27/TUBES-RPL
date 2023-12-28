@@ -20,8 +20,7 @@ VALUES
 
 CREATE TABLE subjects (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	title VARCHAR(50) NOT NULL,
-	asdos_quota INT NOT NULL
+	title VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE users (
@@ -47,6 +46,7 @@ CREATE TABLE dosen_subjects (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	user_id INT NOT NULL,
 	subject_id INT NOT NULL,
+	asdos_quota INT NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (subject_id) REFERENCES subjects(id)
 );
@@ -65,7 +65,7 @@ CREATE TABLE asdos_assigns (
 	subject_id INT NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (subject_id) REFERENCES subjects(id)
-);
+); 
 
 CREATE TABLE course_schedules (
   id INT PRIMARY KEY AUTO_INCREMENT,

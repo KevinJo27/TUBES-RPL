@@ -8,24 +8,21 @@
     <link rel="stylesheet" href="/includes/css/css dosen lab/matakuliah.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
     <script>
-        function Logout()   {
-            window.location.href="/";
-        }
         function openAsistenDosen() {
             window.location.href = '/AsistenDosen';
         }
 
         function openMatakuliah() {
-            window.location.href = '/Matakuliah';
+            window.location.href = '/matakuliah';
         }
 
-        function openProfileDosen(){
+        function openProfileDosen() {
             window.location.href = "/profil-dosen"
         }
-        function openHomeDosen(){
+        function openHomeDosen() {
             window.location.href = "/home-dosen"
         }
-    </script>    
+    </script>
 </head>
 
 <body>
@@ -61,7 +58,7 @@
             </div>
 
             <div id="borderNavLogOutAsdos">
-                <a href="#" class="navigationLogOutAsdos" onclick="Logout()">
+                <a href="login-asdos.html" class="navigationLogOutAsdos">
                     <img src="/includes/images/log out.png" alt="Navigation Logout Asdos">
                     <span>Logout</span>
                 </a>
@@ -81,26 +78,33 @@
                         <th>No</th>
                         <th>Nama MataKuliah</th>
                         <th>Jumlah Asisten</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
-                <!-- ... Your HTML code ... -->
                 <tbody>
-                    <% subjects.forEach((subject, index) => { %>
-                        <tr>
-                            <td><%= index + 1 %></td>
-                            <td><%= subject.title %></td>
+                    <% subjects.forEach((subject, index)=> { %>
+                        <tr id="row_<%= subject.id %>">
                             <td>
-                                <!-- You can add other columns as needed -->
-                                <span class="material-icons-outlined" onclick="showEditPopup('<%= subject.id %>')">edit</span>
-                                <span class="material-icons-outlined" onclick="showDeletePopup('<%= subject.id %>')">delete</span>
+                                <%= index + 1 %>
+                            </td>
+                            <td>
+                                <%= subject.title %>
+                            </td>
+                            <td>
+                                <%= subject.asdos_quota %>
+                            </td>
+                            <td>
+                                <span class="material-icons-outlined"
+                                    onclick="showEditPopup('<%= subject.id %>')">edit</span>
+                                <span class="material-icons-outlined"
+                                    onclick="showDeletePopup('<%= subject.id %>')">delete</span>
                             </td>
                         </tr>
                         <% }); %>
-                    </tbody>
-                    <!-- ... Your HTML code ... -->
+                </tbody>
             </table>
             <div class="upload-button">
-                <button onclick="showPopup()">Upload</button>
+                <button onclick="showPopup()">Tambah</button>
             </div>
         </div>
     </div>
@@ -130,7 +134,7 @@
         </div>
         <div class="button-container">
             <button id="cancel-button" onclick="hidePopup()">Cancel</button>
-            <button id="submit-button" onclick="uploadData()">Submit</button>
+            <button id="submit-button" onclick="tambahMataKuliah()">Submit</button>
         </div>
     </div>
 

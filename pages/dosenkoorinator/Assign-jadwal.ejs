@@ -82,14 +82,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- You can manually populate this table with your data when connected -->
-                    <tr>
-                        <td>1</td>
-                        <td>Rekayasa Perangkat Lunak</td>
-                        <td>3</td>
-                        <td><button onclick="openPopup()">Tambah</button></td>
-                    </tr>
-                    <!-- Repeat the above row structure for other data entries -->
+                    <% data.forEach(entry => { %>
+                        <tr>
+                            <td><%= entry.no %></td>
+                            <td><%= entry.namaMataKuliah %></td>
+                            <td><%= entry.jumlahAsisten %></td>
+                            <td><button onclick="openPopup('<%= entry.namaMataKuliah %>' , '<%= entry.subjectId %>')">Tambah</button></td>
+                        </tr>
+                    <% }); %>
                 </tbody>
             </table>
         </div>
@@ -98,15 +98,17 @@
     <div class="overlay" id="overlay" onclick="closePopup()"></div>
     <div class="modal" id="popup">
         <h3>Berikut daftar calon asisten dosen:</h3>
-        <form>
+        <form action="penugasan" method="post">
             <label for="asistenList">Pilih Calon Asisten:</label>
             <select id="asistenList" name="asistenList">
-                <option value="1">Calon Asisten 1</option>
-                <option value="2">Calon Asisten 2</option>
-                <!-- Add more options for each candidate assistant -->
+              <% userData.forEach(user => { %>
+                <option value="<%= user.id %>" data-subjectid="<%= user.subjectId %>"><%= user.name %></option>
+              <% }); %>
             </select>
+            <button type="submit">Assign</button>
             <button type="button" onclick="closePopup()">Close</button>
-        </form>
+          </form>
+          
     </div>
     
 

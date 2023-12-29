@@ -29,7 +29,7 @@ CREATE TABLE users (
 	npm VARCHAR(255) NOT NULL,
 	password VARCHAR(255) NOT NULL,
 	semester INT,
-	role_id INT,
+	role_id INT, 
 	FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 

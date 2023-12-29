@@ -57,6 +57,7 @@ app.use('/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: true })); 
 app.use('/includes', express.static(staticPath));
 app.use('/css', express.static(cssPath));
+app.use(express.json());
 
 app.use(session({
   secret: 'your-secret-key',
@@ -340,10 +341,61 @@ app.post('/upload', upload.fields([
     });
   });
 
+  // CRUD -> CREATE PART
+app.post('/matakuliah', (req, res) => {
+  try {
+    const userId = req.session.user.userId;
 
+    const { subjectId, assistantQuota } = req.body;
 
+    let dosenSubjectResultId;
 
+    // Execute the query to insert data into the subjects table
+    connection.execute(
+      `INSERT INTO dosen_subjects (user_id, subject_id, asdos_quota) VALUES (${userId}, ${subjectId}, ${assistantQuota})`,
+      (error, results) => {
+        if (error) {
+          console.error('Error inserting data:', error);
+          res.status(500).json({ error: 'Internal server error' });
+        } else {
+          // Send a response with the inserted data
+          dosenSubjectResultId = results.insertId;
 
+          // Execute Query get details from dosen_subjects record table
+          const query = `
+            SELECT ds.*, s.title
+            FROM dosen_subjects ds
+            JOIN subjects s ON ds.subject_id = s.id
+            WHERE ds.id = ${dosenSubjectResultId}
+          `;
+
+          connection.execute(
+            query,
+            (err, resQueryTwo) => {
+              if (err) {
+                console.error('Error querying data', error);
+                res.status(500).json({ error: 'Internal server error' });
+              } else {
+                const finalResult = resQueryTwo[0];
+                console.log(finalResult);
+                res.status(200).json({
+                  id: finalResult.id,
+                  title: finalResult.title,
+                  asdos_quota: finalResult.asdos_quota
+                });
+              }
+            }
+          );
+        }
+      }
+    );
+  } catch (error) {
+    console.error('Error uploading data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// CRUD -> READ PART
 app.get('/matakuliah', (req, res) => {
   if (!req.session.user || !req.session.user.authenticated) {
     return res.redirect('/');
@@ -364,24 +416,57 @@ app.get('/matakuliah', (req, res) => {
       console.error('Error querying database:', err);
       return res.status(500).send('Internal Server Error');
     }
-  
     // Render the page and pass the results to the template
     res.render('dosen/matakuliah', { subjects: results });
   });
 });
 
-app.post('/matakuliah', (req, res) => {
-  const { subjectId } = req.body;
+// CRUD -> UPDATE PART
+app.put('/matakuliah/:dosenSubjectId', (req, res) => {
+  try {
+    // Business logic put here
+    const userId = req.session.user.userId;
+
+    const { dosenSubjectId } = req.params;
+
+    const { asdosQuota } = req.body;
+
+    const query = `UPDATE dosen_subjects SET asdos_quota = ${asdosQuota} WHERE id = ${dosenSubjectId} and user_id = ${userId}`;
+
+    connection.execute(
+      query,
+      (err, finalResult) => {
+        if (err) {
+          console.error('Error editing dosen subject data', error);
+          res.status(500).json({ error: 'Internal server error' });
+        } else {
+          res.status(200).json({
+            id: dosenSubjectId,
+            title: finalResult.title,
+            asdos_quota: finalResult.asdos_quota
+          });
+        }
+      }
+    )
+  } catch (error) {
+    console.error('Error edit data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// CRUD -> DELETE PART
+app.delete('/matakuliah/:dosenSubjectId', (req, res) => {
+  const { dosenSubjectId } = req.params;
 
   // Check if subjectId is provided
-  if (!subjectId) {
+  if (!dosenSubjectId) {
     return res.status(400).send('Bad Request: Missing subjectId');
   }
 
   // Delete data from subjects table
-  const deleteSubjectQuery = 'DELETE FROM subjects WHERE id = ?';
+  const deleteSubjectQuery = 'DELETE FROM dosen_subjects WHERE id = ?';
 
-  connection.query(deleteSubjectQuery, [subjectId], (err, subjectResult) => {
+  connection.query(deleteSubjectQuery, [dosenSubjectId], (err, subjectResult) => {
     if (err) {
       console.error('Error deleting subject from database:', err);
       return res.status(500).send('Internal Server Error');
@@ -392,20 +477,15 @@ app.post('/matakuliah', (req, res) => {
       return res.status(404).send('Subject not found');
     }
 
-    // If subject is deleted from subjects table, delete from dosen_subjects table
-    const deleteDosenSubjectQuery = 'DELETE FROM dosen_subjects WHERE subject_id = ?';
-
-    connection.query(deleteDosenSubjectQuery, [subjectId], (dosenSubjectErr) => {
-      if (dosenSubjectErr) {
-        console.error('Error deleting dosen_subject from database:', dosenSubjectErr);
-        return res.status(500).send('Internal Server Error');
-      }
-
-      // Send a success response
-      res.status(200).send('Delete successful');
-    });
+    res.status(200).send('Delete successful');
   });
 });
+
+
+
+
+
+
 
 
 app.get('/AsistenDosen', (req, res) => {
@@ -626,11 +706,60 @@ connection.query(getUserIdQuery, [userNameParam], (userIdErr, userIdResults) => 
 
 
 
+app.get('/Assign-jadwal', (req, res) => {
+  const getUsersQuery = `
+    SELECT users.*
+    FROM users
+    JOIN asdos_submissions ON users.id = asdos_submissions.user_id
+    WHERE users.role_id = 1 AND asdos_submissions.pdf_path IS NOT NULL;
+  `;
+
+  const getAssignJadwalQuery = `
+    SELECT dosen_subjects.*, subjects.title
+    FROM dosen_subjects
+    JOIN subjects ON dosen_subjects.subject_id = subjects.id
+    WHERE dosen_subjects.asdos_quota > 0;
+  `;
+
+  Promise.all([
+    queryPromise(getUsersQuery),
+    queryPromise(getAssignJadwalQuery),
+  ])
+    .then(([users, results]) => {
+      const userData = users.map(user => ({
+        id: user.id,
+        name: user.name,
+      }));
+
+      const data = results.map((result, index) => ({
+        no: index + 1,
+        namaMataKuliah: result.title,
+        jumlahAsisten: result.asdos_quota,
+        subjectId: result.subject_id,
+      }));
+
+      res.render('dosenkoorinator/Assign-jadwal', { data, userData });
+    })
+    .catch(error => {
+      console.error('Error fetching data for Assign-jadwal:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
 
 
-app.get('/Assign-jadwal', (req, res) =>{
-  res.render('dosenkoorinator/Assign-jadwal');
-})
+function queryPromise(query) {
+  return new Promise((resolve, reject) => {
+    connection.query(query, (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+}
+
+
 
 app.post('/logout', (req, res) => {
   req.session.user = null;
@@ -721,12 +850,11 @@ connection.query(deleteQuery, [user_id, start_time, end_time, day_of_week], (err
 
 app.post('/submitScheduleAS/:user', (req, res) => {
 const { start_time, end_time, day_of_week } = req.body;
-//const user_name = req.query.user; // Assuming user_name is the correct parameter from the URL
+//const user_name = req.query.user;
 //console.log(user_name);
 
 console.log('Received data:', req.body);
 
-// Assuming the user name is in the 'user' property of the req.body object
 const user_name = req.body.user;
 
 console.log(user_name);
@@ -769,7 +897,6 @@ connection.query(getUserIdQuery, [user_name], (userIdErr, userIdResults) => {
       }
 
       if (conflictCheckResults.length > 0) {
-        // Conflict found. Send an alert to the client
         const alertMessage = 'Jadwal bertabrakan';
         console.log(alertMessage);
         return res.status(200).send(`<script>alert('${alertMessage}');</script>`);
@@ -806,7 +933,6 @@ const { start_time, end_time, day_of_week, user } = req.body;
 
 console.log('Received data for schedule removal:', req.body);
 
-// Assuming the user name is in the 'user' property of the req.body object
 const user_name = user;
 
 console.log(user_name);
@@ -856,6 +982,52 @@ connection.query(getUserIdQuery, [user_name], (userIdErr, userIdResults) => {
   );
 });
 });
+
+app.post('/penugasan', (req, res) => {
+  const userId = req.body.asistenList;
+  const subjectName = req.body.subjectName;
+
+  // Query to get subject ID based on the subject name
+  const getSubjectIdQuery = 'SELECT id FROM dosen_subjects WHERE namaMataKuliah = ?';
+  console.log(userId);
+  console.log(subjectName); 
+  connection.query(getSubjectIdQuery, [subjectName], (subjectIdErr, subjectIdResults) => {
+    if (subjectIdErr) {
+      console.error('Error getting subject ID:', subjectIdErr);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    if (subjectIdResults.length === 0) {
+      console.error('Subject not found');
+      return res.status(404).send('Subject not found');
+    }
+
+    const subjectId = subjectIdResults[0].id;
+
+    // Continue with your existing logic
+    const insertAssignQuery = 'INSERT INTO asdos_assign (user_id, subject_id) VALUES (?, ?)';
+
+    connection.query(insertAssignQuery, [userId, subjectId], (assignErr, assignResults) => {
+      if (assignErr) {
+        console.error('Error assigning user:', assignErr);
+        return res.status(500).send('Internal Server Error');
+      }
+
+      const updateQuotaQuery = 'UPDATE dosen_subjects SET asdos_quota = asdos_quota - 1 WHERE id = ?';
+
+      connection.query(updateQuotaQuery, [subjectId], (updateErr, updateResults) => {
+        if (updateErr) {
+          console.error('Error updating asdos_quota:', updateErr);
+          return res.status(500).send('Internal Server Error');
+        }
+
+        console.log('User assigned successfully.');
+        res.redirect('/Assign-jadwal');
+      });
+    });
+  });
+});
+
 
 
 

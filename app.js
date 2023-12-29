@@ -342,7 +342,7 @@ app.get('/jadwal-asdos', (req, res) => {
   });
 });
 
-  // CRUD -> CREATE PART
+// CRUD -> CREATE PART
 app.post('/matakuliah', (req, res) => {
   try {
     const userId = req.session.user.userId;
@@ -850,13 +850,13 @@ app.post('/removeSchedule', (req, res) => {
 });
 
 app.post('/submitScheduleAS/:user', (req, res) => {
-const { start_time, end_time, day_of_week } = req.body;
-//const user_name = req.query.user;
-//console.log(user_name);
+  const { start_time, end_time, day_of_week } = req.body;
+  //const user_name = req.query.user;
+  //console.log(user_name);
 
   console.log('Received data:', req.body);
 
-const user_name = req.body.user;
+  const user_name = req.body.user;
 
   console.log(user_name);
 
@@ -897,11 +897,11 @@ const user_name = req.body.user;
           return res.status(500).send('Internal Server Error');
         }
 
-      if (conflictCheckResults.length > 0) {
-        const alertMessage = 'Jadwal bertabrakan';
-        console.log(alertMessage);
-        return res.status(200).send(`<script>alert('${alertMessage}');</script>`);
-      }
+        if (conflictCheckResults.length > 0) {
+          const alertMessage = 'Jadwal bertabrakan';
+          console.log(alertMessage);
+          return res.status(200).send(`<script>alert('${alertMessage}');</script>`);
+        }
 
         console.log("masuk ke db : ")
         const insertQuery = `
@@ -934,7 +934,7 @@ app.post('/removeScheduleAS', (req, res) => {
 
   console.log('Received data for schedule removal:', req.body);
 
-const user_name = user;
+  const user_name = user;
 
   console.log(user_name);
 
@@ -986,13 +986,11 @@ const user_name = user;
 
 app.post('/penugasan', (req, res) => {
   const userId = req.body.asistenList;
-  const subjectName = req.body.subjectName;
+  const subjectId = req.body.subjectId;
 
   // Query to get subject ID based on the subject name
-  const getSubjectIdQuery = 'SELECT id FROM dosen_subjects WHERE namaMataKuliah = ?';
-  console.log(userId);
-  console.log(subjectName); 
-  connection.query(getSubjectIdQuery, [subjectName], (subjectIdErr, subjectIdResults) => {
+  const getSubjectIdQuery = 'SELECT * FROM dosen_subjects WHERE subject_id = ?';
+  connection.query(getSubjectIdQuery, [subjectId], (subjectIdErr, subjectIdResults) => {
     if (subjectIdErr) {
       console.error('Error getting subject ID:', subjectIdErr);
       return res.status(500).send('Internal Server Error');
@@ -1006,7 +1004,7 @@ app.post('/penugasan', (req, res) => {
     const subjectId = subjectIdResults[0].id;
 
     // Continue with your existing logic
-    const insertAssignQuery = 'INSERT INTO asdos_assign (user_id, subject_id) VALUES (?, ?)';
+    const insertAssignQuery = 'INSERT INTO asdos_assigns (user_id, subject_id) VALUES (?, ?)';
 
     connection.query(insertAssignQuery, [userId, subjectId], (assignErr, assignResults) => {
       if (assignErr) {

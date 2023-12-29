@@ -19,57 +19,59 @@
             window.location.href = '/Assign-jadwal';
         }
 
-        function openProfileDosen(){
+        function openProfileDosen() {
             window.location.href = "/profil-dosen"
         }
-        function openHomeKoordinator(){
+        function openHomeKoordinator() {
             window.location.href = "/home-koordinator"
         }
-    </script>  
+    </script>
 </head>
 
 <body>
-      <!-- Navigation Bar -->
-  <div class="navRectangle">
-    <nav class="navigationBar">
-        <div id="borderNavHomeAsdos">
-            <a href="#" class="navigationHomeAsdos" onclick="openHomeKoordinator()">
-                <img src="/includes/images/home icon.png" alt="Navigation Home">
-                <span>Home</span>
-            </a>
-        </div>
+    <!-- Navigation Bar -->
+    <div class="navRectangle">
+        <nav class="navigationBar">
+            <div id="borderNavHomeAsdos">
+                <a href="#" class="navigationHomeAsdos" onclick="openHomeKoordinator()">
+                    <img src="/includes/images/home icon.png" alt="Navigation Home">
+                    <span>Home</span>
+                </a>
+            </div>
 
-        <div id="borderNavProfileAsdos">
-            <a href="#" class="navigationProfileAsdos" onclick="openProfileDosen()">
-                <img src="/includes/images/profile navigation icon.png" alt="Navigation Profile Asdos">
-                <span>Profile</span>
-            </a>
-        </div>
+            <div id="borderNavProfileAsdos">
+                <a href="#" class="navigationProfileAsdos" onclick="openProfileDosen()">
+                    <img src="/includes/images/profile navigation icon.png" alt="Navigation Profile Asdos">
+                    <span>Profile</span>
+                </a>
+            </div>
 
-        <div id="borderNavMataKuliah">
-            <a href="#" class="navigationMataKuliah" onclick="openAssignJadwal()">
-                <img src="/includes/images/icon daftar asdos.png" alt="Navigation Mata Kuliah">
-                <span>Assign-Jadwal</span>
-            </a>
-        </div>
+            <div id="borderNavMataKuliah">
+                <a href="#" class="navigationMataKuliah" onclick="openAssignJadwal()">
+                    <img src="/includes/images/icon daftar asdos.png" alt="Navigation Mata Kuliah">
+                    <span>Assign-Jadwal</span>
+                </a>
+            </div>
 
-        <div id="borderNavJadwalAsdos">
-            <a href="#" class="navigationJadwalAsdos" onclick="openAsdosList()">
-                <img src="/includes/images/icon jadwal.png" alt="Navigation Jadwal Asdos">
-                <span>Asdos-List</span>
-            </a>
-        </div>
+            <div id="borderNavJadwalAsdos">
+                <a href="#" class="navigationJadwalAsdos" onclick="openAsdosList()">
+                    <img src="/includes/images/icon jadwal.png" alt="Navigation Jadwal Asdos">
+                    <span>Asdos-List</span>
+                </a>
+            </div>
 
-        <div id="borderNavLogOutAsdos">
-            <a href="#" class="navigationLogOutAsdos" onclick="Logout()">
-                <img src="/includes/images/log out.png" alt="Navigation Logout Asdos">
-                <span>Logout</span>
-            </a>
-        </div>
-    </nav>
-</div>
-<!-- Navigation Bar -->
-    <h2 style="color: white;"><center>Asisten Dosen :</center></h2>
+            <div id="borderNavLogOutAsdos">
+                <a href="#" class="navigationLogOutAsdos" onclick="Logout()">
+                    <img src="/includes/images/log out.png" alt="Navigation Logout Asdos">
+                    <span>Logout</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+    <!-- Navigation Bar -->
+    <h2 style="color: white;">
+        <center>Asisten Dosen :</center>
+    </h2>
     <div class="master">
         <div class="container">
             <table>
@@ -82,14 +84,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% data.forEach(entry => { %>
+                    <% data.forEach(entry=> { %>
                         <tr>
-                            <td><%= entry.no %></td>
-                            <td><%= entry.namaMataKuliah %></td>
-                            <td><%= entry.jumlahAsisten %></td>
-                            <td><button onclick="openPopup('<%= entry.namaMataKuliah %>' , '<%= entry.subjectId %>')">Tambah</button></td>
+                            <td>
+                                <%= entry.no %>
+                            </td>
+                            <td>
+                                <%= entry.namaMataKuliah %>
+                            </td>
+                            <td>
+                                <%= entry.jumlahAsisten %>
+                            </td>
+                            <td><button <button onclick="openPopup('<%= entry.subjectId %>')">Tambah</button>
+                            </td>
                         </tr>
-                    <% }); %>
+                        <% }); %>
                 </tbody>
             </table>
         </div>
@@ -101,21 +110,25 @@
         <form action="penugasan" method="post">
             <label for="asistenList">Pilih Calon Asisten:</label>
             <select id="asistenList" name="asistenList">
-              <% userData.forEach(user => { %>
-                <option value="<%= user.id %>" data-subjectid="<%= user.subjectId %>"><%= user.name %></option>
-              <% }); %>
+                <% userData.forEach(user=> { %>
+                    <option value="<%= user.id %>" data-subjectid="<%= user.subjectId %>">
+                        <%= user.name %>
+                    </option>
+                    <% }); %>
             </select>
+            <input type="hidden" name="subjectId" id="subjectId" value="">
             <button type="submit">Assign</button>
             <button type="button" onclick="closePopup()">Close</button>
-          </form>
-          
+        </form>
+
     </div>
-    
+
 
     <script>
-        function openPopup() {
+        function openPopup(subjectId) {
             document.getElementById('overlay').style.display = 'block';
             document.getElementById('popup').style.display = 'block';
+            document.getElementById('subjectId').value = subjectId;
         }
 
         function closePopup() {

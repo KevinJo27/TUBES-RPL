@@ -540,7 +540,6 @@ app.get('/AsistenDosen', (req, res) => {
               } else {
                 const usersId = asdosAssignsResults.map((asdosAssign) => asdosAssign.user_id);
 
-                // Query to get users' names from users table
                 const usersQuery = 'SELECT id, name FROM users WHERE id IN (?)';
 
                 connection.query(usersQuery, [usersId], (usersErr, usersResults) => {
@@ -988,7 +987,6 @@ app.post('/penugasan', (req, res) => {
   const userId = req.body.asistenList;
   const subjectId = req.body.subjectId;
 
-  // Query to get subject ID based on the subject name
   const getSubjectIdQuery = 'SELECT * FROM dosen_subjects WHERE subject_id = ?';
   connection.query(getSubjectIdQuery, [subjectId], (subjectIdErr, subjectIdResults) => {
     if (subjectIdErr) {
@@ -1003,7 +1001,6 @@ app.post('/penugasan', (req, res) => {
 
     const subjectId = subjectIdResults[0].id;
 
-    // Continue with your existing logic
     const insertAssignQuery = 'INSERT INTO asdos_assigns (user_id, subject_id) VALUES (?, ?)';
 
     connection.query(insertAssignQuery, [userId, subjectId], (assignErr, assignResults) => {
@@ -1012,22 +1009,20 @@ app.post('/penugasan', (req, res) => {
         return res.status(500).send('Internal Server Error');
       }
 
-      const updateQuotaQuery = 'UPDATE dosen_subjects SET asdos_quota = asdos_quota - 1 WHERE id = ?';
+      const updateQuotaQuery = 'UPDATE dosen_subjects SET asdos_quota = asdos_quota - 1 WHERE subject_id = ?';
 
       connection.query(updateQuotaQuery, [subjectId], (updateErr, updateResults) => {
         if (updateErr) {
           console.error('Error updating asdos_quota:', updateErr);
           return res.status(500).send('Internal Server Error');
+        } else {
+          console.log('User assigned successfully.');
+          res.redirect('/Assign-jadwal');
         }
-
-        console.log('User assigned successfully.');
-        res.redirect('/Assign-jadwal');
       });
     });
   });
 });
-
-
 
 
 app.listen(port, () => {

@@ -7,8 +7,8 @@
     <title>Asisten Dosen</title>
     <link rel="stylesheet" href="/includes/css/css dosen lab/asistendosen.css">
     <script>
-        function Logout()   {
-            window.location.href="/";
+        function Logout() {
+            window.location.href = "/";
         }
         function openAsistenDosen() {
             window.location.href = '/AsistenDosen';
@@ -27,7 +27,7 @@
         }
 
         function openJadwalViews(userName) {
-            window.location.href = "/jadwal-views?user="+userName;
+            window.location.href = "/jadwal-views?user=" + userName;
         }
     </script>
 </head>
@@ -89,29 +89,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% subjects.forEach((subject, index) => { %>
-                      <!-- Check if there are users assigned to the subject -->
-                      <% if (subject.users && subject.users.length > 0) { %>
-                        <!-- Iterate through each user and display their name in a new row -->
-                        <% subject.users.forEach((user, userIndex) => { %>
-                          <tr>
-                            <!-- Display a unique index for each row, including rows for user names -->
-                            <td><%= userIndex + 1 %></td>
-                            <td><%= user.name %></td>
-                            <td><%= subject.title %></td>
-                            <td><button onclick="openJadwalViews('<%= user.name %>')">Jadwal</button></td>
-                          </tr>
-                        <% }); %>
-                      <% } else { %>
-                        <!-- If no users assigned, display a message in the first column -->
-                        <tr>
-                          <td><%= index + 1 %></td>
-                          <td colspan="4">No users assigned</td>
-                        </tr>
-                      <% } %>
-                    <% }); %>
-                  </tbody>
-                  
+                    <% subjects.forEach((subject, index)=> { %>
+                        <% if (subject) { %>
+                            <tr>
+                                <td>
+                                    <%= index + 1 %>
+                                </td>
+                                <td colspan="4">
+                                    <%= subject.title %>
+                                </td>
+                            </tr>
+                            <% if (subject.users && subject.users.length> 0) { %>
+                                <% subject.users.forEach((user, userIndex)=> { %>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <%= user.name %>
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            <button onclick="openJadwalViews('<%= user.name %>')">Jadwal</button>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td></td>
+                                                <td colspan="4">No users assigned</td>
+                                            </tr>
+                                            <% } %>
+                                                <% } %>
+                                                    <% }); %>
+                </tbody>
+
             </table>
         </div>
     </div>

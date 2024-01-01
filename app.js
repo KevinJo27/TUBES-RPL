@@ -999,8 +999,10 @@ app.post('/penugasan', (req, res) => {
       return res.status(404).send('Subject not found');
     }
 
-    const subjectId = subjectIdResults[0].id;
-
+    console.log(subjectIdResults);
+    const subjectId = subjectIdResults[0].subject_id;
+    // console.log(userId);
+    // console.log(subjectId);
     const insertAssignQuery = 'INSERT INTO asdos_assigns (user_id, subject_id) VALUES (?, ?)';
 
     connection.query(insertAssignQuery, [userId, subjectId], (assignErr, assignResults) => {
